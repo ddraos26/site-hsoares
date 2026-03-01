@@ -21,8 +21,16 @@
     </div>
     <div class="container nav-shell">
       <a class="brand" href="#inicio" aria-label="H Soares Seguros">
-        <span class="brand-mark">HS</span>
-        <span class="brand-name">H Soares Seguros</span>
+        <img
+          class="brand-logo"
+          src="assets/logo-hsoares-transparent.png"
+          alt="H Soares Seguros"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+        >
+        <span class="brand-fallback">
+          <span class="brand-mark">HS</span>
+          <span class="brand-name">H Soares Seguros</span>
+        </span>
       </a>
       <nav class="nav-links">
         <a href="#produtos">Produtos</a>
