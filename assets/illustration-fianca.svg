@@ -1,0 +1,26 @@
+<svg width="960" height="620" viewBox="0 0 960 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgF" x1="100" y1="30" x2="840" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F8FF"/>
+      <stop offset="1" stop-color="#E7EEFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="620" rx="34" fill="url(#bgF)"/>
+
+  <rect x="138" y="220" width="240" height="286" rx="18" fill="#FFFFFF" stroke="#C5D2F1" stroke-width="4"/>
+  <rect x="198" y="282" width="58" height="58" rx="8" fill="#ECF2FF"/>
+  <rect x="276" y="282" width="58" height="58" rx="8" fill="#ECF2FF"/>
+  <rect x="198" y="360" width="58" height="58" rx="8" fill="#ECF2FF"/>
+  <rect x="276" y="360" width="58" height="58" rx="8" fill="#ECF2FF"/>
+
+  <rect x="408" y="172" width="286" height="334" rx="18" fill="#FFFFFF" stroke="#C5D2F1" stroke-width="4"/>
+  <rect x="468" y="236" width="62" height="62" rx="8" fill="#ECF2FF"/>
+  <rect x="548" y="236" width="62" height="62" rx="8" fill="#ECF2FF"/>
+  <rect x="468" y="320" width="62" height="62" rx="8" fill="#ECF2FF"/>
+  <rect x="548" y="320" width="62" height="62" rx="8" fill="#ECF2FF"/>
+
+  <path d="M760 220L850 256V334C850 392 812 444 760 462C708 444 670 392 670 334V256L760 220Z" fill="#002C8F"/>
+  <path d="M760 260L806 278V334C806 374 784 408 760 421C736 408 714 374 714 334V278L760 260Z" fill="#E3FF04"/>
+
+  <path d="M130 520H840" stroke="#A9BCEB" stroke-width="6" stroke-linecap="round"/>
+</svg>

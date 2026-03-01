@@ -257,6 +257,20 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+.media-shell {
+  margin: 0 0 1rem;
+  border: 1px solid #c9d6f4;
+  border-radius: 0.86rem;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.media-shell img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .hero-panel h2 {
   margin-bottom: 0.45rem;
 }
@@ -319,6 +333,16 @@ h3 {
   background: var(--surface);
   padding: 1.1rem;
   box-shadow: 0 10px 24px rgba(0, 23, 72, 0.05);
+}
+
+.product-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid #c9d6f4;
+  border-radius: 0.82rem;
+  margin-bottom: 0.8rem;
+  background: #f4f7ff;
 }
 
 .tag {
@@ -470,6 +494,21 @@ h3 {
   border-radius: var(--radius-lg);
   background: var(--surface);
   padding: 1rem;
+}
+
+.feature-media {
+  margin: 0;
+  border: 1px solid #c9d6f4;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+}
+
+.feature-media img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .detail-card p {
