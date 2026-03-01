@@ -389,6 +389,10 @@ h3 {
   gap: 1rem;
 }
 
+.institution-cta {
+  margin-top: 1rem;
+}
+
 .process-card,
 .institution-card {
   border: 1px solid var(--line);
