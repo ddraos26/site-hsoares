@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 569" role="img" aria-labelledby="title">
+  <title>Porto</title>
+  <g fill="none" fill-rule="evenodd">
+    <rect x="48" y="99" width="429" height="370" rx="39" fill="#19A0EB"/>
+    <path
+      d="M101 155c79-1 154 7 224 26 42 12 75 35 102 70-49-23-105-39-168-48-52-8-104-11-158-9V155z"
+      fill="#FFF"
+    />
+    <path
+      d="M108 243c65-10 132-13 199-9 54 4 99 17 136 40 12 8 22 18 32 31-49-18-103-30-163-34-68-6-136 0-204 17V243z"
+      fill="#FFF"
+    />
+    <path
+      d="M110 351c55-21 114-35 176-39 79-6 149 6 212 35-60-9-119-11-177-4-79 9-151 33-217 74 16-24 18-44 6-60z"
+      fill="#FFF"
+    />
+    <text
+      x="560"
+      y="452"
+      fill="#19A0EB"
+      font-family="SF Pro Display, SF Pro Text, Helvetica Neue, Arial, sans-serif"
+      font-size="420"
+      font-weight="700"
+      letter-spacing="-18"
+    >Porto</text>
+  </g>
+</svg>
