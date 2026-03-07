@@ -73,7 +73,7 @@ export async function GET(request) {
       )
       SELECT
         v.page_path,
-        ROUND((COALESCE(c.clicks, 0) / NULLIF(v.views, 0)) * 100, 2) AS ctr
+        ROUND((((COALESCE(c.clicks, 0) / NULLIF(v.views, 0)) * 100)::numeric), 2) AS ctr
       FROM views v
       LEFT JOIN clicks c ON c.page_path = v.page_path
       ORDER BY ctr DESC

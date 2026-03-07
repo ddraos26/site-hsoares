@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -35,8 +33,7 @@ export default function LoginPage() {
         throw new Error('Credenciais inválidas');
       }
 
-      router.push(redirectTo);
-      router.refresh();
+      window.location.assign(redirectTo);
     } catch {
       setFeedback('Não foi possível autenticar. Verifique e-mail e senha.');
     } finally {
