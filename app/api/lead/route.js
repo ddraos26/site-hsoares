@@ -43,12 +43,18 @@ function normalizeAttachments(attachments) {
       const name = sanitize(attachment.name).slice(0, 160);
       const type = sanitize(attachment.type).slice(0, 120);
       const contentBase64 = String(attachment.contentBase64 || '').trim();
+      const fileSizeBytes = Number(attachment.fileSizeBytes || 0);
 
       if (!name || !contentBase64) {
         return null;
       }
 
-      return { name, type, contentBase64 };
+      return {
+        name,
+        type,
+        contentBase64,
+        fileSizeBytes: Number.isFinite(fileSizeBytes) && fileSizeBytes > 0 ? Math.round(fileSizeBytes) : null
+      };
     })
     .filter(Boolean);
 }
@@ -70,6 +76,7 @@ async function sendLeadEmail(payload) {
 
   const toEmail = process.env.LEAD_TO_EMAIL || 'rodolfo@hsoaresseguros.com.br';
   const fromEmail = process.env.LEAD_FROM_EMAIL || 'H Soares Seguros <onboarding@resend.dev>';
+  const publicReplyTo = process.env.LEAD_REPLY_TO_EMAIL || 'contato@hsoaresseguros.com.br';
 
   const lines = [
     ['Nome', payload.nome || 'Não informado'],
@@ -97,7 +104,8 @@ async function sendLeadEmail(payload) {
     from: fromEmail,
     to: [toEmail],
     subject: `Novo lead ${payload.productSlug || 'site'}`,
-    html: `<table style="border-collapse:collapse;width:100%;max-width:700px">${html}</table>`
+    html: `<table style="border-collapse:collapse;width:100%;max-width:700px">${html}</table>`,
+    reply_to: [publicReplyTo]
   };
 
   if (payload.attachments?.length) {
@@ -210,7 +218,7 @@ export async function POST(request) {
 
     const sql = getDb();
 
-    await sql`
+    const [lead] = await sql`
       INSERT INTO leads (
         nome, whatsapp, email, product_slug, page_path, click_id, session_id,
         utm_source, utm_medium, utm_campaign, referrer, user_agent, ip_address
@@ -219,7 +227,40 @@ export async function POST(request) {
         ${payload.clickId || null}, ${payload.sessionId || null}, ${payload.utmSource || null}, ${payload.utmMedium || null}, ${payload.utmCampaign || null},
         ${payload.referrer || null}, ${sanitize(request.headers.get('user-agent')) || null}, ${ip}
       )
+      RETURNING id
     `;
+
+    if (attachments.length) {
+      await sql`
+        CREATE TABLE IF NOT EXISTS lead_attachments (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+          file_name TEXT NOT NULL,
+          content_type TEXT,
+          file_size_bytes INTEGER,
+          content_base64 TEXT NOT NULL,
+          created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+        )
+      `;
+
+      for (const attachment of attachments) {
+        await sql`
+          INSERT INTO lead_attachments (
+            lead_id,
+            file_name,
+            content_type,
+            file_size_bytes,
+            content_base64
+          ) VALUES (
+            ${lead.id},
+            ${attachment.name},
+            ${attachment.type || null},
+            ${attachment.fileSizeBytes || Buffer.byteLength(attachment.contentBase64, 'base64')},
+            ${attachment.contentBase64}
+          )
+        `;
+      }
+    }
 
     await registerEventInDb({
       eventType: 'lead_submit',
@@ -236,11 +277,17 @@ export async function POST(request) {
       payload: {
         leadType: payload.leadType || 'micro_capture',
         details,
-        attachmentNames: attachments.map((attachment) => attachment.name)
+        attachmentNames: attachments.map((attachment) => attachment.name),
+        attachmentCount: attachments.length
       }
     });
 
-    await sendLeadEmail({ ...payload, details, attachments });
+    try {
+      await sendLeadEmail({ ...payload, details, attachments });
+    } catch (emailError) {
+      console.error('lead email warning', emailError);
+    }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('lead error', error);

@@ -8,6 +8,10 @@ const BRL_FORMATTER = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL'
 });
+const BRL_INTEGER_FORMATTER = new Intl.NumberFormat('pt-BR', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0
+});
 
 const AUTO_USAGE_OPTIONS = [
   { label: 'Particular (padrão)', value: 'particular' },
@@ -291,6 +295,68 @@ function formatCnpjInput(value) {
   return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12)}`;
 }
 
+function formatDateInput(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    const [year, month, day] = raw.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
+  const digits = raw.replace(/\D/g, '').slice(0, 8);
+  if (digits.length <= 2) return digits;
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`;
+}
+
+function parseDateInput(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return null;
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    const [yearString, monthString, dayString] = raw.split('-');
+    const day = Number(dayString);
+    const month = Number(monthString);
+    const year = Number(yearString);
+    const parsed = new Date(year, month - 1, day);
+
+    if (
+      Number.isNaN(parsed.getTime()) ||
+      parsed.getFullYear() !== year ||
+      parsed.getMonth() !== month - 1 ||
+      parsed.getDate() !== day
+    ) {
+      return null;
+    }
+
+    return { day, month, year, date: parsed };
+  }
+
+  const digits = raw.replace(/\D/g, '');
+  if (digits.length !== 8) return null;
+
+  const day = Number(digits.slice(0, 2));
+  const month = Number(digits.slice(2, 4));
+  const year = Number(digits.slice(4, 8));
+  const parsed = new Date(year, month - 1, day);
+
+  if (
+    Number.isNaN(parsed.getTime()) ||
+    parsed.getFullYear() !== year ||
+    parsed.getMonth() !== month - 1 ||
+    parsed.getDate() !== day
+  ) {
+    return null;
+  }
+
+  return { day, month, year, date: parsed };
+}
+
+function isValidDateInput(value) {
+  return Boolean(parseDateInput(value));
+}
+
 function formatPlateInput(value) {
   const raw = String(value || '')
     .toUpperCase()
@@ -385,34 +451,102 @@ function getDeviceLabels(values) {
     .join(', ');
 }
 
+function splitCurrencyParts(value) {
+  const raw = String(value || '')
+    .replace(/\s/g, '')
+    .replace(/^R\$/i, '')
+    .trim();
+
+  if (!raw) {
+    return {
+      integerDigits: '',
+      decimalDigits: '',
+      hasExplicitDecimal: false,
+      hasTrailingSeparator: false,
+      negative: false
+    };
+  }
+
+  const negative = raw.startsWith('-');
+  const unsigned = raw.replace(/-/g, '');
+  const commaIndex = unsigned.lastIndexOf(',');
+  const dotIndex = unsigned.lastIndexOf('.');
+
+  let separatorIndex = -1;
+  let separatorType = '';
+
+  if (commaIndex >= 0) {
+    separatorIndex = commaIndex;
+    separatorType = ',';
+  } else if (dotIndex >= 0) {
+    const decimalsCandidate = unsigned.slice(dotIndex + 1).replace(/\D/g, '');
+    if (decimalsCandidate.length <= 2) {
+      separatorIndex = dotIndex;
+      separatorType = '.';
+    }
+  }
+
+  if (separatorIndex >= 0) {
+    const integerDigits = unsigned.slice(0, separatorIndex).replace(/\D/g, '');
+    const decimalDigits = unsigned
+      .slice(separatorIndex + 1)
+      .replace(/\D/g, '')
+      .slice(0, 2);
+
+    return {
+      integerDigits,
+      decimalDigits,
+      hasExplicitDecimal: true,
+      hasTrailingSeparator: separatorIndex === unsigned.length - 1,
+      separatorType,
+      negative
+    };
+  }
+
+  return {
+    integerDigits: unsigned.replace(/\D/g, ''),
+    decimalDigits: '',
+    hasExplicitDecimal: false,
+    hasTrailingSeparator: false,
+    separatorType: '',
+    negative
+  };
+}
+
 function parseCurrencyValue(value) {
-  const raw = String(value || '').trim();
-  if (!raw) return null;
+  const { integerDigits, decimalDigits, hasExplicitDecimal, negative } = splitCurrencyParts(value);
+  if (!integerDigits && !decimalDigits) return null;
 
-  const cleaned = raw.replace(/[^\d,.-]/g, '');
-  if (!cleaned) return null;
+  const sign = negative ? '-' : '';
 
-  const lastComma = cleaned.lastIndexOf(',');
-  const lastDot = cleaned.lastIndexOf('.');
-  const decimalIndex = Math.max(lastComma, lastDot);
-
-  if (decimalIndex >= 0) {
-    const integerPart = cleaned.slice(0, decimalIndex).replace(/[^\d-]/g, '');
-    const decimalPart = cleaned.slice(decimalIndex + 1).replace(/\D/g, '').slice(0, 2);
-    const normalized = `${integerPart || '0'}.${decimalPart.padEnd(decimalPart ? 2 : 0, '0')}`;
+  if (hasExplicitDecimal) {
+    const normalized = `${sign}${integerDigits || '0'}.${decimalDigits.padEnd(decimalDigits ? 2 : 0, '0')}`;
     const numeric = Number(normalized);
     return Number.isFinite(numeric) ? numeric : null;
   }
 
-  const integerOnly = cleaned.replace(/[^\d-]/g, '');
-  const numeric = Number(integerOnly);
+  const numeric = Number(`${sign}${integerDigits || '0'}`);
   return Number.isFinite(numeric) ? numeric : null;
 }
 
 function formatCurrencyInput(value) {
-  const numeric = parseCurrencyValue(value);
-  if (numeric === null) return '';
-  return BRL_FORMATTER.format(numeric);
+  const { integerDigits, decimalDigits, hasExplicitDecimal, hasTrailingSeparator, negative } = splitCurrencyParts(value);
+  if (!integerDigits && !decimalDigits) return '';
+
+  const sign = negative ? '-' : '';
+  const formattedInteger = BRL_INTEGER_FORMATTER.format(Number(integerDigits || '0'));
+
+  if (hasExplicitDecimal) {
+    if (hasTrailingSeparator && !decimalDigits) {
+      return `${sign}R$ ${formattedInteger},`;
+    }
+
+    if (decimalDigits) {
+      return `${sign}R$ ${formattedInteger},${decimalDigits}`;
+    }
+  }
+
+  return `${sign}R$ ${formattedInteger}`;
 }
 
 function isCompleteCep(value) {
@@ -420,10 +554,8 @@ function isCompleteCep(value) {
 }
 
 function isDateAtLeastTwoYearsAgo(value) {
-  if (!value) return false;
-
-  const openedAt = new Date(`${value}T00:00:00`);
-  if (Number.isNaN(openedAt.getTime())) {
+  const parsed = parseDateInput(value);
+  if (!parsed) {
     return false;
   }
 
@@ -431,7 +563,7 @@ function isDateAtLeastTwoYearsAgo(value) {
   threshold.setHours(0, 0, 0, 0);
   threshold.setFullYear(threshold.getFullYear() - 2);
 
-  return openedAt <= threshold;
+  return parsed.date <= threshold;
 }
 
 function composeAddressFromCep(data) {
@@ -465,6 +597,7 @@ async function lookupAddressByCep(value) {
 
 const TOP_LEVEL_CURRENCY_FIELDS = new Set(['valorMensal', 'valorAtual', 'valorAluguel', 'condominio', 'iptu', 'agua', 'luz']);
 const TOP_LEVEL_CEP_FIELDS = new Set(['cep', 'cepPernoite', 'cepImovel']);
+const TOP_LEVEL_DATE_FIELDS = new Set(['seguradoDataNascimento', 'condutorDataNascimento']);
 
 function readFileAsBase64(file) {
   return new Promise((resolve, reject) => {
@@ -734,6 +867,7 @@ function validateForm(productSlug, form, attachments = []) {
       if (!company.cnpj.trim()) return 'Informe o CNPJ.';
       if (!isValidCnpj(company.cnpj)) return 'Informe um CNPJ válido.';
       if (!company.dataAberturaCnpj) return 'Informe a data de abertura do CNPJ.';
+      if (!isValidDateInput(company.dataAberturaCnpj)) return 'Informe uma data de abertura válida no formato dd/mm/aaaa.';
       if (!isDateAtLeastTwoYearsAgo(company.dataAberturaCnpj)) {
         return 'O CNPJ precisa ter pelo menos 2 anos para essa análise.';
       }
@@ -758,6 +892,9 @@ function validateForm(productSlug, form, attachments = []) {
       if (!applicant.nome.trim()) return 'Informe o nome.';
       if (!applicant.cpf.trim()) return 'Informe o CPF.';
       if (!isValidCpf(applicant.cpf)) return 'Informe um CPF válido.';
+      if (applicant.dataExpedicao && !isValidDateInput(applicant.dataExpedicao)) {
+        return 'Informe uma data de expedição válida no formato dd/mm/aaaa.';
+      }
 
       const phone = normalizePhone(applicant.telefone);
       if (phone.length < 10 || phone.length > 13) return 'Informe um telefone válido.';
@@ -800,6 +937,9 @@ function validateForm(productSlug, form, attachments = []) {
         return `Informe um CEP válido para o endereço atual do pretendente ${index + 1}.`;
       }
       if (!pretendente.dataNascimento.trim()) return `Informe a data de nascimento do pretendente ${index + 1}.`;
+      if (!isValidDateInput(pretendente.dataNascimento)) {
+        return `Informe uma data de nascimento válida para o pretendente ${index + 1}.`;
+      }
 
       const phone = normalizePhone(pretendente.whatsapp);
       if (phone.length < 10 || phone.length > 13) return `Informe um WhatsApp válido para o pretendente ${index + 1}.`;
@@ -849,6 +989,7 @@ function validateForm(productSlug, form, attachments = []) {
   if (!isValidCpf(form.seguradoCpf)) return 'Informe um CPF válido para o segurado.';
   if (!form.seguradoNome.trim()) return 'Informe o nome do segurado.';
   if (!form.seguradoDataNascimento) return 'Informe a data de nascimento do segurado.';
+  if (!isValidDateInput(form.seguradoDataNascimento)) return 'Informe uma data de nascimento válida para o segurado.';
   if (!form.seguradoSexo) return 'Informe o sexo do segurado.';
   if (form.seguradoPossuiNomeSocial === 'sim' && !form.seguradoNomeSocial.trim()) {
     return 'Informe o nome social do segurado.';
@@ -859,6 +1000,7 @@ function validateForm(productSlug, form, attachments = []) {
     if (!isValidCpf(form.condutorCpf)) return 'Informe um CPF válido para o condutor.';
     if (!form.condutorNome.trim()) return 'Informe o nome do condutor.';
     if (!form.condutorDataNascimento) return 'Informe a data de nascimento do condutor.';
+    if (!isValidDateInput(form.condutorDataNascimento)) return 'Informe uma data de nascimento válida para o condutor.';
     if (!form.condutorSexo) return 'Informe o sexo do condutor.';
     if (form.condutorPossuiNomeSocial === 'sim' && !form.condutorNomeSocial.trim()) {
       return 'Informe o nome social do condutor.';
@@ -899,6 +1041,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
           ? formatCpfInput(value)
           : field === 'cepAtual'
             ? formatCepInput(value)
+            : field === 'dataNascimento'
+              ? formatDateInput(value)
             : field === 'rendaBruta'
               ? formatCurrencyInput(value)
               : value;
@@ -912,6 +1056,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
           ? formatCpfInput(value)
           : field === 'cepEnderecoAtualEmpresa'
             ? formatCepInput(value)
+            : field === 'dataExpedicao'
+              ? formatDateInput(value)
             : field === 'rendaBruta'
               ? formatCurrencyInput(value)
               : value;
@@ -925,6 +1071,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
           ? formatCnpjInput(value)
           : field === 'cepSedeSocial'
             ? formatCepInput(value)
+            : field === 'dataAberturaCnpj'
+              ? formatDateInput(value)
             : field === 'capitalSocial' || field === 'movimentacaoMensal'
               ? formatCurrencyInput(value)
               : value;
@@ -998,7 +1146,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
                     </DetailField>
                     <DetailField label="Data de nascimento">
                       <input
-                        type="date"
+                        inputMode="numeric"
+                        placeholder="dd/mm/aaaa"
                         value={pretendente.dataNascimento}
                         onChange={(event) => updateFiancaPretendente(index, 'dataNascimento', event.target.value)}
                       />
@@ -1102,6 +1251,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
                 </DetailField>
                 <DetailField label="Data de expedição">
                   <input
+                    inputMode="numeric"
+                    placeholder="dd/mm/aaaa"
                     value={form.pfComercial.dataExpedicao}
                     onChange={(event) => updateFiancaPfField('dataExpedicao', event.target.value)}
                   />
@@ -1271,7 +1422,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
                 </DetailField>
                 <DetailField label="Data de abertura do CNPJ">
                   <input
-                    type="date"
+                    inputMode="numeric"
+                    placeholder="dd/mm/aaaa"
                     value={form.pjMaisDoisAnos.dataAberturaCnpj}
                     onChange={(event) => updateFiancaPjField('dataAberturaCnpj', event.target.value)}
                   />
@@ -1453,7 +1605,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
         </DetailField>
         <DetailField label="Data de nascimento">
           <input
-            type="date"
+            inputMode="numeric"
+            placeholder="dd/mm/aaaa"
             value={form.seguradoDataNascimento}
             onChange={(event) => updateField('seguradoDataNascimento', event.target.value)}
           />
@@ -1504,7 +1657,8 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
             </DetailField>
             <DetailField label="Data de nascimento">
               <input
-                type="date"
+                inputMode="numeric"
+                placeholder="dd/mm/aaaa"
                 value={form.condutorDataNascimento}
                 onChange={(event) => updateField('condutorDataNascimento', event.target.value)}
               />
@@ -1764,6 +1918,8 @@ export function PremiumLeadCapture({ product, mode = 'inline' }) {
       ? formatCurrencyInput(value)
       : TOP_LEVEL_CEP_FIELDS.has(field)
         ? formatCepInput(value)
+        : TOP_LEVEL_DATE_FIELDS.has(field)
+          ? formatDateInput(value)
         : value;
 
     setForm((current) => ({ ...current, [field]: nextValue }));
@@ -1976,7 +2132,8 @@ export function PremiumLeadCapture({ product, mode = 'inline' }) {
           attachments: attachments.map((file) => ({
             name: file.name,
             type: file.type,
-            contentBase64: file.contentBase64
+            contentBase64: file.contentBase64,
+            fileSizeBytes: file.size
           }))
         })
       });

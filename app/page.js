@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import { ProductCard } from '@/components/product-card';
-import { EventTracker } from '@/components/event-tracker';
 import { LgpdBanner } from '@/components/lgpd-banner';
 import { SafeImage } from '@/components/safe-image';
 import { SiteFooter } from '@/components/site-footer';
@@ -27,57 +27,6 @@ const homeFaqs = [
   }
 ];
 
-const strategicPages = [
-  {
-    title: 'Seguro Fiança Locatícia',
-    description:
-      'Página focada em locação residencial e comercial, com argumentos para locatário, proprietário e imobiliária.',
-    href: '/seguro-fianca-locaticia'
-  },
-  {
-    title: 'Seguro Fiança para Imobiliárias',
-    description:
-      'Página voltada a parceiros imobiliários com plataforma própria, análise rápida e operação forte para locação.',
-    href: '/seguro-fianca-para-imobiliarias'
-  },
-  {
-    title: 'Seguro Incêndio para Locação',
-    description:
-      'Conteúdo voltado ao seguro do imóvel alugado e à integração com o Seguro Fiança dentro da operação de locação.',
-    href: '/seguro-incendio-locacao'
-  },
-  {
-    title: 'Plano de Saúde Empresarial e Familiar',
-    description:
-      'Página comercial para busca de plano de saúde com foco em hospital desejado, operadora e custo total.',
-    href: '/plano-de-saude-empresarial-e-familiar'
-  },
-  {
-    title: 'Plano de Saúde por Hospital e Rede',
-    description:
-      'Página focada em pesquisa por hospital, rede credenciada e melhor aderência entre operadora e perfil.',
-    href: '/plano-de-saude-por-hospital-e-rede'
-  },
-  {
-    title: 'Cotação de Seguro Auto',
-    description:
-      'Página de apoio à cotação com foco em condutor, veículo, renovação, tipo de uso e melhor qualidade de captura.',
-      href: '/cotacao-seguro-auto'
-  },
-  {
-    title: 'Renovação de Seguro Auto',
-    description:
-      'Página voltada à renovação com foco em apólice atual, comparação de cenário e melhor leitura do risco.',
-    href: '/renovacao-seguro-auto'
-  },
-  {
-    title: 'Seguradoras Parceiras',
-    description:
-      'Página com seguradoras atendidas pela H Soares, canais oficiais, assistência 24h e links úteis por marca.',
-    href: '/seguradoras'
-  }
-];
-
 export const metadata = buildPageMetadata({
   title: 'Seguro Fiança, Auto, Saúde e Seguros Patrimoniais',
   description:
@@ -86,19 +35,19 @@ export const metadata = buildPageMetadata({
 });
 
 const insurerLogos = [
-  { name: 'Azul Seguros', src: '/assets/insurers/azul.png' },
-  { name: 'Allianz', src: '/assets/insurers/allianz.png' },
-  { name: 'Alfa', src: '/assets/insurers/alfa.png' },
-  { name: 'Bradesco', src: '/assets/insurers/bradesco.png' },
-  { name: 'HDI', src: '/assets/insurers/hdi.png' },
-  { name: 'Yelum', src: '/assets/insurers/yelum.png' },
-  { name: 'Mapfre', src: '/assets/insurers/mapfre.png' },
-  { name: 'Porto', src: '/assets/insurers/porto.svg' },
-  { name: 'SulAmérica', src: '/assets/insurers/sulamerica.svg' },
-  { name: 'Tokio Marine', src: '/assets/insurers/tokio-marine.png' },
-  { name: 'Too Seguros', src: '/assets/insurers/too-seguros.png' },
-  { name: 'Akad', src: '/assets/insurers/akad.png' },
-  { name: 'Suhai', src: '/assets/insurers/suhai.png' }
+  { name: 'Azul Seguros', slug: 'azul', src: '/assets/AZUL.png' },
+  { name: 'Allianz', slug: 'allianz', src: '/assets/insurers/allianz.png' },
+  { name: 'Alfa', slug: 'alfa', src: '/assets/insurers/alfa.png' },
+  { name: 'Bradesco', slug: 'bradesco', src: '/assets/insurers/bradesco.png' },
+  { name: 'HDI', slug: 'hdi', src: '/assets/insurers/hdi.png' },
+  { name: 'Yelum', slug: 'yelum', src: '/assets/insurers/yelum.png' },
+  { name: 'Mapfre', slug: 'mapfre', src: '/assets/insurers/mapfre.png' },
+  { name: 'Porto', slug: 'porto', src: '/assets/PORTO.png' },
+  { name: 'SulAmérica', slug: 'sulamerica', src: '/assets/insurers/sulamerica.svg' },
+  { name: 'Tokio Marine', slug: 'tokio-marine', src: '/assets/insurers/tokio-marine.png' },
+  { name: 'Too Seguros', slug: 'too-seguros', src: '/assets/insurers/too-seguros.png' },
+  { name: 'Akad', slug: 'akad', src: '/assets/insurers/akad.png' },
+  { name: 'Suhai', slug: 'suhai', src: '/assets/insurers/suhai.png' }
 ];
 
 const homeStructuredData = [
@@ -141,8 +90,6 @@ export default function HomePage() {
       <StructuredData data={homeStructuredData} />
       <SiteHeader />
       <main>
-        <EventTracker pagePath="/" />
-
         <section className="hero">
           <div className="container hero-grid">
             <div className="hero-copy">
@@ -184,8 +131,8 @@ export default function HomePage() {
             <aside className="hero-media-shell">
               <figure className="hero-media">
                 <SafeImage
-                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1900&q=80"
-                  alt="Consultoria profissional em seguros"
+                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1900&q=80"
+                  alt="Reunião institucional e consultiva para contratação de seguros"
                 />
               </figure>
               <article className="hero-floating-card">
@@ -283,33 +230,9 @@ export default function HomePage() {
             </div>
             <div className="logo-grid">
               {insurerLogos.map((logo) => (
-                <div className="logo-tile" key={logo.name}>
+                <Link className="logo-tile logo-tile--compact" href={`/seguradoras#${logo.slug}`} key={logo.name}>
                   <img src={logo.src} alt={logo.name} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section section-soft-blue">
-          <div className="container">
-            <div className="section-head section-head-readable">
-              <p className="eyebrow">Buscas estratégicas</p>
-              <h2>Páginas criadas para responder melhor às pesquisas mais importantes</h2>
-              <p>
-                Além das páginas de produto, a H Soares está estruturando rotas específicas para temas com alta
-                intenção comercial e forte demanda de busca.
-              </p>
-            </div>
-            <div className="premium-product-feature-grid">
-              {strategicPages.map((page) => (
-                <article key={page.href} className="premium-product-feature-card">
-                  <h3>{page.title}</h3>
-                  <p>{page.description}</p>
-                  <a className="link-btn" href={page.href}>
-                    Acessar página
-                  </a>
-                </article>
+                </Link>
               ))}
             </div>
           </div>

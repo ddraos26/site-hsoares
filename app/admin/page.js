@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { AdminShell } from '@/components/admin-shell';
 import DashboardClient from './dashboard-client';
 
 export const metadata = {
@@ -11,22 +11,12 @@ export const metadata = {
 
 export default function AdminPage() {
   return (
-    <main className="admin-page">
-      <div className="admin-header">
-        <h1>Painel Admin - H Soares</h1>
-        <div className="admin-actions">
-          <Link href="/admin/leads" className="btn btn-primary">
-            Ver Leads
-          </Link>
-          <form action="/api/admin/logout" method="post">
-            <button type="submit" className="btn btn-ghost">
-              Sair
-            </button>
-          </form>
-        </div>
-      </div>
-
+    <AdminShell
+      section="dashboard"
+      title="Dashboard comercial"
+      description="Leitura rápida da operação, páginas com mais tração e presença atual no site."
+    >
       <DashboardClient />
-    </main>
+    </AdminShell>
   );
 }

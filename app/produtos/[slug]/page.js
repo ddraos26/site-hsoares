@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { EventTracker } from '@/components/event-tracker';
 import { PremiumLeadCapture } from '@/components/premium-intake-modal';
 import { ProductConversion } from '@/components/product-conversion';
 import { SafeImage } from '@/components/safe-image';
@@ -438,9 +437,7 @@ export default function ProductPage({ params }) {
     <>
       <StructuredData data={productSchemas} />
       <SiteHeader />
-      <main>
-        <EventTracker pagePath={`/produtos/${product.slug}`} productSlug={product.slug} />
-
+      <main className={`product-page product-page--${product.slug}`}>
         {isResidential ? (
           <>
             <section className="section residential-hero">

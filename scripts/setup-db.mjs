@@ -75,9 +75,28 @@ async function run() {
       user_agent TEXT,
       ip_address TEXT,
       lead_status TEXT NOT NULL DEFAULT 'novo',
+      owner_name TEXT,
+      next_contact_at TIMESTAMPTZ,
+      loss_reason TEXT,
       notes TEXT,
       created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
       updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+  `;
+
+  await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS owner_name TEXT;`;
+  await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS next_contact_at TIMESTAMPTZ;`;
+  await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS loss_reason TEXT;`;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS lead_attachments (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      lead_id UUID NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+      file_name TEXT NOT NULL,
+      content_type TEXT,
+      file_size_bytes INTEGER,
+      content_base64 TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
     );
   `;
 
@@ -86,6 +105,7 @@ async function run() {
   await sql`CREATE INDEX IF NOT EXISTS idx_events_event_type ON conversion_events (event_type);`;
   await sql`CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads (created_at DESC);`;
   await sql`CREATE INDEX IF NOT EXISTS idx_leads_status ON leads (lead_status);`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_lead_attachments_lead_id ON lead_attachments (lead_id);`;
 
   console.log('Banco configurado com sucesso.');
 }

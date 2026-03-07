@@ -3,4 +3,6 @@ node_modules
 .next
 .env.local
 .env
+.env.local.bak-*
 .DS_Store
+\#\# GitHub Copilot Chat.md

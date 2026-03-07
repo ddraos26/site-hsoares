@@ -14,12 +14,14 @@ export async function GET(request) {
     const to = searchParams.get('to');
     const status = searchParams.get('status');
     const product = searchParams.get('product');
+    const owner = sanitize(searchParams.get('owner'));
     const query = sanitize(searchParams.get('q'));
 
     const sql = getDb();
     const fromDate = from ? new Date(`${from}T00:00:00.000Z`) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
     const toDate = to ? new Date(`${to}T23:59:59.999Z`) : new Date();
     const queryLike = query ? `%${query}%` : null;
+    const ownerLike = owner ? `%${owner}%` : null;
 
     const leads = await sql`
       SELECT
@@ -30,13 +32,18 @@ export async function GET(request) {
         product_slug,
         page_path,
         click_id,
+        owner_name,
+        next_contact_at,
+        loss_reason,
         notes,
         lead_status,
+        updated_at,
         created_at
       FROM leads
       WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${status || null}::text IS NULL OR lead_status = ${status || null})
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+        AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
         AND (
           ${queryLike}::text IS NULL
           OR nome ILIKE ${queryLike}

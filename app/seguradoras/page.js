@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InsurerHashOpen } from '@/components/insurer-hash-open';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { StructuredData } from '@/components/structured-data';
@@ -43,6 +44,7 @@ export default function InsurersPage() {
   return (
     <>
       <StructuredData data={schema} />
+      <InsurerHashOpen />
       <SiteHeader />
       <main className="content-page insurers-page">
         <section className="section page-hero">
@@ -91,7 +93,7 @@ export default function InsurersPage() {
 
             <div className="insurers-grid insurers-grid-premium">
               {insurers.map((insurer) => (
-                <details key={insurer.slug} className="insurer-card insurer-card-premium">
+                <details key={insurer.slug} id={insurer.slug} className="insurer-card insurer-card-premium">
                   <summary>
                     <div className="insurer-card-shell">
                       <div className="insurer-card-logo-wrap insurer-card-logo-wrap--premium">

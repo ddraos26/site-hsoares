@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { BrandLogo } from '@/components/brand-logo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -44,8 +45,12 @@ export default function LoginPage() {
   return (
     <main className="login-page">
       <form className="login-card" onSubmit={handleSubmit}>
+        <div className="login-brand">
+          <BrandLogo className="brand-logo brand-logo--auth" />
+        </div>
+        <p className="eyebrow login-eyebrow">Acesso interno</p>
         <h1>Painel H Soares</h1>
-        <p>Acesso restrito ao administrador.</p>
+        <p>Acesso restrito para acompanhar leads, operação e presença online no site.</p>
 
         <label htmlFor="email">E-mail</label>
         <input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />

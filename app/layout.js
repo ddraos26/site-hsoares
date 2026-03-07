@@ -1,5 +1,6 @@
 import './globals.css';
 import Script from 'next/script';
+import { EventTracker } from '@/components/event-tracker';
 import { absoluteUrl, siteConfig } from '@/lib/site';
 
 export const metadata = {
@@ -83,6 +84,7 @@ export default function RootLayout({ children }) {
             </Script>
           </>
         ) : null}
+        <EventTracker />
         {children}
       </body>
     </html>

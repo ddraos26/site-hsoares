@@ -6,7 +6,7 @@ import { rateLimit } from '@/lib/rate-limit';
 
 export const dynamic = 'force-dynamic';
 
-const ALLOWED_EVENTS = new Set(['page_view', 'porto_click', 'lead_submit']);
+const ALLOWED_EVENTS = new Set(['page_view', 'porto_click', 'lead_submit', 'heartbeat']);
 
 function sanitize(value) {
   return String(value || '').trim();
