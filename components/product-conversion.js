@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { trackPortoClick } from '@/lib/porto-tracking';
 
 function getOrCreateSessionId() {
   const key = 'hs_session_id';
@@ -44,18 +45,21 @@ export function ProductConversion({ product }) {
     setFeedback('Preparando sua contratação...');
 
     try {
-      await fetch('/api/track/event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          eventType: 'porto_click',
-          pagePath: window.location.pathname,
-          productSlug: product.slug,
-          clickId,
-          sessionId,
-          ...attr,
-          referrer: document.referrer || ''
-        })
+      await trackPortoClick({
+        href: destination,
+        productSlug: product.slug,
+        clickId,
+        sessionId,
+        attribution: attr,
+        ctaLabel: withLead ? 'Ir para contratação' : 'Continuar sem preencher',
+        ctaPosition: 'inline_cta',
+        pageSection: 'final_cta',
+        templateType: 'product_page',
+        waitForTracking: true,
+        trackingPayload: {
+          cta_mode: withLead ? 'micro_capture' : 'direct_continue',
+          cta_placement: 'conversion_box'
+        }
       });
 
       if (withLead && (nome || whatsapp)) {

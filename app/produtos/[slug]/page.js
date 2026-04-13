@@ -7,6 +7,7 @@ import { ServicesCarousel } from '@/components/services-carousel';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { StructuredData } from '@/components/structured-data';
+import { TrackedPortoLink } from '@/components/tracked-porto-link';
 import { getProductBySlug, products } from '@/lib/products';
 import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
 
@@ -454,9 +455,19 @@ export default function ProductPage({ params }) {
                       ))}
                     </div>
                     <div className="cta-row residential-inline-actions">
-                      <a className="btn btn-primary" href={product.portoUrl} target="_blank" rel="noopener noreferrer">
+                      <TrackedPortoLink
+                        className="btn btn-primary"
+                        href={product.portoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        productSlug={product.slug}
+                        ctaLabel="Cotar agora"
+                        ctaPosition="hero_primary"
+                        pageSection="hero"
+                        templateType="product_page"
+                      >
                         Cotar agora
-                      </a>
+                      </TrackedPortoLink>
                       <a
                         className="btn btn-ghost"
                         href="https://wa.me/5511972064288?text=Ol%C3%A1%2C%20quero%20simular%20o%20Seguro%20Residencial."
@@ -956,9 +967,19 @@ export default function ProductPage({ params }) {
                       ))}
                     </div>
                     <div className="cta-row premium-product-actions">
-                      <a className="btn btn-primary" href={product.portoUrl} target="_blank" rel="noopener noreferrer">
+                      <TrackedPortoLink
+                        className="btn btn-primary"
+                        href={product.portoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        productSlug={product.slug}
+                        ctaLabel="Entender o seguro"
+                        ctaPosition="hero_primary"
+                        pageSection="hero"
+                        templateType="product_page"
+                      >
                         Entender o seguro
-                      </a>
+                      </TrackedPortoLink>
                       <a
                         className="btn btn-ghost"
                         href={product.imobiliarioPlatform?.url}
@@ -1209,9 +1230,19 @@ export default function ProductPage({ params }) {
                       {supportsPremiumIntake ? (
                         <PremiumLeadCapture product={product} mode="inline" />
                       ) : (
-                        <a className="btn btn-primary" href={product.portoUrl} target="_blank" rel="noopener noreferrer">
+                        <TrackedPortoLink
+                          className="btn btn-primary"
+                          href={product.portoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          productSlug={product.slug}
+                          ctaLabel="Cotar agora"
+                          ctaPosition="hero_primary"
+                          pageSection="hero"
+                          templateType="product_page"
+                        >
                           Cotar agora
-                        </a>
+                        </TrackedPortoLink>
                       )}
                       <a
                         className="btn btn-ghost"
