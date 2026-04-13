@@ -14,9 +14,7 @@ const OG_IMAGE = absoluteUrl('/images/seguro-viagem/og-seguro-viagem.jpg');
 const WHATSAPP_LINK = 'https://wa.me/5511972064288?text=Ol%C3%A1%21%20Quero%20cotar%20Seguro%20Viagem.';
 
 export const metadata = {
-  title: {
-    absolute: 'Seguro Viagem Nacional e Internacional | Cotação Online | H Soares Seguros'
-  },
+  title: 'Seguro Viagem Nacional e Internacional | Cotação Online | H Soares Seguros',
   description:
     'Faça sua cotação de Seguro Viagem para viagens nacionais ou internacionais. Proteção para despesas médicas, bagagem, cancelamento e outros imprevistos.',
   keywords: ['seguro viagem', 'seguro viagem internacional', 'seguro viagem nacional', 'cotacao seguro viagem', 'seguro viagem europa'],
