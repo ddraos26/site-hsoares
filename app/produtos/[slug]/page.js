@@ -11,6 +11,7 @@ import { TrackedExternalLink } from '@/components/tracked-external-link';
 import { TrackedPortoLink } from '@/components/tracked-porto-link';
 import { getProductBySlug, products } from '@/lib/products';
 import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
+import SeguroViagemPage from '../seguro-viagem/page';
 
 const PremiumLeadCapture = dynamic(
   () => import('@/components/premium-intake-modal').then((mod) => mod.PremiumLeadCapture),
@@ -1571,6 +1572,10 @@ export default async function ProductPage({ params }) {
 
   if (!product) {
     notFound();
+  }
+
+  if (product.slug === 'seguro-viagem') {
+    return <SeguroViagemPage />;
   }
 
   const isResidential = product.slug === 'residencial-essencial';
