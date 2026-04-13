@@ -1,0 +1,72 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="card-black-surface" x1="180" y1="120" x2="1460" y2="920" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#050506"/>
+      <stop offset="0.52" stop-color="#101011"/>
+      <stop offset="1" stop-color="#343436"/>
+    </linearGradient>
+    <linearGradient id="card-black-sheen" x1="790" y1="140" x2="1220" y2="860" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="chip-metal" x1="0" y1="0" x2="150" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F6F6F7"/>
+      <stop offset="1" stop-color="#D3D3D8"/>
+    </linearGradient>
+    <filter id="shadow-black" x="24" y="38" width="1552" height="948" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="44" stdDeviation="44" flood-color="#01040D" flood-opacity="0.34"/>
+    </filter>
+    <filter id="soft-black" x="0" y="0" width="1600" height="1000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow-black)">
+    <rect x="92" y="82" width="1416" height="836" rx="72" fill="url(#card-black-surface)"/>
+    <path d="M786 82H1508V918H664C735 842 786 714 786 570V82Z" fill="url(#card-black-sheen)" opacity="0.46"/>
+    <ellipse cx="1168" cy="230" rx="280" ry="160" fill="#FFFFFF" opacity="0.04" filter="url(#soft-black)"/>
+    <ellipse cx="448" cy="760" rx="320" ry="120" fill="#0F1118" opacity="0.32" filter="url(#soft-black)"/>
+
+    <g transform="translate(156 160)">
+      <rect width="118" height="118" rx="26" fill="#F3F4F6"/>
+      <svg x="16" y="22" width="84" height="72" viewBox="48 99 429 370" aria-hidden="true">
+        <path
+          d="M101 155c79-1 154 7 224 26 42 12 75 35 102 70-49-23-105-39-168-48-52-8-104-11-158-9V155z"
+          fill="#0D1117"
+        />
+        <path
+          d="M108 243c65-10 132-13 199-9 54 4 99 17 136 40 12 8 22 18 32 31-49-18-103-30-163-34-68-6-136 0-204 17V243z"
+          fill="#0D1117"
+        />
+        <path
+          d="M110 351c55-21 114-35 176-39 79-6 149 6 212 35-60-9-119-11-177-4-79 9-151 33-217 74 16-24 18-44 6-60z"
+          fill="#0D1117"
+        />
+      </svg>
+    </g>
+
+    <text x="304" y="255" fill="#E9EAEE" font-size="92" font-weight="700" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">PortoBank</text>
+    <text x="1320" y="258" fill="#E9EAEE" font-size="34" font-weight="700" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" letter-spacing="3">BLACK</text>
+
+    <g opacity="0.92">
+      <path d="M1420 150C1458 167 1484 200 1488 242" stroke="#F1F3F6" stroke-width="14" stroke-linecap="round"/>
+      <path d="M1404 174C1430 186 1448 209 1451 237" stroke="#F1F3F6" stroke-width="12" stroke-linecap="round"/>
+      <path d="M1389 198C1405 205 1416 220 1418 238" stroke="#F1F3F6" stroke-width="10" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(1088 430)">
+      <rect width="156" height="112" rx="22" fill="url(#chip-metal)"/>
+      <path d="M52 0V112M104 0V112M0 38H156M0 74H156" stroke="#A3A6B0" stroke-width="4"/>
+      <ellipse cx="78" cy="56" rx="28" ry="46" stroke="#898D97" stroke-width="6" fill="none"/>
+    </g>
+
+    <g transform="translate(166 674)">
+      <circle cx="72" cy="72" r="72" fill="#B8BBC4"/>
+      <circle cx="148" cy="72" r="72" fill="#E5E7EB" fill-opacity="0.92"/>
+      <path d="M130 20C167 42 192 84 192 132C176 143 154 150 130 150C93 128 68 86 68 38C84 27 106 20 130 20Z" fill="#D0D3DA" fill-opacity="0.54"/>
+      <text x="8" y="188" fill="#E8EAEE" font-size="54" font-weight="600" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">mastercard</text>
+    </g>
+
+    <text x="1030" y="810" fill="#F6F7FA" font-size="76" font-weight="500" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Laura B Tavares</text>
+  </g>
+</svg>

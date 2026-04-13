@@ -1,0 +1,71 @@
+<svg width="1800" height="1200" viewBox="0 0 1800 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blue-card-front" x1="146" y1="108" x2="964" y2="734" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#244FA8"/>
+      <stop offset="0.54" stop-color="#1F4497"/>
+      <stop offset="1" stop-color="#173579"/>
+    </linearGradient>
+    <linearGradient id="blue-card-back" x1="152" y1="120" x2="1004" y2="752" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2E5AB8"/>
+      <stop offset="0.56" stop-color="#234A9F"/>
+      <stop offset="1" stop-color="#183B82"/>
+    </linearGradient>
+    <linearGradient id="blue-gloss" x1="522" y1="104" x2="872" y2="772" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="blue-chip" x1="0" y1="0" x2="136" y2="98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8F8F9"/>
+      <stop offset="1" stop-color="#D7D7DC"/>
+    </linearGradient>
+    <filter id="shadow-duo" x="50" y="70" width="1700" height="1080" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="42" stdDeviation="40" flood-color="#020613" flood-opacity="0.30"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow-duo)">
+    <g transform="translate(210 104) rotate(-13 470 420)">
+      <rect width="820" height="980" rx="68" fill="url(#blue-card-back)"/>
+      <path d="M516 0H820V980H408C478 884 516 760 516 604V0Z" fill="url(#blue-gloss)" opacity="0.42"/>
+      <g transform="translate(86 118)">
+        <text x="0" y="0" fill="#EEF2FB" font-size="78" font-weight="700" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" dominant-baseline="hanging">PortoBank</text>
+      </g>
+      <g opacity="0.92">
+        <path d="M682 110C717 125 741 156 744 194" stroke="#F1F4F8" stroke-width="12" stroke-linecap="round"/>
+        <path d="M668 130C692 141 709 162 711 188" stroke="#F1F4F8" stroke-width="10" stroke-linecap="round"/>
+        <path d="M655 150C670 157 680 170 682 186" stroke="#F1F4F8" stroke-width="8" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(446 232)">
+        <rect width="136" height="98" rx="20" fill="url(#blue-chip)"/>
+        <path d="M46 0V98M90 0V98M0 34H136M0 64H136" stroke="#9DA3AF" stroke-width="4"/>
+        <ellipse cx="68" cy="49" rx="24" ry="40" stroke="#848996" stroke-width="5" fill="none"/>
+      </g>
+      <text x="90" y="844" fill="#F5F7FD" font-size="60" font-weight="600" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Laura B Tavares</text>
+      <text x="580" y="840" fill="#EEF2FB" font-size="92" font-weight="800" font-style="italic" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">VISA</text>
+    </g>
+
+    <g transform="translate(790 198) rotate(10 410 390)">
+      <rect width="760" height="920" rx="68" fill="url(#blue-card-front)"/>
+      <path d="M498 0H760V920H394C458 838 498 726 498 590V0Z" fill="url(#blue-gloss)" opacity="0.34"/>
+      <g transform="translate(86 116)">
+        <text x="0" y="0" fill="#EEF2FB" font-size="76" font-weight="700" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" dominant-baseline="hanging">PortoBank</text>
+      </g>
+      <g opacity="0.92">
+        <path d="M636 110C671 125 695 156 698 194" stroke="#F1F4F8" stroke-width="12" stroke-linecap="round"/>
+        <path d="M622 130C646 141 663 162 665 188" stroke="#F1F4F8" stroke-width="10" stroke-linecap="round"/>
+        <path d="M609 150C624 157 634 170 636 186" stroke="#F1F4F8" stroke-width="8" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(428 228)">
+        <rect width="136" height="98" rx="20" fill="url(#blue-chip)"/>
+        <path d="M46 0V98M90 0V98M0 34H136M0 64H136" stroke="#9DA3AF" stroke-width="4"/>
+        <ellipse cx="68" cy="49" rx="24" ry="40" stroke="#848996" stroke-width="5" fill="none"/>
+      </g>
+      <g transform="translate(476 674)">
+        <circle cx="58" cy="58" r="58" fill="#FF8B00"/>
+        <circle cx="120" cy="58" r="58" fill="#FF4A19" fill-opacity="0.94"/>
+        <path d="M106 14C138 34 160 70 160 108C146 118 128 124 106 124C74 104 52 68 52 30C66 20 84 14 106 14Z" fill="#FFB15E" fill-opacity="0.48"/>
+      </g>
+      <text x="88" y="798" fill="#F5F7FD" font-size="58" font-weight="600" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Laura B Tavares</text>
+    </g>
+  </g>
+</svg>

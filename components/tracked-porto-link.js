@@ -17,6 +17,8 @@ export function TrackedPortoLink({
   ctaPosition = '',
   pageSection = '',
   templateType = '',
+  articleSlug = '',
+  categorySlug = '',
   trackingPayload = {},
   ...props
 }) {
@@ -39,9 +41,12 @@ export function TrackedPortoLink({
       ctaPosition,
       pageSection,
       templateType,
+      articleSlug,
+      categorySlug,
       trackingPayload,
       pagePath: pathname || '',
       pageTitle: typeof document !== 'undefined' ? document.title : '',
+      element: currentTarget,
       waitForTracking: shouldWaitForTracking
     };
     const originalPreventDefault = event.preventDefault?.bind(event);
@@ -63,6 +68,7 @@ export function TrackedPortoLink({
           event.preventDefault = originalPreventDefault;
         }
       }
+
       return;
     }
 

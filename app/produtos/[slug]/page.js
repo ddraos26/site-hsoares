@@ -1,15 +1,23 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
-import { PremiumLeadCapture } from '@/components/premium-intake-modal';
-import { ProductConversion } from '@/components/product-conversion';
+import { ProductConversion, ProductCtaButton } from '@/components/product-conversion';
 import { SafeImage } from '@/components/safe-image';
 import { ServicesCarousel } from '@/components/services-carousel';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { StructuredData } from '@/components/structured-data';
+import { TrackedExternalLink } from '@/components/tracked-external-link';
 import { TrackedPortoLink } from '@/components/tracked-porto-link';
 import { getProductBySlug, products } from '@/lib/products';
 import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
+
+const PremiumLeadCapture = dynamic(
+  () => import('@/components/premium-intake-modal').then((mod) => mod.PremiumLeadCapture),
+  {
+    loading: () => null
+  }
+);
 
 function PremiumIcon({ name }) {
   const common = {
@@ -113,19 +121,19 @@ function PremiumIcon({ name }) {
 
 const CATEGORY_UI = {
   Auto: {
-    highlights: ['Atendimento consultivo', 'Contratação digital', 'Acompanhamento comercial', 'Link oficial da seguradora'],
-    heroCaption: 'Proteção com leitura comercial, apoio humano e contratação digital no momento certo.',
-    panelTitle: 'Simule com leitura comercial',
+    highlights: ['Atendimento consultivo', 'Contratação digital', 'Apoio humano', 'Link oficial da seguradora'],
+    heroCaption: 'Proteção com orientação clara, apoio humano e contratação digital no momento certo.',
+    panelTitle: 'Simule com mais clareza',
     panelText: 'Entenda cobertura, assistência e custo-benefício antes de seguir para a contratação oficial.'
   },
   Financeiro: {
-    highlights: ['Solicitação orientada', 'Jornada digital', 'Análise no ambiente oficial', 'Apoio comercial'],
+    highlights: ['Solicitação orientada', 'Jornada digital', 'Análise no ambiente oficial', 'Apoio consultivo'],
     heroCaption: 'Soluções financeiras com explicação clara, posicionamento consultivo e fluxo digital.',
     panelTitle: 'Solicite com apoio consultivo',
     panelText: 'A H Soares orienta o enquadramento do produto e reduz dúvidas antes do envio para o fluxo oficial.'
   },
   Equipamentos: {
-    highlights: ['Proteção do ativo', 'Contratação digital', 'Apoio comercial', 'Jornada objetiva'],
+    highlights: ['Proteção do ativo', 'Contratação digital', 'Apoio consultivo', 'Jornada objetiva'],
     heroCaption: 'Proteção para equipamentos importantes da sua rotina profissional e pessoal.',
     panelTitle: 'Proteja seu equipamento com clareza',
     panelText: 'Entenda elegibilidade, regras e pontos de atenção antes de concluir no ambiente oficial.'
@@ -143,8 +151,8 @@ const CATEGORY_UI = {
     panelText: 'A H Soares ajuda você a avaliar cobertura, rede médica, acomodação, abrangência e custo total antes da adesão.'
   },
   Viagem: {
-    highlights: ['Pré-embarque digital', 'Cobertura orientada', 'Apoio comercial', 'Contratação rápida'],
-    heroCaption: 'Proteção para imprevistos em viagens com contratação ágil e apoio comercial.',
+    highlights: ['Pré-embarque digital', 'Cobertura orientada', 'Apoio consultivo', 'Contratação rápida'],
+    heroCaption: 'Proteção para imprevistos em viagens com contratação ágil e apoio consultivo.',
     panelTitle: 'Feche antes do embarque',
     panelText: 'Entenda cobertura, período e perfil da viagem antes de seguir para o ambiente oficial.'
   }
@@ -153,7 +161,7 @@ const CATEGORY_UI = {
 const GENERIC_VALUE_META = [
   { icon: 'shield', title: 'Visão estratégica' },
   { icon: 'clock', title: 'Jornada simplificada' },
-  { icon: 'chat', title: 'Acompanhamento comercial' }
+  { icon: 'chat', title: 'Apoio consultivo' }
 ];
 
 const GENERIC_COVERAGE_META = [
@@ -173,7 +181,7 @@ const SEO_SUPPORT_LINKS = {
     {
       href: '/seguro-fianca-locaticia',
       title: 'Seguro Fiança Locatícia',
-      text: 'Página estratégica para buscas sobre garantia locatícia e locação residencial ou comercial.'
+      text: 'Guia para entender garantia locatícia e locação residencial ou comercial com mais clareza.'
     },
     {
       href: '/seguro-fianca-para-imobiliarias',
@@ -202,7 +210,7 @@ const SEO_SUPPORT_LINKS = {
     {
       href: '/plano-de-saude-empresarial-e-familiar',
       title: 'Plano de Saúde Empresarial e Familiar',
-      text: 'Página criada para buscas relacionadas a rede hospitalar, operadoras e custo total.'
+      text: 'Guia para comparar rede hospitalar, operadoras e custo total antes de pedir proposta.'
     },
     {
       href: '/plano-de-saude-por-hospital-e-rede',
@@ -214,12 +222,545 @@ const SEO_SUPPORT_LINKS = {
     {
       href: '/cotacao-seguro-auto',
       title: 'Cotação de Seguro Auto',
-      text: 'Página de apoio comercial para busca de cotação com foco em segurado, condutor, veículo e renovação.'
+      text: 'Página de apoio para cotação com foco em segurado, condutor, veículo e renovação.'
     },
     {
       href: '/renovacao-seguro-auto',
       title: 'Renovação de Seguro Auto',
-      text: 'Página focada em renovação com apólice atual, histórico do seguro e melhor comparação comercial.'
+      text: 'Guia de renovação com apólice atual, histórico do seguro e comparação mais clara.'
+    }
+  ],
+  'seguro-celular': [
+    {
+      href: '/blog/noticia/seguro-celular-cobre-roubo-e-furto-2026',
+      title: 'Roubo, furto e cobertura',
+      text: 'Entenda a diferença entre roubo, furto com vestígio e furto simples antes de contratar.'
+    },
+    {
+      href: '/blog/noticia/quanto-custa-seguro-de-celular-2026',
+      title: 'Preço e custo-benefício',
+      text: 'Veja como ler a mensalidade do seguro sem comparar só pelo valor da parcela.'
+    },
+    {
+      href: '/blog/noticia/acabei-de-comprar-um-celular-devo-fazer-seguro-agora',
+      title: 'Celular novo e momento certo',
+      text: 'Conteúdo para quem acabou de comprar o aparelho e quer proteger logo no início da vida útil.'
+    },
+    {
+      href: '/blog/noticia/seguro-celular-ou-applecare-qual-e-melhor-2026',
+      title: 'Seguro ou AppleCare?',
+      text: 'Comparativo útil para quem usa iPhone e quer decidir com mais critério.'
+    }
+  ],
+  'cartao-credito-porto-bank': [
+    {
+      href: '/blog/noticia/qual-cartao-porto-escolher',
+      title: 'Qual versão escolher',
+      text: 'Compare sem anuidade, International, Gold, Platinum e premium com uma leitura mais objetiva.'
+    },
+    {
+      href: '/blog/noticia/cartao-porto-anuidade-como-zerar',
+      title: 'Como funciona a anuidade',
+      text: 'Veja quando a mensalidade pesa, quando cai e em quais cenários pode deixar de existir.'
+    },
+    {
+      href: '/blog/noticia/cartao-porto-vale-a-pena-2026',
+      title: 'Vale a pena para o seu perfil?',
+      text: 'Entenda quando o cartão entrega valor real e quando ele pode ser mais do que você precisa.'
+    },
+    {
+      href: '/blog/noticia/como-pedir-cartao-porto-seguro',
+      title: 'Passo a passo do pedido',
+      text: 'Uma leitura direta para entender a jornada oficial antes de fazer a solicitação.'
+    }
+  ]
+};
+
+const CELL_PHONE_PAGE = {
+  highlights: ['Somente Porto Seguro', 'Proteção para iPhone e premium', 'Até 12x sem juros', 'Apoio da H Soares'],
+  quickFacts: [
+    {
+      icon: 'shield',
+      value: '3 formas de proteger um prejuízo que pode custar caro',
+      label: 'Você escolhe entre leituras que podem incluir roubo, quebra acidental e furto simples, conforme o plano contratado.'
+    },
+    {
+      icon: 'clock',
+      value: '365 dias de vigência após a emissão',
+      label: 'Depois da aprovação e emissão da apólice, a cobertura passa a valer sem carência.'
+    },
+    {
+      icon: 'document',
+      value: 'Contratação digital, rápida e guiada',
+      label: 'Você informa o modelo, realiza o pagamento e faz a verificação do aparelho dentro do fluxo oficial da Porto.'
+    },
+    {
+      icon: 'star',
+      value: 'Até aparelho usado pode ser elegível',
+      label: 'A Porto aceita aparelho usado dentro da regra vigente, hoje com limite de até 24 meses da compra pelo primeiro dono.'
+    }
+  ],
+  painCards: [
+    {
+      icon: 'lock',
+      title: 'O prejuízo não é só perder o aparelho',
+      text:
+        'Perder um celular hoje pode travar banco, trabalho, autenticação, contatos e rotina. Em muitos casos, a dor maior está no que para junto com ele.'
+    },
+    {
+      icon: 'bolt',
+      title: 'Trocar um smartphone premium sem planejar pesa',
+      text:
+        'Quem usa iPhone e outros modelos de alto valor sabe que uma reposição inesperada pode bagunçar o orçamento em minutos.'
+    },
+    {
+      icon: 'chat',
+      title: 'Cobertura errada dá falsa sensação de segurança',
+      text:
+        'Preço baixo sozinho não protege ninguém. O que faz diferença é contratar uma leitura coerente com o risco que mais preocupa no seu dia a dia.'
+    },
+    {
+      icon: 'tools',
+      title: 'Decidir antes do problema quase sempre custa menos',
+      text:
+        'Quando o aparelho já é importante para a sua vida pessoal ou profissional, esperar o imprevisto costuma ser a parte mais cara da decisão.'
+    }
+  ],
+  planCards: [
+    {
+      eyebrow: 'Mais enxuto',
+      title: 'Roubo',
+      accent: 'blue',
+      description:
+        'Para quem quer começar protegendo o risco de abordagem e levar a cotação para o essencial.',
+      items: ['Roubo', 'Furto com vestígio de crime', 'Entrada mais acessível para quem quer agir agora'],
+      idealFor: 'Ideal para quem circula bastante e quer atacar primeiro o risco de rua.'
+    },
+    {
+      eyebrow: 'Mais equilibrado',
+      title: 'Quebra + roubo',
+      accent: 'gold',
+      description:
+        'Mistura risco de roubo com dano acidental, um dos cenários mais comuns para quem usa o celular o dia inteiro.',
+      items: ['Roubo', 'Quebra acidental', 'Cobertura mais equilibrada para rotina intensa'],
+      idealFor: 'Faz muito sentido para iPhone e smartphones premium expostos a queda, correria e uso constante.'
+    },
+    {
+      eyebrow: 'Mais protegido',
+      title: 'Quebra + roubo + furto simples',
+      accent: 'ink',
+      description:
+        'Leitura mais ampla para quem quer incluir também o cenário em que o aparelho desaparece sem vestígio de arrombamento.',
+      items: ['Roubo', 'Quebra acidental', 'Furto simples'],
+      idealFor: 'Indicada para quem quer dormir mais tranquilo com a opção mais abrangente da linha.'
+    }
+  ],
+  compareRows: [
+    {
+      label: 'Roubo',
+      values: ['Sim', 'Sim', 'Sim']
+    },
+    {
+      label: 'Furto com vestígio de crime',
+      values: ['Sim', 'Sim', 'Sim']
+    },
+    {
+      label: 'Quebra acidental',
+      values: ['Não', 'Sim', 'Sim']
+    },
+    {
+      label: 'Furto simples',
+      values: ['Não', 'Não', 'Sim']
+    },
+    {
+      label: 'Perfil que costuma escolher',
+      values: [
+        'Quem quer proteger o principal risco de rua gastando menos',
+        'Quem quer equilíbrio entre proteção e custo-benefício',
+        'Quem quer a opção mais completa disponível'
+      ]
+    }
+  ],
+  audienceCards: [
+    {
+      icon: 'star',
+      title: 'Quem acabou de investir em um celular caro',
+      text:
+        'Nos primeiros dias, o aparelho já está em uso e ainda sem proteção. Para muita gente, esse é o momento em que a cotação mais faz sentido.'
+    },
+    {
+      icon: 'building',
+      title: 'Quem trabalha, vende ou atende pelo celular',
+      text:
+        'Se o aparelho ajuda você a faturar, responder cliente, aprovar pagamento ou autenticar acesso, ficar sem ele custa mais do que parece.'
+    },
+    {
+      icon: 'chat',
+      title: 'Quem usa banco, app e autenticação o dia inteiro',
+      text:
+        'Quando um único aparelho concentra vida financeira e rotina digital, um sinistro deixa de ser incômodo e vira bloqueio.'
+    },
+    {
+      icon: 'shield',
+      title: 'Quem prefere previsibilidade a prejuízo surpresa',
+      text:
+        'Muita gente contrata porque prefere encaixar uma proteção no orçamento a correr o risco de comprar outro celular do zero.'
+    }
+  ],
+  journeySteps: [
+    {
+      number: '01',
+      title: 'Entenda qual leitura protege melhor o seu cenário',
+      text:
+        'Você pode falar com a H Soares antes para comparar o risco principal: roubo, quebra ou a necessidade de uma opção mais abrangente.'
+    },
+    {
+      number: '02',
+      title: 'Vá para a contratação oficial da Porto',
+      text:
+        'O link leva para o ambiente oficial, onde você informa o modelo do aparelho, escolhe a leitura de cobertura e define o pagamento.'
+    },
+    {
+      number: '03',
+      title: 'Faça a verificação do celular no app',
+      text:
+        'A jornada pede conferência do aparelho e validação pelo aplicativo da Porto dentro do processo digital.'
+    },
+    {
+      number: '04',
+      title: 'Aguarde a análise e receba a apólice',
+      text:
+        'Se aprovado, a Porto informa o resultado no e-mail cadastrado e envia a apólice em até 48 horas.'
+    }
+  ],
+  ruleCards: [
+    {
+      icon: 'clock',
+      title: 'Vigência e ativação',
+      text:
+        'Depois da aprovação, a Porto informa vigência de 365 dias sem carência, contada a partir da emissão da apólice.'
+    },
+    {
+      icon: 'document',
+      title: 'Aparelho usado e comprovação',
+      text:
+        'Aparelho usado pode ser elegível na regra atual de até 24 meses do primeiro dono. A forma de comprovar aquisição segue relevante no processo e no eventual sinistro.'
+    },
+    {
+      icon: 'star',
+      title: 'Pagamento',
+      text:
+        'A contratação pode ser parcelada em até 12x sem juros no cartão de crédito. A Porto também informa 5% de desconto no Cartão Porto Bank.'
+    },
+    {
+      icon: 'lock',
+      title: 'App Porto durante a vigência',
+      text:
+        'Durante a vigência, a Porto orienta manter o app instalado e a biometria facial ativa no aparelho segurado.'
+    },
+    {
+      icon: 'chat',
+      title: 'Cancelamento',
+      text:
+        'Se precisar, o cancelamento pode ser solicitado a qualquer momento, mediante validação dos dados do segurado e da apólice.'
+    },
+    {
+      icon: 'shield',
+      title: 'Cobertura depende do aparelho e do plano',
+      text:
+        'O desenho final da proteção varia conforme modelo, elegibilidade e o que estiver disponível no fluxo oficial da Porto no momento da sua cotação.'
+    }
+  ],
+  imageCards: [
+    {
+      image: '/assets/blog/seguro-celular-compra-recente.webp',
+      alt: 'Celulares premium para representar aparelho novo',
+      title: 'Quanto antes você cotar, menor a chance de ficar descoberto',
+      text:
+        'Quem compra um aparelho novo normalmente passa a enxergar o seguro de outro jeito assim que lembra quanto custaria repor o mesmo modelo.'
+    },
+    {
+      image: '/assets/blog/seguro-celular-cobertura-card.webp',
+      alt: 'Composição de smartphone premium',
+      title: 'Em celular caro, decidir só por preço costuma sair caro',
+      text:
+        'A boa cotação não é a mais barata a qualquer custo. É a que protege o risco que realmente poderia machucar o seu bolso.'
+    },
+    {
+      image: '/assets/blog/seguro-celular-vigencia-card.webp',
+      alt: 'Smartphone premium em uso',
+      title: 'Rotina intensa aumenta o valor percebido da proteção',
+      text:
+        'Rua, trabalho, transporte, viagens e uso constante fazem muita gente entender rápido por que esse seguro vale a análise.'
+    }
+  ],
+  faq: [
+    {
+      q: 'O Seguro Celular Porto cobre o que exatamente?',
+      a:
+        'A linha de Seguro Celular da Porto organiza a proteção em formatos que podem envolver roubo, quebra acidental e furto simples, conforme o plano escolhido e o aparelho elegível no fluxo oficial.'
+    },
+    {
+      q: 'Posso contratar para aparelho usado?',
+      a:
+        'Sim. A Porto informa que aparelho usado pode ser aceito quando atende à regra de elegibilidade vigente, incluindo o limite de até 24 meses de uso a partir da compra pelo primeiro dono.'
+    },
+    {
+      q: 'Preciso de nota fiscal para contratar?',
+      a:
+        'A Porto informa que a nota fiscal não é obrigatória em todos os casos para contratar, mas a comprovação de aquisição do aparelho segue importante para análise e eventual sinistro. No caso de aparelho usado, vale conferir a regra exibida no fluxo oficial.'
+    },
+    {
+      q: 'Em quanto tempo o seguro fica ativo?',
+      a:
+        'Depois da verificação do aparelho, a Porto informa o resultado por e-mail. Se aprovado, a apólice é enviada em até 48 horas e a vigência passa a contar da emissão.'
+    },
+    {
+      q: 'Preciso manter o App Porto instalado?',
+      a:
+        'Sim. Nas orientações oficiais da Porto, o app deve permanecer instalado e a biometria facial ativa no celular segurado durante a vigência.'
+    },
+    {
+      q: 'Posso cancelar o seguro depois?',
+      a:
+        'Sim. A Porto informa que o cancelamento pode ser solicitado a qualquer momento, sem permanência mínima, mediante validação dos dados do segurado e da apólice.'
+    }
+  ]
+};
+
+const PORTO_CARD_PAGE = {
+  highlights: ['6 versões oficiais', 'PortoPlus e benefícios Porto', 'App + carteiras digitais', 'Pedido oficial da Porto'],
+  quickFacts: [
+    {
+      icon: 'document',
+      value: '6 versões na prateleira oficial',
+      label:
+        'Sem anuidade, Internacional, Gold, Platinum, Mastercard Black e Visa Infinite aparecem na página oficial consultada em 29 de março de 2026.'
+    },
+    {
+      icon: 'clock',
+      value: 'Sem anuidade ou 12 meses grátis para começar',
+      label:
+        'A Porto destaca cartão sem anuidade e isenção inicial em Internacional, Gold e Platinum, com desconto calculado conforme o gasto mensal depois do período promocional.'
+    },
+    {
+      icon: 'star',
+      value: 'Pontuação de 1 a 3 pontos por US$ 1',
+      label:
+        'Na base oficial consultada, Internacional e Gold acumulam 1 ponto, Platinum 1,5 e Black ou Infinite chegam a 3 pontos por dólar gasto no Brasil.'
+    },
+    {
+      icon: 'chat',
+      value: 'App Porto para controlar a rotina do cartão',
+      label:
+        'A Porto informa consulta de gastos, fatura, limite, bloqueio, desbloqueio, aviso viagem, carteiras digitais e acesso a meios de pagamento no aplicativo.'
+    }
+  ],
+  versionCards: [
+    {
+      eyebrow: 'Entrada inteligente',
+      title: 'Sem anuidade',
+      accent: 'ice',
+      image: 'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Basic.png',
+      alt: 'Cartão Porto Bank sem anuidade oficial',
+      details: [
+        'Renda mínima de R$ 1.000',
+        'Anuidade gratuita sem gasto mensal',
+        'App, carteiras digitais, cartão adicional, Tag Porto e Shell Box'
+      ],
+      fit:
+        'Boa rota para quem quer começar sem custo fixo e ainda usar benefícios práticos do ecossistema Porto.'
+    },
+    {
+      eyebrow: 'Uso recorrente',
+      title: 'Internacional',
+      accent: 'blue',
+      image:
+        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Imagem-1-Porto-Seguro-International.png',
+      alt: 'Cartão Porto Internacional oficial',
+      details: [
+        'Renda mínima de R$ 1.000',
+        '12 meses de anuidade grátis na 1ª bandeira',
+        '1 ponto por US$ 1 e gratuidade a partir de R$ 2.500 em gasto mensal'
+      ],
+      fit:
+        'Faz sentido quando você já quer pontuar e usar o cartão como principal no dia a dia.'
+    },
+    {
+      eyebrow: 'Mais benefícios',
+      title: 'Gold',
+      accent: 'gold',
+      image: 'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Gold.png',
+      alt: 'Cartão Porto Bank Gold oficial',
+      details: [
+        'Renda mínima de R$ 1.000',
+        '12 meses de anuidade grátis na 1ª bandeira',
+        '1 ponto por US$ 1, Tag Porto, Shell Box e gratuidade a partir de R$ 4.000 em gasto mensal'
+      ],
+      fit:
+        'Boa leitura para quem quer um pacote mais completo da Porto sem subir cedo demais para a faixa premium.'
+    },
+    {
+      eyebrow: 'Intermediário forte',
+      title: 'Platinum',
+      accent: 'silver',
+      image:
+        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Platinum.png',
+      alt: 'Cartão Porto Bank Platinum oficial',
+      details: [
+        'Renda mínima de R$ 10.000',
+        '12 meses de anuidade grátis na 1ª bandeira',
+        '1,5 ponto por US$ 1 e gratuidade a partir de R$ 6.500 em gasto mensal'
+      ],
+      fit:
+        'Entra melhor para quem gasta mais, quer pontuar melhor e começar a destravar uma categoria superior.'
+    },
+    {
+      eyebrow: 'Premium',
+      title: 'Black ou Infinite',
+      accent: 'ink',
+      image:
+        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Visa_Infinite.png',
+      alt: 'Cartão Porto Bank Visa Infinite oficial',
+      details: [
+        'Associação mediante convite',
+        'Até 3 pontos por US$ 1',
+        '10 acessos anuais a mais de 2 mil salas VIP e acesso ilimitado à Sala VIP Coworking'
+      ],
+      fit:
+        'Leitura para perfis de maior relacionamento e uso premium, com foco forte em viagem e benefícios superiores.'
+    }
+  ],
+  benefitCards: [
+    {
+      icon: 'star',
+      title: 'PortoPlus para milhas, viagens e descontos',
+      text:
+        'Ao concentrar gastos no cartão, você acumula pontos para resgatar milhas aéreas, hospedagem, produtos, serviços e descontos dentro do ecossistema Porto.'
+    },
+    {
+      icon: 'bolt',
+      title: 'Tag Porto e Shell Box no uso diário',
+      text:
+        'Nas versões mais robustas, a Porto conecta o cartão com mobilidade prática: Tag Porto sem mensalidade em categorias elegíveis e desconto no abastecimento pelo Shell Box.'
+    },
+    {
+      icon: 'document',
+      title: 'App, carteiras digitais e cartão virtual',
+      text:
+        'Apple Pay, Samsung Pay, Google Pay, consulta de fatura, gestão de limite, bloqueio e aviso viagem aparecem na jornada digital oficial do cartão.'
+    },
+    {
+      icon: 'shield',
+      title: 'Benefícios que crescem para quem usa Porto',
+      text:
+        'A proposta ganha valor quando você também aproveita descontos em seguros, serviços e condições especiais da marca, e não só uma linha de crédito.'
+    }
+  ],
+  proofCards: [
+    {
+      icon: 'shield',
+      title: '30 anos de mercado no posicionamento da corretora',
+      text:
+        'A H Soares se apresenta institucionalmente como corretora com 30 anos de mercado, atendimento consultivo e foco em pessoas, imóveis e empresas.',
+      href: '/institucional',
+      linkLabel: 'Ver institucional'
+    },
+    {
+      icon: 'building',
+      title: 'Corretora identificada e com CNPJ público',
+      text: `${siteConfig.legalName} opera com identificação institucional clara no site, incluindo o CNPJ ${siteConfig.cnpj}.`,
+      href: '/institucional',
+      linkLabel: 'Ver dados da corretora'
+    },
+    {
+      icon: 'chat',
+      title: 'Canal humano real quando surgir dúvida',
+      text:
+        'Se a escolha entre as versões travar, existe apoio por WhatsApp e contato institucional. O suporte entra como apoio, sem esconder a rota oficial da Porto.',
+      href: '/contato',
+      linkLabel: 'Abrir contato'
+    },
+    {
+      icon: 'document',
+      title: 'Pedido e informação em rota oficial',
+      text:
+        'As condições desta página foram organizadas a partir do conteúdo oficial da Porto, e o CTA principal segue para o pedido oficial com rastreamento do clique.',
+      href: 'https://www.portoseguro.com.br/sites/institucional/cartao-de-credito',
+      linkLabel: 'Ver fonte oficial Porto',
+      external: true
+    }
+  ],
+  fitCards: [
+    {
+      icon: 'lock',
+      title: 'Quem quer economizar na mensalidade',
+      text:
+        'Sem anuidade, Internacional e Gold fazem mais sentido quando a prioridade é controlar custo fixo sem abrir mão de benefícios práticos.'
+    },
+    {
+      icon: 'chat',
+      title: 'Quem quer usar o cartão como principal',
+      text:
+        'Internacional, Gold e Platinum crescem quando o gasto mensal ajuda a derrubar a anuidade e o PortoPlus começa a devolver valor real.'
+    },
+    {
+      icon: 'family',
+      title: 'Quem viaja e usa benefícios premium',
+      text:
+        'Platinum, Black e Infinite fazem mais sentido para quem quer pontuação maior, salas VIP, seguro viagem e um pacote mais robusto.'
+    }
+  ],
+  detailCards: [
+    {
+      icon: 'clock',
+      title: 'Anuidade que muda com o uso',
+      text:
+        'Na FAQ oficial, a Porto informa 1 ano de anuidade grátis para conhecer o cartão e, depois disso, desconto calculado conforme o gasto mensal. Em algumas faixas, a mensalidade pode ficar zerada.'
+    },
+    {
+      icon: 'star',
+      title: 'Pontos já começam sem cadastro separado',
+      text:
+        'Segundo a Porto, você não precisa se cadastrar para começar a pontuar. Os pontos já passam a ser gerados no PortoPlus e podem ser consultados no WhatsApp, no app ou na área do cliente.'
+    },
+    {
+      icon: 'shield',
+      title: 'Validade de 24 meses para os pontos',
+      text:
+        'A Porto informa validade de 24 meses para os pontos do programa de relacionamento a partir da data de aquisição do cartão.'
+    },
+    {
+      icon: 'chat',
+      title: 'App resolve a rotina do cartão',
+      text:
+        'A FAQ oficial cita acompanhamento de gastos, fatura, limite, bloqueio, desbloqueio e aviso viagem, além de acesso a meios de pagamento como cartão virtual.'
+    }
+  ],
+  journeySteps: [
+    {
+      number: '01',
+      title: 'Defina a faixa certa antes de pedir',
+      text:
+        'Comece escolhendo entre sem anuidade, faixa intermediária ou premium com base no seu gasto mensal, na renda e no tipo de benefício que você realmente vai usar.'
+    },
+    {
+      number: '02',
+      title: 'Clique no link oficial da Porto',
+      text:
+        'O CTA principal desta página leva para o ambiente oficial da Porto com o atalho correto para iniciar a solicitação.'
+    },
+    {
+      number: '03',
+      title: 'Preencha seus dados e siga a análise',
+      text:
+        'A jornada digital do Porto Bank faz a leitura cadastral e a análise de crédito para definir se o pedido segue e em quais condições.'
+    },
+    {
+      number: '04',
+      title: 'Use a H Soares apenas como apoio se precisar',
+      text:
+        'Se alguma dúvida travar a escolha entre as versões, você pode chamar a H Soares no WhatsApp antes de concluir. O pedido continua sendo oficial da Porto.'
     }
   ]
 };
@@ -227,8 +768,8 @@ const SEO_SUPPORT_LINKS = {
 function getCategoryUi(product) {
   return (
     CATEGORY_UI[product.category] || {
-      highlights: ['Atendimento consultivo', 'Contratação digital', 'Apoio comercial', 'Link oficial da seguradora'],
-      heroCaption: 'Produto com orientação comercial, apoio humano e contratação digital.',
+      highlights: ['Atendimento consultivo', 'Contratação digital', 'Apoio humano', 'Link oficial da seguradora'],
+      heroCaption: 'Produto com orientação clara, apoio humano e contratação digital.',
       panelTitle: 'Simule com apoio consultivo',
       panelText: 'Entenda regras, benefícios e jornada de contratação antes de seguir para o fluxo oficial.'
     }
@@ -282,17 +823,658 @@ function SupportLinksSection({ items, title }) {
   );
 }
 
+function getWhatsAppHref(message) {
+  return `https://wa.me/5511972064288?text=${encodeURIComponent(message)}`;
+}
+
+function CellPhoneProductPage({ product, supportLinks }) {
+  const whatsappHref = getWhatsAppHref('Olá, quero cotar o Seguro Celular da Porto com a H Soares.');
+
+  return (
+    <>
+      <section className="section premium-product-hero cell-phone-hero">
+        <div className="container">
+          <ProductBreadcrumb category={product.category} name={product.name} />
+          <div className="cell-phone-hero-grid">
+            <div className="premium-product-copy cell-phone-hero-copy">
+              <p className="eyebrow">{product.category}</p>
+              <h1>Seguro Celular Porto para proteger seu iPhone antes que um imprevisto vire prejuízo</h1>
+              <p className="subhead">
+                Seu celular concentra banco, trabalho, autenticação e rotina. Aqui você entende em poucos minutos qual
+                cobertura faz sentido para o seu perfil e segue para a contratação oficial da Porto com mais
+                segurança.
+              </p>
+              <div className="product-highlights">
+                {CELL_PHONE_PAGE.highlights.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <div className="cta-row cell-phone-hero-actions">
+                <ProductCtaButton
+                  product={product}
+                  label="Quero Cotar Meu Celular"
+                  payload={{ cta_position: 'hero_primary', page_section: 'hero', template_type: 'product_page' }}
+                />
+                <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                  Quero ajuda no WhatsApp
+                </a>
+                <a className="btn btn-ghost" href="#comparativo-coberturas">
+                  Comparar coberturas
+                </a>
+              </div>
+              <p className="cell-phone-hero-note">
+                Se o custo de reposição apertaria seu bolso, esta página foi feita para tirar a dúvida mais importante:
+                qual proteção faz sentido para você antes do clique final.
+              </p>
+            </div>
+
+            <div className="cell-phone-hero-visual">
+              <figure className="cell-phone-hero-media">
+                <SafeImage
+                  src="/assets/blog/seguro-celular-hero-177.webp"
+                  alt="Linha de celulares premium da Porto"
+                  loading="eager"
+                />
+              </figure>
+              <aside className="cell-phone-floating-card">
+                <div className="cell-phone-floating-brand">
+                  <SafeImage src="/assets/PORTO.png" alt="Porto Seguro" />
+                  <span>Produto atual vendido pela H Soares</span>
+                </div>
+                <h2>O que vai te ajudar a decidir melhor</h2>
+                <ul>
+                  <li>Resumo rápido dos níveis de proteção</li>
+                  <li>Perfis que mais se beneficiam da contratação</li>
+                  <li>CTAs distribuídos para você cotar na hora certa</li>
+                </ul>
+              </aside>
+            </div>
+          </div>
+
+          <div className="cell-phone-kpi-grid">
+            {CELL_PHONE_PAGE.quickFacts.map((item) => (
+              <article key={item.value} className="cell-phone-kpi-card">
+                <PremiumIcon name={item.icon} />
+                <strong>{item.value}</strong>
+                <p>{item.label}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Por que isso vira prioridade</p>
+            <h2>Quando perder o celular bagunçaria sua vida, o seguro passa a fazer sentido</h2>
+            <p>
+              O ponto aqui não é empurrar cobertura. É mostrar quando proteger o aparelho é uma decisão inteligente
+              para evitar dor financeira e operacional.
+            </p>
+          </div>
+          <div className="cell-phone-pain-grid">
+            {CELL_PHONE_PAGE.painCards.map((card) => (
+              <article key={card.title} className="cell-phone-info-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-soft-blue" id="comparativo-coberturas">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Compare antes de contratar</p>
+            <h2>Veja em segundos qual formato de proteção combina mais com o seu risco</h2>
+            <p>
+              Em vez de olhar só para o preço, compare o cenário que mais preocupa. É isso que normalmente separa uma
+              boa decisão de uma contratação rasa.
+            </p>
+          </div>
+
+          <div className="cell-phone-plan-grid">
+            {CELL_PHONE_PAGE.planCards.map((plan) => (
+              <article key={plan.title} className={`cell-phone-plan-card cell-phone-plan-card--${plan.accent}`}>
+                <p className="eyebrow">{plan.eyebrow}</p>
+                <h3>{plan.title}</h3>
+                <p>{plan.description}</p>
+                <ul>
+                  {plan.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <strong>{plan.idealFor}</strong>
+                <div className="cell-phone-plan-actions">
+                  <ProductCtaButton
+                    product={product}
+                    label="Cotar esse nível"
+                    payload={{ cta_position: 'card_cta', page_section: 'comparativo', template_type: 'product_page' }}
+                  />
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="cell-phone-table-shell">
+            <table className="cell-phone-compare-table">
+              <thead>
+                <tr>
+                  <th>Leitura da cobertura</th>
+                  <th>Roubo</th>
+                  <th>Quebra + roubo</th>
+                  <th>Quebra + roubo + furto simples</th>
+                </tr>
+              </thead>
+              <tbody>
+                {CELL_PHONE_PAGE.compareRows.map((row) => (
+                  <tr key={row.label}>
+                    <th>{row.label}</th>
+                    {row.values.map((value, index) => (
+                      <td key={`${row.label}-${index}`}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="cell-phone-disclaimer">
+            A disponibilidade final depende do aparelho, da elegibilidade e do que estiver ativo na contratação oficial
+            da Porto no momento da sua cotação.
+          </p>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container cell-phone-story-grid">
+          <div className="cell-phone-story-copy">
+            <div className="section-head section-head-readable section-head-left">
+              <p className="eyebrow">Quem mais se beneficia</p>
+              <h2>Os perfis que costumam enxergar valor mais rápido no Seguro Celular</h2>
+              <p>
+                Se você se reconhece em um ou mais perfis abaixo, a cotação tende a fazer muito mais sentido do que
+                parece à primeira vista.
+              </p>
+            </div>
+            <div className="cell-phone-profile-grid">
+              {CELL_PHONE_PAGE.audienceCards.map((card) => (
+                <article key={card.title} className="cell-phone-profile-card">
+                  <PremiumIcon name={card.icon} />
+                  <h3>{card.title}</h3>
+                  <p>{card.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="cell-phone-story-visual">
+            <figure className="cell-phone-stack-card cell-phone-stack-card--transparent">
+              <SafeImage
+                src="/assets/blog/seguro-celular-story-fan-transparent.webp"
+                alt="iPhone em composição lateral com várias cores"
+              />
+              <figcaption>
+                Não é só sobre ter seguro. É sobre escolher uma cobertura à altura do valor do seu aparelho.
+              </figcaption>
+            </figure>
+            <figure className="cell-phone-stack-card">
+              <SafeImage
+                src="/assets/blog/seguro-celular-story-hands-transparent.webp"
+                alt="Dois iPhones sendo segurados pelas mãos"
+              />
+              <figcaption>Quando a reposição pesa no bolso, o seguro deixa de parecer excesso e passa a parecer inteligência.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="cell-phone-cta-band">
+            <div>
+              <p className="eyebrow">Seu próximo passo</p>
+              <h2>Se o prejuízo seria alto, vale resolver isso hoje em poucos minutos</h2>
+              <p>
+                Você pode seguir direto para o ambiente oficial da Porto ou falar com a H Soares antes para alinhar
+                cobertura, elegibilidade e melhor escolha.
+              </p>
+            </div>
+            <div className="cta-row cell-phone-band-actions">
+              <ProductCtaButton
+                product={product}
+                label="Quero cotar agora"
+                payload={{ cta_position: 'footer_cta', page_section: 'final_cta', template_type: 'product_page' }}
+              />
+              <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                Falar com especialista
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Como funciona na prática</p>
+            <h2>O caminho até a apólice, sem surpresa e sem enrolação</h2>
+            <p>
+              A contratação da Porto é digital, mas muita gente trava por não entender a verificação do aparelho ou a
+              ativação. Aqui o processo fica claro do início ao fim.
+            </p>
+          </div>
+          <div className="cell-phone-journey-grid">
+            {CELL_PHONE_PAGE.journeySteps.map((step) => (
+              <article key={step.number} className="cell-phone-step-card">
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-soft-blue">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Antes de contratar</p>
+            <h2>Os detalhes que evitam dúvida, arrependimento e abandono da cotação</h2>
+            <p>
+              Aqui estão os pontos que mais pesam na decisão: aparelho usado, comprovação, pagamento, ativação, app e
+              cancelamento.
+            </p>
+          </div>
+          <div className="cell-phone-rule-grid">
+            {CELL_PHONE_PAGE.ruleCards.map((card) => (
+              <article key={card.title} className="cell-phone-rule-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Se ainda está comparando</p>
+            <h2>Três leituras rápidas para sentir quando o seguro compensa</h2>
+            <p>
+              Se alguma dessas situações conversa com a sua rotina, vale avançar para a cotação com mais convicção.
+            </p>
+          </div>
+          <div className="cell-phone-image-grid">
+            {CELL_PHONE_PAGE.imageCards.map((card) => (
+              <article key={card.title} className="cell-phone-image-card">
+                <SafeImage src={card.image} alt={card.alt} />
+                <div>
+                  <h3>{card.title}</h3>
+                  <p>{card.text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="faq-celular">
+        <div className="container faq-shell">
+          <h2>Perguntas que mais travam a decisão</h2>
+          <div className="faq-list">
+            {CELL_PHONE_PAGE.faq.map((faq) => (
+              <details key={faq.q}>
+                <summary>{faq.q}</summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SupportLinksSection
+        items={supportLinks}
+        title="Conteúdos rápidos da H Soares para você chegar na cotação com mais convicção"
+      />
+
+      <section className="section">
+        <div className="container">
+          <ProductConversion product={product} />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function PortoCardProductPage({ product, supportLinks }) {
+  const whatsappHref = getWhatsAppHref('Olá, quero entender qual Cartão Porto combina com o meu perfil.');
+
+  return (
+    <>
+      <section className="section premium-product-hero porto-card-hero">
+        <div className="container">
+          <ProductBreadcrumb category={product.category} name={product.name} />
+          <div className="porto-card-hero-grid">
+            <div className="premium-product-copy porto-card-hero-copy">
+              <p className="eyebrow">{product.category}</p>
+              <h1>Cartão Porto Bank: escolha a versão certa e vá para o pedido oficial com mais clareza</h1>
+              <p className="subhead">
+                Sem anuidade, Internacional, Gold, Platinum e cartões premium por convite. Aqui você entende qual
+                versão combina com sua renda, seu gasto e o tipo de benefício que realmente vai usar antes de seguir
+                para o pedido oficial da Porto.
+              </p>
+              <div className="product-highlights">
+                {PORTO_CARD_PAGE.highlights.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <div className="cta-row porto-card-hero-actions">
+                <ProductCtaButton
+                  product={product}
+                  label="Ir para o pedido oficial da Porto"
+                  payload={{ cta_placement: 'hero-primary', page_template: 'porto-card-dedicated' }}
+                />
+                <TrackedExternalLink
+                  className="btn btn-ghost"
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  eventType="whatsapp_click"
+                  productSlug={product.slug}
+                  objective="porto_support"
+                  payload={{ cta_placement: 'hero-support', page_template: 'porto-card-dedicated', channel: 'whatsapp' }}
+                >
+                  Tirar dúvida no WhatsApp
+                </TrackedExternalLink>
+                <a className="btn btn-ghost" href="#comparar-cartoes">
+                  Comparar versões
+                </a>
+              </div>
+              <p className="porto-card-hero-note">
+                A aprovação depende da análise de crédito do Porto Bank. As informações desta página foram organizadas
+                a partir das páginas oficiais consultadas em 29 de março de 2026.
+              </p>
+            </div>
+
+            <div className="porto-card-hero-visual">
+              <figure className="porto-card-hero-media">
+                <SafeImage
+                  src="/assets/blog/porto-hero-option-2-crop.webp"
+                  alt="Cartões Porto Bank em destaque"
+                  loading="eager"
+                />
+              </figure>
+
+              <aside className="porto-card-floating-card">
+                <div className="porto-card-floating-brand">
+                  <SafeImage src="/assets/blog/porto-logo.png" alt="Porto" />
+                  <span>Leitura oficial organizada pela H Soares</span>
+                </div>
+                <h2>O que você vai resolver aqui</h2>
+                <ul>
+                  <li>Entender qual faixa do cartão combina com sua renda e gasto mensal</li>
+                  <li>Ver onde a anuidade pesa, cai ou deixa de existir</li>
+                  <li>Seguir para o pedido oficial da Porto com menos dúvida e mais contexto</li>
+                </ul>
+              </aside>
+            </div>
+          </div>
+
+          <div className="porto-card-kpi-grid">
+            {PORTO_CARD_PAGE.quickFacts.map((item) => (
+              <article key={item.value} className="porto-card-kpi-card">
+                <PremiumIcon name={item.icon} />
+                <strong>{item.value}</strong>
+                <p>{item.label}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="comparar-cartoes">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Compare as versões</p>
+            <h2>Do cartão sem anuidade ao premium, veja onde cada faixa faz mais sentido</h2>
+            <p>
+              A melhor escolha não sai pelo nome mais forte nem pela aparência do cartão. Ela sai da combinação entre
+              renda, gasto mensal e benefícios que você realmente vai usar.
+            </p>
+          </div>
+
+          <div className="porto-card-version-grid">
+            {PORTO_CARD_PAGE.versionCards.map((card) => (
+              <article key={card.title} className={`porto-card-version-card porto-card-version-card--${card.accent}`}>
+                <p className="eyebrow">{card.eyebrow}</p>
+                <div className="porto-card-version-media">
+                  <SafeImage src={card.image} alt={card.alt} />
+                </div>
+                <h3>{card.title}</h3>
+                <ul>
+                  {card.details.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <strong>{card.fit}</strong>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-soft-blue">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Benefícios que pesam no uso real</p>
+            <h2>O Cartão Porto cresce quando o benefício sai do papel e entra na rotina</h2>
+            <p>
+              A proposta não se resume a limite e bandeira. O valor aparece quando pontos, app, mobilidade e descontos
+              no ecossistema Porto conversam com a sua rotina.
+            </p>
+          </div>
+
+          <div className="porto-card-benefit-grid">
+            {PORTO_CARD_PAGE.benefitCards.map((card) => (
+              <article key={card.title} className="porto-card-info-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Sinais de confiança</p>
+            <h2>Prova comercial mais forte, sem inventar depoimento ou prometer aprovação</h2>
+            <p>
+              Em vez de usar prova genérica, a página reforça sinais verificáveis da corretora, do atendimento e da
+              rota oficial da Porto. Isso aumenta confiança sem vender uma promessa que não depende da H Soares.
+            </p>
+          </div>
+
+          <div className="porto-card-proof-grid">
+            {PORTO_CARD_PAGE.proofCards.map((card) => (
+              <article key={card.title} className="porto-card-info-card porto-card-proof-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+                {card.external ? (
+                  <TrackedExternalLink
+                    className="link-btn"
+                    href={card.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    eventType="important_link_click"
+                    productSlug={product.slug}
+                    objective="porto_source_reference"
+                    payload={{ cta_placement: 'proof-source', page_template: 'porto-card-dedicated' }}
+                  >
+                    {card.linkLabel}
+                  </TrackedExternalLink>
+                ) : (
+                  <Link href={card.href} className="link-btn">
+                    {card.linkLabel}
+                  </Link>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Como escolher sem errar</p>
+            <h2>Três leituras simples para saber qual faixa merece sua atenção primeiro</h2>
+            <p>
+              Se você souber em qual cenário se encaixa, a decisão fica muito mais rápida e o clique no pedido oficial
+              passa a fazer mais sentido.
+            </p>
+          </div>
+
+          <div className="porto-card-fit-grid">
+            {PORTO_CARD_PAGE.fitCards.map((card) => (
+              <article key={card.title} className="porto-card-info-card porto-card-fit-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-soft-blue">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Antes de pedir</p>
+            <h2>Os detalhes oficiais que mais evitam dúvida e pedido desalinhado</h2>
+            <p>
+              Esses pontos costumam travar a decisão: anuidade, pontuação, validade dos pontos, uso do app e o que a
+              Porto realmente exige na jornada.
+            </p>
+          </div>
+
+          <div className="porto-card-detail-grid">
+            {PORTO_CARD_PAGE.detailCards.map((card) => (
+              <article key={card.title} className="porto-card-info-card porto-card-detail-card">
+                <PremiumIcon name={card.icon} />
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="section-head section-head-readable">
+            <p className="eyebrow">Como pedir</p>
+            <h2>O caminho mais seguro para sair da dúvida e entrar no pedido oficial</h2>
+            <p>
+              A H Soares ajuda na leitura, mas a ação principal desta página é levar você para o ambiente oficial da
+              Porto quando a escolha da faixa já estiver clara.
+            </p>
+          </div>
+
+          <div className="porto-card-journey-grid">
+            {PORTO_CARD_PAGE.journeySteps.map((step) => (
+              <article key={step.number} className="porto-card-step-card">
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container faq-shell">
+          <h2>Perguntas que mais travam a solicitação</h2>
+          <div className="faq-list">
+            {product.faqs.map((faq) => (
+              <details key={faq.q}>
+                <summary>{faq.q}</summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SupportLinksSection
+        items={supportLinks}
+        title="Leituras da H Soares para escolher a versão certa antes de pedir"
+      />
+
+      <section className="section">
+        <div className="container">
+          <div className="porto-card-cta-band">
+            <div>
+              <p className="eyebrow">Pedido oficial Porto</p>
+              <h2>Se a faixa já ficou clara, siga agora para o link oficial da Porto</h2>
+              <p>
+                O pedido é digital e a análise é feita pelo Porto Bank. Se quiser, a H Soares fica como apoio rápido
+                antes do clique, mas a ação principal desta página continua sendo a solicitação oficial.
+              </p>
+            </div>
+            <div className="cta-row porto-card-band-actions">
+              <ProductCtaButton
+                product={product}
+                label="Ir para o pedido oficial"
+                payload={{ cta_placement: 'closing-band', page_template: 'porto-card-dedicated' }}
+              />
+              <TrackedExternalLink
+                className="btn btn-ghost"
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                eventType="whatsapp_click"
+                productSlug={product.slug}
+                objective="porto_support"
+                payload={{ cta_placement: 'closing-support', page_template: 'porto-card-dedicated', channel: 'whatsapp' }}
+              >
+                Preciso de ajuda rápida
+              </TrackedExternalLink>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
 function buildProductSchemas(product) {
   const productUrl = absoluteUrl(`/produtos/${product.slug}`);
+  const productDescription = product.seoDescription || product.shortDescription || product.longDescription;
+  const productImage = product.seoImage
+    ? absoluteUrl(product.seoImage)
+    : product.heroImage?.startsWith('http')
+      ? product.heroImage
+      : absoluteUrl(product.heroImage);
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    name: product.name,
+    name: product.seoTitle || product.name,
     serviceType: product.name,
     category: product.category,
-    description: product.shortDescription,
+    description: productDescription,
     url: productUrl,
-    image: product.heroImage,
+    image: productImage,
     areaServed: 'BR',
     provider: {
       '@type': 'InsuranceAgency',
@@ -322,6 +1504,24 @@ function buildProductSchemas(product) {
     ]
   };
 
+  const paymentCardSchema =
+    product.slug === 'cartao-credito-porto-bank'
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'PaymentCard',
+          name: product.name,
+          description: productDescription,
+          url: productUrl,
+          image: productImage,
+          provider: {
+            '@type': 'Organization',
+            name: siteConfig.legalName,
+            url: siteConfig.url
+          },
+          areaServed: 'BR'
+        }
+      : null;
+
   const faqSchema =
     product.faqs?.length > 0
       ? {
@@ -338,29 +1538,36 @@ function buildProductSchemas(product) {
         }
       : null;
 
-  return [buildOrganizationSchema(), serviceSchema, breadcrumbSchema, faqSchema].filter(Boolean);
+  return [buildOrganizationSchema(), serviceSchema, paymentCardSchema, breadcrumbSchema, faqSchema].filter(Boolean);
 }
+
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return products.map((product) => ({ slug: product.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const product = getProductBySlug(params.slug);
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
+  const product = getProductBySlug(resolvedParams?.slug);
   if (!product) {
     return {};
   }
 
-  return buildPageMetadata({
-    title: product.name,
-    description: product.shortDescription,
-    path: `/produtos/${product.slug}`,
-    image: product.heroImage
-  });
+  return {
+    ...buildPageMetadata({
+      title: product.seoTitle || `${product.name} | H Soares Seguros`,
+      description: product.seoDescription || product.shortDescription,
+      path: `/produtos/${product.slug}`,
+      image: product.seoImage || product.heroImage
+    }),
+    keywords: product.keywords
+  };
 }
 
-export default function ProductPage({ params }) {
-  const product = getProductBySlug(params.slug);
+export default async function ProductPage({ params }) {
+  const resolvedParams = await params;
+  const product = getProductBySlug(resolvedParams?.slug);
 
   if (!product) {
     notFound();
@@ -369,6 +1576,8 @@ export default function ProductPage({ params }) {
   const isResidential = product.slug === 'residencial-essencial';
   const isSurety = product.slug === 'seguro-fianca';
   const isPropertyInsurance = product.slug === 'seguro-imobiliario';
+  const isCellPhone = product.slug === 'seguro-celular';
+  const isPortoCard = product.slug === 'cartao-credito-porto-bank';
   const supportsPremiumIntake = product.slug === 'plano-saude' || product.slug === 'seguro-auto';
   const categoryUi = getCategoryUi(product);
   const genericHighlights = product.highlights?.length ? product.highlights : categoryUi.highlights;
@@ -379,7 +1588,7 @@ export default function ProductPage({ params }) {
     {
       icon: 'shield',
       title: '30 anos de atuação',
-      text: 'Consultoria comercial para orientar decisão, reduzir dúvida e acelerar fechamento.'
+      text: 'Orientação consultiva para ajudar na decisão com mais clareza e menos dúvida.'
     },
     {
       icon: 'clock',
@@ -389,19 +1598,19 @@ export default function ProductPage({ params }) {
     {
       icon: 'chat',
       title: 'WhatsApp direto',
-      text: 'Canal rápido para tirar dúvidas, ajustar leitura comercial e apoiar a conversão.'
+      text: 'Canal rápido para tirar dúvidas e entender o melhor caminho antes da contratação.'
     }
   ];
   const residentialTrustItems = [
-    { icon: 'shield', title: '30 anos de atuação', text: 'Consultoria comercial para proteger o patrimônio com leitura mais estratégica.' },
+    { icon: 'shield', title: '30 anos de atuação', text: 'Orientação consultiva para proteger o patrimônio com mais critério.' },
     { icon: 'clock', title: 'Contratação digital', text: 'Fluxo ágil com envio para o ambiente oficial da Porto no momento certo.' },
-    { icon: 'chat', title: 'Apoio humano real', text: 'WhatsApp direto para orientar cobertura, valores e dúvidas de fechamento.' }
+    { icon: 'chat', title: 'Apoio humano real', text: 'WhatsApp direto para orientar cobertura, valores e próximos passos.' }
   ];
   const suretyTrustItems = [
     {
       icon: 'shield',
       title: 'Especialidade da H Soares',
-      text: 'Seguro Fiança com operação comercial estruturada para locatário, proprietário e imobiliária.'
+      text: 'Seguro Fiança com jornada estruturada para locatário, proprietário e imobiliária.'
     },
     {
       icon: 'clock',
@@ -439,7 +1648,11 @@ export default function ProductPage({ params }) {
       <StructuredData data={productSchemas} />
       <SiteHeader />
       <main className={`product-page product-page--${product.slug}`}>
-        {isResidential ? (
+        {isCellPhone ? (
+          <CellPhoneProductPage product={product} supportLinks={supportLinks} />
+        ) : isPortoCard ? (
+          <PortoCardProductPage product={product} supportLinks={supportLinks} />
+        ) : isResidential ? (
           <>
             <section className="section residential-hero">
               <div className="container">
@@ -461,7 +1674,6 @@ export default function ProductPage({ params }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         productSlug={product.slug}
-                        ctaLabel="Cotar agora"
                         ctaPosition="hero_primary"
                         pageSection="hero"
                         templateType="product_page"
@@ -494,7 +1706,7 @@ export default function ProductPage({ params }) {
                         </li>
                         <li>
                           <PremiumIcon name="chat" />
-                          <span>WhatsApp direto para acelerar fechamento</span>
+                          <span>WhatsApp direto para tirar dúvidas e seguir com mais rapidez</span>
                         </li>
                         <li>
                           <PremiumIcon name="shield" />
@@ -912,7 +2124,7 @@ export default function ProductPage({ params }) {
                   <h2>Atuação com múltiplas seguradoras para buscar a melhor rota de aprovação</h2>
                   <p>
                     A H Soares opera o Seguro Fiança com seguradoras parceiras para estruturar a jornada com mais
-                    flexibilidade comercial e melhor enquadramento por perfil.
+                    flexibilidade de análise e melhor enquadramento por perfil.
                   </p>
                 </div>
                 <div className="surety-partners-grid">
@@ -973,7 +2185,6 @@ export default function ProductPage({ params }) {
                         target="_blank"
                         rel="noopener noreferrer"
                         productSlug={product.slug}
-                        ctaLabel="Entender o seguro"
                         ctaPosition="hero_primary"
                         pageSection="hero"
                         templateType="product_page"
@@ -1236,7 +2447,6 @@ export default function ProductPage({ params }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           productSlug={product.slug}
-                          ctaLabel="Cotar agora"
                           ctaPosition="hero_primary"
                           pageSection="hero"
                           templateType="product_page"
@@ -1270,7 +2480,7 @@ export default function ProductPage({ params }) {
                         </li>
                         <li>
                           <PremiumIcon name="chat" />
-                          <span>WhatsApp direto para acelerar o fechamento</span>
+                          <span>WhatsApp direto para tirar dúvidas e seguir com mais rapidez</span>
                         </li>
                         <li>
                           <PremiumIcon name="shield" />
@@ -1300,8 +2510,8 @@ export default function ProductPage({ params }) {
                   <p className="eyebrow">Diferenciais</p>
                   <h2>Uma leitura mais clara para decidir com segurança</h2>
                   <p>
-                    Estruturamos os principais argumentos do produto para facilitar comparação, entendimento e avanço
-                    para a contratação oficial.
+                    Organizamos os pontos mais importantes do produto para facilitar a comparação, o entendimento e o
+                    avanço para a contratação oficial.
                   </p>
                 </div>
                 <div className="premium-product-feature-grid">
@@ -1344,8 +2554,8 @@ export default function ProductPage({ params }) {
                   <p className="eyebrow">Para quem é indicado</p>
                   <h2>Perfis que costumam se beneficiar mais desse produto</h2>
                   <p>
-                    Essa leitura ajuda a posicionar o produto com mais aderência, antes de enviar o cliente para o
-                    link oficial.
+                    Essa leitura ajuda você a entender se o produto combina com o seu perfil antes de seguir para a
+                    contratação oficial.
                   </p>
                 </div>
                 <div className="premium-product-profile-grid">
@@ -1371,11 +2581,11 @@ export default function ProductPage({ params }) {
                   </ol>
                 </article>
                 <article className="detail-card">
-                  <h2>Atendimento comercial</h2>
+                  <h2>Atendimento consultivo</h2>
                   <ul>
                     <li>Orientação consultiva antes do redirecionamento para a contratação oficial.</li>
-                    <li>Canal direto no WhatsApp para reduzir abandono e esclarecer dúvidas de jornada.</li>
-                    <li>Suporte da H Soares para posicionar o produto com mais assertividade comercial.</li>
+                    <li>Canal direto no WhatsApp para reduzir dúvidas e esclarecer a jornada.</li>
+                    <li>Suporte da H Soares para ajudar você a escolher o produto com mais clareza.</li>
                   </ul>
                 </article>
               </div>

@@ -1,0 +1,66 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="card-infinite-surface" x1="164" y1="112" x2="1490" y2="914" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#040506"/>
+      <stop offset="0.58" stop-color="#0E0E10"/>
+      <stop offset="1" stop-color="#2E2F33"/>
+    </linearGradient>
+    <linearGradient id="card-infinite-sheen" x1="900" y1="140" x2="1260" y2="824" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="chip-infinite" x1="0" y1="0" x2="150" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8F8F9"/>
+      <stop offset="1" stop-color="#D7D7DC"/>
+    </linearGradient>
+    <filter id="shadow-infinite" x="18" y="34" width="1564" height="956" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="44" stdDeviation="44" flood-color="#020510" flood-opacity="0.36"/>
+    </filter>
+    <filter id="soft-infinite" x="0" y="0" width="1600" height="1000" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="15"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow-infinite)">
+    <rect x="84" y="80" width="1432" height="840" rx="72" fill="url(#card-infinite-surface)"/>
+    <path d="M858 80H1516V920H712C806 840 858 694 858 520V80Z" fill="url(#card-infinite-sheen)" opacity="0.48"/>
+    <ellipse cx="1216" cy="236" rx="290" ry="170" fill="#FFFFFF" opacity="0.05" filter="url(#soft-infinite)"/>
+    <ellipse cx="402" cy="752" rx="320" ry="122" fill="#0E1117" opacity="0.32" filter="url(#soft-infinite)"/>
+
+    <g transform="translate(150 152)">
+      <rect width="118" height="118" rx="26" fill="#F3F4F6"/>
+      <svg x="16" y="22" width="84" height="72" viewBox="48 99 429 370" aria-hidden="true">
+        <path
+          d="M101 155c79-1 154 7 224 26 42 12 75 35 102 70-49-23-105-39-168-48-52-8-104-11-158-9V155z"
+          fill="#0D1117"
+        />
+        <path
+          d="M108 243c65-10 132-13 199-9 54 4 99 17 136 40 12 8 22 18 32 31-49-18-103-30-163-34-68-6-136 0-204 17V243z"
+          fill="#0D1117"
+        />
+        <path
+          d="M110 351c55-21 114-35 176-39 79-6 149 6 212 35-60-9-119-11-177-4-79 9-151 33-217 74 16-24 18-44 6-60z"
+          fill="#0D1117"
+        />
+      </svg>
+    </g>
+
+    <text x="298" y="247" fill="#ECEEF2" font-size="92" font-weight="700" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">PortoBank</text>
+
+    <g opacity="0.92">
+      <path d="M1412 148C1450 165 1476 198 1480 240" stroke="#F1F3F6" stroke-width="14" stroke-linecap="round"/>
+      <path d="M1396 172C1422 184 1440 207 1443 235" stroke="#F1F3F6" stroke-width="12" stroke-linecap="round"/>
+      <path d="M1381 196C1397 203 1408 218 1410 236" stroke="#F1F3F6" stroke-width="10" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(1084 394)">
+      <rect width="156" height="112" rx="22" fill="url(#chip-infinite)"/>
+      <path d="M52 0V112M104 0V112M0 38H156M0 74H156" stroke="#A3A6B0" stroke-width="4"/>
+      <ellipse cx="78" cy="56" rx="28" ry="46" stroke="#898D97" stroke-width="6" fill="none"/>
+    </g>
+
+    <text x="180" y="828" fill="#F6F7FA" font-size="76" font-weight="500" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Laura B Tavares</text>
+    <text x="1084" y="804" fill="#E9EBEF" font-size="118" font-weight="800" font-style="italic" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">VISA</text>
+    <text x="1290" y="862" fill="#E9EBEF" font-size="52" font-weight="500" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">Infinite</text>
+  </g>
+</svg>

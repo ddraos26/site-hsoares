@@ -3,10 +3,24 @@ import { registerEventInDb } from '@/lib/analytics';
 import { getDb } from '@/lib/db';
 import { getClientIp, hasJsonContentType, isAllowedOrigin } from '@/lib/request';
 import { rateLimit } from '@/lib/rate-limit';
+import { normalizeTrackingRecord } from '@/lib/tracking-attribution';
 
 export const dynamic = 'force-dynamic';
 
-const ALLOWED_EVENTS = new Set(['page_view', 'porto_click', 'lead_submit', 'heartbeat']);
+const ALLOWED_EVENTS = new Set([
+  'page_view',
+  'porto_click',
+  'lead_submit',
+  'heartbeat',
+  'whatsapp_click',
+  'phone_click',
+  'email_click',
+  'cta_primary_click',
+  'cta_secondary_click',
+  'important_link_click',
+  'scroll_relevant',
+  'thank_you_view'
+]);
 
 function sanitize(value) {
   return String(value || '').trim();
@@ -34,19 +48,32 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Evento inválido.' }, { status: 400 });
   }
 
+  const tracking = normalizeTrackingRecord({
+    pagePath: body?.pagePath,
+    productSlug: body?.productSlug,
+    clickId: body?.clickId,
+    sessionId: body?.sessionId,
+    utm_source: body?.utm_source,
+    utm_medium: body?.utm_medium,
+    utm_campaign: body?.utm_campaign,
+    referrer: body?.referrer,
+    payload: body?.payload || {}
+  });
+
   const event = {
     eventType,
-    pagePath: sanitize(body?.pagePath),
-    productSlug: sanitize(body?.productSlug),
-    clickId: sanitize(body?.clickId),
-    sessionId: sanitize(body?.sessionId),
-    utmSource: sanitize(body?.utm_source),
-    utmMedium: sanitize(body?.utm_medium),
-    utmCampaign: sanitize(body?.utm_campaign),
-    referrer: sanitize(body?.referrer),
+    pagePath: tracking.pagePath,
+    productSlug: tracking.productSlug,
+    clickId: tracking.clickId,
+    sessionId: tracking.sessionId,
+    utmSource: tracking.utmSource,
+    utmMedium: tracking.utmMedium,
+    utmCampaign: tracking.utmCampaign,
+    referrer: tracking.referrer,
     userAgent: sanitize(request.headers.get('user-agent')),
     ipAddress: ip,
-    payload: body?.payload || {}
+    payload: tracking.payload,
+    debugMode: body?.debug_mode === true || body?.debug_mode === 'true'
   };
 
   try {
