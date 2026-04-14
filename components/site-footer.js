@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BrandLogo } from '@/components/brand-logo';
+import { TrackedExternalLink } from '@/components/tracked-external-link';
 import { siteConfig } from '@/lib/site';
 
 export function SiteFooter() {
@@ -12,16 +13,18 @@ export function SiteFooter() {
           <p>CNPJ: 11.194.245.0001-13</p>
           <p>30 anos no mercado de seguros.</p>
           <p className="footer-brand-copy">
-            Corretora com postura institucional, atendimento consultivo e foco real em conversão com segurança.
+            Corretora com atendimento consultivo, leitura clara de cobertura e apoio para contratar com mais segurança.
           </p>
-          <a
+          <TrackedExternalLink
             className="btn btn-whatsapp footer-cta"
             href={siteConfig.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
+            eventType="whatsapp_click"
+            payload={{ placement: 'footer' }}
           >
             Falar no WhatsApp
-          </a>
+          </TrackedExternalLink>
         </div>
         <div>
           <p className="footer-title">Contato</p>
@@ -30,8 +33,8 @@ export function SiteFooter() {
         </div>
         <div>
           <p className="footer-title">Atendimento</p>
-          <p>Consultoria comercial com foco em fechamento.</p>
-          <p>Direcionamento para contratação oficial com seguradoras parceiras.</p>
+          <p>Orientação para comparar produtos, coberturas e próximos passos.</p>
+          <p>Direcionamento para contratação oficial com seguradoras e parceiros autorizados.</p>
         </div>
         <div>
           <p className="footer-title">Links institucionais</p>
@@ -49,6 +52,9 @@ export function SiteFooter() {
           </p>
           <p>
             <Link href="/termos-de-uso">Termos de Uso</Link>
+          </p>
+          <p>
+            <Link href="/login">Acesso administrativo</Link>
           </p>
         </div>
       </div>

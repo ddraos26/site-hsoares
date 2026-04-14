@@ -3,6 +3,7 @@ import { registerEventInDb } from '@/lib/analytics';
 import { getDb } from '@/lib/db';
 import { getClientIp, hasJsonContentType, isAllowedOrigin } from '@/lib/request';
 import { rateLimit } from '@/lib/rate-limit';
+import { normalizeTrackingRecord } from '@/lib/tracking-attribution';
 
 export const dynamic = 'force-dynamic';
 
@@ -165,18 +166,29 @@ export async function POST(request) {
     return NextResponse.json({ ok: true });
   }
 
+  const tracking = normalizeTrackingRecord({
+    pagePath: body?.pagePath,
+    productSlug: body?.productSlug,
+    clickId: body?.clickId,
+    sessionId: body?.sessionId,
+    utm_source: body?.utm_source,
+    utm_medium: body?.utm_medium,
+    utm_campaign: body?.utm_campaign,
+    referrer: body?.referrer
+  });
+
   const payload = {
     nome: sanitize(body?.nome),
     whatsapp: sanitize(body?.whatsapp),
     email: sanitize(body?.email),
-    productSlug: sanitize(body?.productSlug),
-    pagePath: sanitize(body?.pagePath),
-    clickId: sanitize(body?.clickId),
-    sessionId: sanitize(body?.sessionId),
-    utmSource: sanitize(body?.utm_source),
-    utmMedium: sanitize(body?.utm_medium),
-    utmCampaign: sanitize(body?.utm_campaign),
-    referrer: sanitize(body?.referrer),
+    productSlug: tracking.productSlug,
+    pagePath: tracking.pagePath,
+    clickId: tracking.clickId,
+    sessionId: tracking.sessionId,
+    utmSource: tracking.utmSource,
+    utmMedium: tracking.utmMedium,
+    utmCampaign: tracking.utmCampaign,
+    referrer: tracking.referrer,
     leadType: sanitize(body?.leadType)
   };
   const details = normalizeDetails(body?.details);

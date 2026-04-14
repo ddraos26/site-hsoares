@@ -1,6 +1,8 @@
 import { siteConfig } from '@/lib/site';
 
 export default function robots() {
+  const host = new URL(siteConfig.url).host;
+
   return {
     rules: [
       {
@@ -12,7 +14,7 @@ export default function robots() {
         allow: '/'
       }
     ],
-    sitemap: `${siteConfig.url}/sitemap.xml`,
-    host: siteConfig.url
+    sitemap: [`${siteConfig.url}/sitemap.xml`, `${siteConfig.url}/pages-sitemap.xml`],
+    host
   };
 }

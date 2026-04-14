@@ -7,7 +7,7 @@ import { insurers } from '@/lib/insurers';
 import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
 
 export const metadata = buildPageMetadata({
-  title: 'Seguradoras Parceiras',
+  title: 'Seguradoras parceiras H Soares: canais oficiais e telefones',
   description:
     'Conheça as seguradoras parceiras da H Soares Seguros com canais úteis, assistência 24h, sinistro, SAC, ouvidoria e links oficiais.',
   path: '/seguradoras'
@@ -175,10 +175,10 @@ export default function InsurersPage() {
           <div className="container cta-panel cta-panel-static insurers-cta-panel">
             <div>
               <p className="eyebrow">Apoio H Soares</p>
-              <h2>Para contratação e orientação comercial, a H Soares continua sendo o melhor ponto de apoio.</h2>
+              <h2>Para orientação e contratação, a H Soares continua sendo um ponto de apoio importante.</h2>
               <p>
                 Para assistência, serviços emergenciais e sinistro, confirme sempre o canal oficial da seguradora no
-                momento do uso. Para escolha do produto, comparação e fechamento, fale com a corretora.
+                momento do uso. Para escolha do produto, comparação e contratação, fale com a corretora.
               </p>
             </div>
             <div className="cta-row">

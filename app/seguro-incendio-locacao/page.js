@@ -22,7 +22,7 @@ const faqs = [
 export const metadata = buildPageMetadata({
   title: 'Seguro Incêndio para Locação',
   description:
-    'Seguro Incêndio para Locação com foco em Seguro Imobiliário, cálculo junto do Seguro Fiança e operação mais rápida para imobiliárias e proprietários.',
+    'Seguro Incêndio para Locação com foco em Seguro Imobiliário, cálculo junto do Seguro Fiança e jornada mais fluida para imobiliárias e proprietários.',
   path: '/seguro-incendio-locacao'
 });
 
@@ -93,7 +93,7 @@ export default function SeguroIncendioLocacaoPage() {
               <ul>
                 <li>Protege o imóvel alugado dentro da composição exigida para a locação.</li>
                 <li>Evita retrabalho quando já entra junto do Seguro Fiança.</li>
-                <li>Ajuda imobiliária, locatário e proprietário a verem o custo completo da operação.</li>
+                <li>Ajuda imobiliária, locatário e proprietário a verem o custo completo da locação.</li>
               </ul>
             </article>
             <article className="detail-card">

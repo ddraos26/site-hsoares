@@ -1,22 +1,31 @@
 import { AdminShell } from '@/components/admin-shell';
 import DashboardClient from './dashboard-client';
+import { getCachedExecutiveDashboardSnapshot } from '@/lib/admin/server-snapshot-cache';
 
 export const metadata = {
-  title: 'Admin',
+  title: 'Dashboard Executivo | Admin',
   robots: {
     index: false,
     follow: false
   }
 };
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  let initialData = null;
+
+  try {
+    initialData = await getCachedExecutiveDashboardSnapshot();
+  } catch (error) {
+    console.error('admin page preload error', error);
+  }
+
   return (
     <AdminShell
       section="dashboard"
-      title="Dashboard comercial"
-      description="Leitura rápida da operação, páginas com mais tração e presença atual no site."
+      title="Hoje"
+      description="Comece aqui. O sistema deve te mostrar o que fazer agora, o que está travando e para onde seguir depois."
     >
-      <DashboardClient />
+      <DashboardClient initialData={initialData} />
     </AdminShell>
   );
 }

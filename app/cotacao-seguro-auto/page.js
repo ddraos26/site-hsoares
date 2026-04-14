@@ -1,7 +1,9 @@
 import Link from 'next/link';
+import { PremiumLeadCapture } from '@/components/premium-intake-modal';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { StructuredData } from '@/components/structured-data';
+import { getProductBySlug } from '@/lib/products';
 import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
 
 const faqs = [
@@ -11,7 +13,7 @@ const faqs = [
   },
   {
     q: 'A H Soares já recebe a apólice na renovação?',
-    a: 'Sim. No formulário do Seguro Auto, quando a cotação é de renovação, o envio da apólice em PDF ou imagem pode ser exigido para organizar melhor a análise comercial.'
+    a: 'Sim. No formulário do Seguro Auto, quando a cotação é de renovação, o envio da apólice em PDF ou imagem pode ser exigido para organizar melhor a análise.'
   },
   {
     q: 'Vocês atendem tipos de uso diferentes?',
@@ -20,9 +22,9 @@ const faqs = [
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Cotação de Seguro Auto',
+  title: 'Cotação de Seguro Auto: segurado, veículo e renovação',
   description:
-    'Cotação de Seguro Auto com captura organizada de segurado, condutor e veículo, incluindo renovação, placa, tipo de uso e histórico do seguro.',
+    'Cotação de Seguro Auto com envio organizado de dados do segurado, condutor e veículo, incluindo renovação, placa, tipo de uso e histórico do seguro.',
   path: '/cotacao-seguro-auto'
 });
 
@@ -34,7 +36,7 @@ const schema = [
     name: 'Cotação de Seguro Auto',
     serviceType: 'Seguro Auto',
     description:
-      'Página de apoio comercial para cotação de Seguro Auto com captura estruturada de dados do segurado, do condutor e do veículo.',
+      'Página de cotação de Seguro Auto com envio estruturado de dados do segurado, do condutor e do veículo.',
     url: absoluteUrl('/cotacao-seguro-auto'),
     provider: {
       '@type': 'InsuranceAgency',
@@ -55,6 +57,8 @@ const schema = [
   }
 ];
 
+const autoProduct = getProductBySlug('seguro-auto');
+
 export default function CotacaoSeguroAutoPage() {
   return (
     <>
@@ -64,19 +68,21 @@ export default function CotacaoSeguroAutoPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Auto</p>
-            <h1>Cotação de Seguro Auto com formulário mais completo e leitura comercial melhor.</h1>
+            <h1>Cotação de Seguro Auto com envio guiado e leitura mais organizada.</h1>
             <p className="subhead">
-              A H Soares estruturou a captura de dados do Seguro Auto para reduzir retrabalho, organizar renovação,
-              tipo de uso, informações do condutor e detalhes do veículo. Isso melhora a qualidade da cotação e a
-              velocidade do retorno comercial.
+              Envie os dados principais do veículo, do condutor e da renovação em um fluxo orientado pela H Soares.
+              Isso reduz retrabalho, organiza melhor a análise e acelera a resposta com mais contexto.
             </p>
             <div className="cta-row">
-              <Link className="btn btn-primary" href="/produtos/seguro-auto">
-                Abrir página do Seguro Auto
-              </Link>
+              <PremiumLeadCapture product={autoProduct} mode="inline" />
               <a className="btn btn-whatsapp" href={siteConfig.whatsapp} target="_blank" rel="noopener noreferrer">
                 Falar no WhatsApp
               </a>
+            </div>
+            <div className="contact-chip-row">
+              <span className="contact-chip">Dados guiados para cotação</span>
+              <span className="contact-chip">Upload da apólice na renovação</span>
+              <span className="contact-chip">Retorno mais claro</span>
             </div>
           </div>
         </section>
@@ -97,7 +103,7 @@ export default function CotacaoSeguroAutoPage() {
               <ul>
                 <li>A apólice atual pode ser solicitada em PDF ou imagem.</li>
                 <li>Esse material ajuda a comparar a estrutura atual com a nova cotação.</li>
-                <li>O objetivo é organizar a leitura comercial e ganhar precisão no retorno.</li>
+                <li>O objetivo é organizar a leitura da apólice e ganhar precisão no retorno.</li>
               </ul>
             </article>
           </div>
@@ -122,8 +128,8 @@ export default function CotacaoSeguroAutoPage() {
             <article>
               <h2>Mais clareza na proposta</h2>
               <p>
-                A captura correta do perfil evita proposta desalinhada, melhora o retorno comercial e aumenta a chance
-                de fechamento com mais segurança.
+                A captura correta do perfil evita proposta desalinhada, melhora a resposta da corretora e ajuda você a
+                decidir com mais segurança.
               </p>
             </article>
           </div>
@@ -131,7 +137,7 @@ export default function CotacaoSeguroAutoPage() {
 
         <section className="section">
           <div className="container faq-shell">
-            <h2>Perguntas frequentes sobre Cotação de Seguro Auto</h2>
+            <h2>Perguntas frequentes sobre a cotação</h2>
             <div className="faq-list">
               {faqs.map((faq) => (
                 <details key={faq.q}>
@@ -146,13 +152,16 @@ export default function CotacaoSeguroAutoPage() {
         <section className="section">
           <div className="container cta-panel cta-panel-static">
             <div>
-              <p className="eyebrow">Próximo passo</p>
-              <h2>Quer começar a sua cotação de Seguro Auto agora?</h2>
-              <p>A página do produto já tem o modal com os campos principais da cotação e upload da apólice para renovação.</p>
+              <p className="eyebrow">Página completa</p>
+              <h2>Prefere revisar a página completa do Seguro Auto antes de seguir?</h2>
+              <p>
+                Se quiser mais contexto sobre o produto, a página completa reúne visão clara de cobertura e o mesmo
+                fluxo de cotação orientada.
+              </p>
             </div>
             <div className="cta-row">
               <Link className="btn btn-primary" href="/produtos/seguro-auto">
-                Abrir formulário do auto
+                Ver página completa
               </Link>
               <a className="btn btn-ghost" href={siteConfig.whatsapp} target="_blank" rel="noopener noreferrer">
                 Falar com especialista

@@ -15,7 +15,7 @@ const homeFaqs = [
   },
   {
     q: 'A contratação acontece no site da H Soares?',
-    a: 'A H Soares orienta comercialmente a escolha do produto e, em muitos casos, o fechamento final acontece no ambiente oficial da seguradora parceira ou no link de contratação correspondente.'
+    a: 'A H Soares orienta a escolha do produto e, em muitos casos, a contratação final acontece no ambiente oficial da seguradora parceira ou no link correspondente.'
   },
   {
     q: 'Como funciona o Seguro Fiança da H Soares?',
@@ -23,12 +23,12 @@ const homeFaqs = [
   },
   {
     q: 'A H Soares atende por WhatsApp?',
-    a: 'Sim. O principal canal comercial da corretora é o WhatsApp, com atendimento orientado para tirar dúvidas, estruturar a escolha e acelerar o fechamento.'
+    a: 'Sim. O principal canal de atendimento da corretora é o WhatsApp, ideal para tirar dúvidas, comparar caminhos e seguir com mais agilidade.'
   }
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Seguro Fiança, Auto, Saúde e Seguros Patrimoniais',
+  title: 'H Soares Seguros: Seguro Fiança, Auto, Saúde e Soluções Patrimoniais',
   description:
     'H Soares Seguros: corretora com 30 anos, forte em Seguro Fiança, Seguro Auto, Plano de Saúde e proteção patrimonial para pessoas, imóveis e empresas.',
   path: '/'
@@ -49,6 +49,24 @@ const insurerLogos = [
   { name: 'Akad', slug: 'akad', src: '/assets/insurers/akad.png' },
   { name: 'Suhai', slug: 'suhai', src: '/assets/insurers/suhai.png' }
 ];
+
+const featuredProductSlugs = [
+  'seguro-fianca',
+  'seguro-imobiliario',
+  'plano-saude',
+  'seguro-auto',
+  'residencial-essencial',
+  'seguro-celular',
+  'cartao-credito-porto-bank',
+  'seguro-vida-on',
+  'seguro-viagem'
+];
+
+const featuredProducts = featuredProductSlugs
+  .map((slug) => products.find((product) => product.slug === slug))
+  .filter(Boolean);
+
+const additionalProducts = products.filter((product) => !featuredProductSlugs.includes(product.slug));
 
 const homeStructuredData = [
   buildOrganizationSchema(),
@@ -94,10 +112,10 @@ export default function HomePage() {
           <div className="container hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">Corretora de Seguros | 30 anos</p>
-              <h1>Seguros com confiança institucional, atendimento forte e fechamento com mais segurança.</h1>
+              <h1>Seguros com atendimento consultivo, leitura clara e contratação com mais segurança.</h1>
               <p className="subhead">
-                A H Soares combina postura institucional, atendimento consultivo e uma operação comercial de alta
-                performance. O cliente entende, confia e avança para contratação com segurança no primeiro contato.
+                A H Soares combina experiência de mercado, atendimento humano e orientação clara para ajudar você a
+                comparar coberturas, entender o produto e contratar com mais segurança.
               </p>
               <div className="cta-row">
                 <a className="btn btn-primary" href="#produtos">
@@ -105,7 +123,7 @@ export default function HomePage() {
                 </a>
                 <a
                   className="btn btn-whatsapp"
-                  href="https://wa.me/5511972064288?text=Ol%C3%A1%2C%20quero%20uma%20orienta%C3%A7%C3%A3o%20comercial%20sobre%20seguros."
+                  href="https://wa.me/5511972064288?text=Ol%C3%A1%2C%20quero%20uma%20orienta%C3%A7%C3%A3o%20sobre%20seguros."
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -123,7 +141,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <strong>100%</strong>
-                  <span>Foco em fechamento</span>
+                  <span>Atendimento consultivo</span>
                 </div>
               </div>
             </div>
@@ -136,8 +154,8 @@ export default function HomePage() {
                 />
               </figure>
               <article className="hero-floating-card">
-                <p className="mini-label">Atendimento comercial premium</p>
-                <h2>Decisão mais rápida, cobertura melhor e fechamento assistido.</h2>
+                <p className="mini-label">Atendimento premium</p>
+                <h2>Decisão mais clara, cobertura melhor e apoio até a contratação.</h2>
                 <ul>
                   <li>Estratégia por perfil do cliente</li>
                   <li>Comparativo objetivo de opções</li>
@@ -160,7 +178,7 @@ export default function HomePage() {
             </article>
             <article>
               <p>Canal principal de atendimento</p>
-              <strong>WhatsApp com resposta comercial rápida</strong>
+              <strong>WhatsApp com resposta rápida</strong>
             </article>
           </div>
         </section>
@@ -170,12 +188,12 @@ export default function HomePage() {
             <article>
               <h3>Quem somos</h3>
               <p>
-                A H Soares Corretora de Seguros LTDA atua há 30 anos com perfil consultivo, ética comercial e foco em
+                A H Soares Corretora de Seguros LTDA atua há 30 anos com perfil consultivo, ética no atendimento e foco em
                 solução real para pessoas, famílias e empresas.
               </p>
             </article>
             <article>
-              <h3>Estrutura comercial</h3>
+              <h3>Como atendemos</h3>
               <p>
                 Jornada pensada para reduzir fricção: página de produto clara, microcaptura opcional e redirecionamento
                 rápido para contratação.
@@ -194,8 +212,8 @@ export default function HomePage() {
         <section className="section sales-process">
           <div className="container">
             <div className="section-head">
-              <p className="eyebrow">Jornada Comercial</p>
-              <h2>Uma experiência premium para converter com confiança</h2>
+              <p className="eyebrow">Jornada de atendimento</p>
+              <h2>Uma experiência premium para decidir e contratar com confiança</h2>
             </div>
             <div className="process-grid">
               <article>
@@ -205,13 +223,13 @@ export default function HomePage() {
               </article>
               <article>
                 <span>02</span>
-                <h3>Posicionamento estratégico</h3>
+                <h3>Comparação orientada</h3>
                 <p>Explicamos coberturas, condições e diferenciais de forma clara, sem linguagem confusa.</p>
               </article>
               <article>
                 <span>03</span>
-                <h3>Fechamento assistido</h3>
-                <p>Você finaliza no ambiente oficial da seguradora parceira e nós acompanhamos para aumentar conclusão.</p>
+                <h3>Contratação assistida</h3>
+                <p>Você finaliza no ambiente oficial da seguradora parceira e nós seguimos por perto para apoiar o processo.</p>
               </article>
             </div>
           </div>
@@ -222,7 +240,7 @@ export default function HomePage() {
             <div className="section-head section-head-readable insurers-band-head">
               <div>
                 <p className="eyebrow">Seguradoras parceiras</p>
-                <h2>Grandes marcas atendidas pela operação comercial da H Soares</h2>
+                <h2>Grandes marcas parceiras para comparar cobertura, assistência e contratação</h2>
               </div>
               <a className="link-btn" href="/seguradoras">
                 Ver canais e assistência
@@ -240,14 +258,41 @@ export default function HomePage() {
 
         <section className="section" id="produtos">
           <div className="container">
-            <div className="section-head">
+            <div className="section-head section-head-readable">
               <p className="eyebrow">Produtos e Serviços</p>
-              <h2>Uma página de venda para cada produto</h2>
+              <h2>Comece pelos produtos com maior procura e avance para o restante sem excesso de rolagem</h2>
+              <p>
+                Destacamos primeiro as jornadas com maior procura. As demais soluções continuam
+                disponíveis logo abaixo, em formato mais leve para facilitar a navegação, principalmente no mobile.
+              </p>
             </div>
             <div className="product-grid">
-              {products.map((product) => (
+              {featuredProducts.map((product) => (
                 <ProductCard key={product.slug} product={product} />
               ))}
+            </div>
+            <div className="product-summary-shell">
+              <article className="product-summary-card">
+                <p className="eyebrow">Outras soluções da corretora</p>
+                <h3>Se o seu cenário for mais específico, a H Soares continua atendendo outras frentes</h3>
+                <p>
+                  Produtos financeiros, proteção de equipamentos, vida e outras soluções seguem disponíveis com apoio
+                  consultivo da corretora.
+                </p>
+                <div className="cta-row">
+                  <Link className="btn btn-ghost" href="/contato">
+                    Preciso de ajuda para escolher
+                  </Link>
+                </div>
+              </article>
+
+              <div className="product-summary-links">
+                {additionalProducts.map((product) => (
+                  <Link key={product.slug} href={`/produtos/${product.slug}`}>
+                    {product.name}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>

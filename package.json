@@ -3,18 +3,29 @@
   "version": "1.5.0",
   "private": true,
   "scripts": {
-    "dev": "rm -rf .next && next build && next start --hostname 127.0.0.1 --port 3001",
+    "dev": "next dev --hostname 127.0.0.1 --port 3001",
     "build": "next build",
     "start": "next start",
+    "seo:check": "node scripts/check-seo.mjs",
+    "test:e2e": "npx playwright test --config=ms-playwright/playwright.config.ts",
     "db:setup": "node scripts/setup-db.mjs",
+    "admin:ops:migrate": "node scripts/migrate-admin-ops.mjs",
+    "admin:jobs:run": "node --import ./scripts/register-alias-loader.mjs scripts/run-admin-jobs.mjs",
     "admin:hash": "node scripts/hash-password.mjs"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "jose": "^5.9.6",
-    "next": "^14.2.32",
     "@neondatabase/serverless": "^0.10.4",
+    "bcryptjs": "^2.4.3",
+    "googleapis": "^171.4.0",
+    "jose": "^5.9.6",
+    "next": "^16.2.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "playwright": "^1.58.2",
+    "puppeteer-core": "^24.39.0"
   }
 }

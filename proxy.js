@@ -17,7 +17,7 @@ async function isTokenValid(token) {
   }
 }
 
-export async function middleware(request) {
+export async function proxy(request) {
   const pathname = request.nextUrl.pathname;
 
   if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/admin')) {

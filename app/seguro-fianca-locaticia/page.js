@@ -15,18 +15,18 @@ const faqs = [
   },
   {
     q: 'A H Soares atende locação residencial e comercial?',
-    a: 'Sim. A operação atende seguro fiança residencial, comercial para pessoa física e análise comercial para pessoa jurídica com critérios específicos.'
+    a: 'Sim. A H Soares atende seguro fiança residencial, comercial para pessoa física e análise para pessoa jurídica com critérios específicos.'
   },
   {
     q: 'O seguro incêndio da locação pode sair junto?',
-    a: 'Sim. Na jornada da H Soares, o Seguro Imobiliário pode ser calculado junto com o Seguro Fiança para acelerar o fechamento da locação.'
+    a: 'Sim. Na jornada da H Soares, o Seguro Imobiliário pode ser calculado junto com o Seguro Fiança para deixar a locação mais fluida.'
   }
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Seguro Fiança Locatícia',
+  title: 'Seguro Fiança Locatícia: aluguel com análise rápida e suporte',
   description:
-    'Seguro Fiança Locatícia com atendimento consultivo, operação forte para imobiliárias, análise rápida e integração com Seguro Imobiliário.',
+    'Seguro Fiança Locatícia com atendimento consultivo, análise rápida para operações elegíveis e integração com Seguro Imobiliário.',
   path: '/seguro-fianca-locaticia'
 });
 
@@ -38,7 +38,7 @@ const schema = [
     name: 'Seguro Fiança Locatícia',
     serviceType: 'Seguro Fiança Locatícia',
     description:
-      'Garantia locatícia para aluguel residencial e comercial com operação consultiva, análise rápida e apoio comercial da H Soares.',
+      'Garantia locatícia para aluguel residencial e comercial com análise rápida, leitura clara da cobertura e apoio consultivo da H Soares.',
     url: absoluteUrl('/seguro-fianca-locaticia'),
     provider: {
       '@type': 'InsuranceAgency',
@@ -76,11 +76,10 @@ export default function SeguroFiancaLocaticiaPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Locação</p>
-            <h1>Seguro Fiança Locatícia com operação forte para fechar locação com mais velocidade.</h1>
+            <h1>Seguro Fiança Locatícia para deixar a locação mais ágil e mais segura.</h1>
             <p className="subhead">
-              A H Soares trabalha o Seguro Fiança Locatícia como uma solução comercial e operacional. A corretora atua
-              para reduzir atrito na locação, orientar o perfil da garantia e acelerar a jornada de locatário,
-              proprietário e imobiliária.
+              A H Soares trabalha o Seguro Fiança Locatícia para reduzir atrito na locação, orientar o perfil da
+              garantia e ajudar locatário, proprietário e imobiliária a seguir com mais clareza.
             </p>
             <div className="cta-row">
               <Link className="btn btn-primary" href="/produtos/seguro-fianca">
@@ -181,9 +180,9 @@ export default function SeguroFiancaLocaticiaPage() {
               <article className="coverage-card">
                 <div className="coverage-card-head">
                   <span className="coverage-icon tone-fire">04</span>
-                  <h3>Velocidade operacional</h3>
-                </div>
-                <p>Imobiliárias parceiras conseguem trabalhar com retorno mais rápido para não travar o fechamento da locação.</p>
+                <h3>Velocidade operacional</h3>
+              </div>
+                <p>Imobiliárias parceiras conseguem trabalhar com retorno mais rápido para não travar o andamento da locação.</p>
               </article>
             </div>
           </div>

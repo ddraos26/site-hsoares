@@ -2,32 +2,14 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-
-function getOrCreateSessionId() {
-  const key = 'hs_session_id';
-  const current = window.localStorage.getItem(key);
-  if (current) return current;
-
-  const newValue = `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
-  window.localStorage.setItem(key, newValue);
-  return newValue;
-}
-
-function getUtm() {
-  const url = new URL(window.location.href);
-  return {
-    utm_source: url.searchParams.get('utm_source') || '',
-    utm_medium: url.searchParams.get('utm_medium') || '',
-    utm_campaign: url.searchParams.get('utm_campaign') || ''
-  };
-}
+import { getBrowserAttribution, getBrowserTrafficContext, getOrCreateBrowserSessionId } from '@/lib/tracking-attribution';
 
 export function EventTracker({ pagePath, productSlug = '' }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    const sessionId = getOrCreateSessionId();
-    const utm = getUtm();
+    const sessionId = getOrCreateBrowserSessionId();
+    const utm = getBrowserAttribution();
     const resolvedPath = pagePath || pathname || '/';
     const resolvedProductSlug =
       productSlug || (resolvedPath.startsWith('/produtos/') ? resolvedPath.split('/')[2] || '' : '');
@@ -35,6 +17,13 @@ export function EventTracker({ pagePath, productSlug = '' }) {
     if (resolvedPath.startsWith('/admin') || resolvedPath.startsWith('/login')) {
       return undefined;
     }
+
+    const debugMode = typeof window !== 'undefined' && window.location.search.includes('gtm_debug');
+    const trafficContext = getBrowserTrafficContext({
+      pagePath: resolvedPath,
+      productSlug: resolvedProductSlug,
+      objective: resolvedPath.startsWith('/produtos/') ? 'porto_direct_click_candidate' : ''
+    });
 
     function send(eventType) {
       fetch('/api/track/event', {
@@ -45,8 +34,13 @@ export function EventTracker({ pagePath, productSlug = '' }) {
           pagePath: resolvedPath,
           productSlug: resolvedProductSlug,
           sessionId,
+          debug_mode: debugMode,
           ...utm,
-          referrer: document.referrer || ''
+          referrer: document.referrer || '',
+          payload: {
+            ...trafficContext,
+            event_surface: eventType === 'page_view' ? 'landing-entry' : 'heartbeat'
+          }
         })
       }).catch(() => null);
     }

@@ -7,7 +7,7 @@ import { absoluteUrl, buildOrganizationSchema, buildPageMetadata, siteConfig } f
 const faqs = [
   {
     q: 'Qual é a pergunta mais importante para cotar plano de saúde?',
-    a: 'Na prática comercial da H Soares, a pergunta mais importante costuma ser qual hospital ou rede o cliente deseja utilizar, porque isso altera bastante as operadoras e os planos elegíveis.'
+    a: 'Na prática da H Soares, a pergunta mais importante costuma ser qual hospital ou rede o cliente deseja utilizar, porque isso altera bastante as operadoras e os planos elegíveis.'
   },
   {
     q: 'É possível comparar plano de saúde por hospital?',
@@ -24,7 +24,7 @@ const faqs = [
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Plano de Saúde por Hospital e Rede',
+  title: 'Plano de Saúde por Hospital e Rede: operadoras, hospitais e custo',
   description:
     'Plano de Saúde por Hospital e Rede com comparação consultiva entre operadoras, foco em hospital desejado, custo total e perfil de contratação.',
   path: '/plano-de-saude-por-hospital-e-rede'
@@ -68,7 +68,7 @@ export default function PlanoSaudePorHospitalPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Saúde</p>
-            <h1>Plano de Saúde por Hospital e Rede com leitura comercial mais precisa.</h1>
+            <h1>Plano de Saúde por Hospital e Rede com leitura mais precisa.</h1>
             <p className="subhead">
               A H Soares trabalha a busca de plano de saúde a partir da rede desejada pelo cliente. Isso evita
               comparação genérica, melhora o enquadramento das operadoras e ajuda a encontrar propostas mais coerentes
@@ -126,9 +126,9 @@ export default function PlanoSaudePorHospitalPage() {
             <article className="detail-card">
               <h2>Por que essa lógica funciona melhor</h2>
               <ul>
-                <li>Reduz ruído comercial e propostas que não atendem a rede desejada.</li>
+                <li>Reduz ruído na análise e evita propostas que não atendem a rede desejada.</li>
                 <li>Ajuda a comparar operadoras com mais critério e menos perda de tempo.</li>
-                <li>Melhora a qualidade da proposta e a chance de conversão.</li>
+                <li>Melhora a qualidade da proposta e a segurança na escolha.</li>
               </ul>
             </article>
           </div>

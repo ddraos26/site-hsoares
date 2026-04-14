@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { TrackedPortoLink } from '@/components/tracked-porto-link';
+import { getBrowserAttribution, getOrCreateBrowserSessionId } from '@/lib/tracking-attribution';
 import { VEHICLE_OPTIONS } from '@/lib/vehicle-catalog';
 
 const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
@@ -94,30 +96,11 @@ const CONFIGS = {
     modalEyebrow: 'Seguro Auto',
     modalTitle: 'Preencha os dados principais para cotação',
     modalText:
-      'Esse formulário reduz ida e volta comercial e ajuda a H Soares a estruturar a cotação com mais assertividade.',
+      'Esse formulário reduz retrabalho e ajuda a H Soares a estruturar a cotação com mais assertividade.',
     successMessage:
       'Recebemos os dados do veículo. A H Soares vai usar essas informações para avançar com sua cotação de Seguro Auto.'
   }
 };
-
-function getOrCreateSessionId() {
-  const key = 'hs_session_id';
-  const current = window.localStorage.getItem(key);
-  if (current) return current;
-
-  const next = `${Date.now()}-${Math.random().toString(16).slice(2, 10)}`;
-  window.localStorage.setItem(key, next);
-  return next;
-}
-
-function getAttribution() {
-  const url = new URL(window.location.href);
-  return {
-    utm_source: url.searchParams.get('utm_source') || '',
-    utm_medium: url.searchParams.get('utm_medium') || '',
-    utm_campaign: url.searchParams.get('utm_campaign') || ''
-  };
-}
 
 function newClickId(slug) {
   return `${slug}-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
@@ -1752,7 +1735,7 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
               onChange={(event) => updateField('veiculoModelo', event.target.value)}
               placeholder="Digite marca ou modelo"
             />
-            <small className="intake-helper">Comece digitando que o sistema sugere veículos da base interna.</small>
+            <small className="intake-helper">Comece digitando que o sistema sugere modelos para facilitar o preenchimento.</small>
             <datalist id="hs-vehicle-options">
               {VEHICLE_OPTIONS.map((option) => (
                 <option key={option} value={option} />
@@ -1865,7 +1848,7 @@ function renderDynamicFields(productSlug, form, updateField, helpers = {}) {
         </div>
       </FormSection>
 
-      <FormSection title="Histórico de risco" tone="coverage" description="Último ponto para leitura comercial da cotação.">
+      <FormSection title="Histórico de risco" tone="coverage" description="Último ponto para deixar a cotação mais precisa.">
         <ToggleGroup
           label="Teve sinistro nos últimos 5 anos?"
           value={form.houveSinistro}
@@ -2109,8 +2092,8 @@ export function PremiumLeadCapture({ product, mode = 'inline' }) {
 
     const detailEntries = buildDetailEntries(product.slug, form, attachments);
     const clickId = newClickId(product.slug);
-    const sessionId = getOrCreateSessionId();
-    const attr = getAttribution();
+    const sessionId = getOrCreateBrowserSessionId();
+    const attr = getBrowserAttribution();
     const fiancaPrimaryContact = product.slug === 'seguro-fianca' ? getFiancaPrimaryContact(form) : null;
 
     try {
@@ -2182,14 +2165,18 @@ export function PremiumLeadCapture({ product, mode = 'inline' }) {
             <button type="button" className="btn btn-primary" onClick={() => setOpen(true)}>
               {config.inlineLabel}
             </button>
-            <a
+            <TrackedPortoLink
               className="btn btn-ghost"
               href={product.slug === 'seguro-fianca' ? product.fiancaPlatform?.url : product.portoUrl}
               target="_blank"
               rel="noopener noreferrer"
+              productSlug={product.slug}
+              ctaPosition="footer_cta"
+              pageSection="final_cta"
+              templateType="product_page"
             >
               {config.sectionSecondaryLabel}
-            </a>
+            </TrackedPortoLink>
           </div>
         </section>
       )}

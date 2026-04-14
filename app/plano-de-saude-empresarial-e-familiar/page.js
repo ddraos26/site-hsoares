@@ -20,7 +20,7 @@ const faqs = [
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Plano de Saúde Empresarial e Familiar',
+  title: 'Plano de Saúde Empresarial e Familiar: comparativo e rede hospitalar',
   description:
     'Plano de Saúde Empresarial e Familiar com comparação entre operadoras, análise da rede hospitalar e atendimento consultivo da H Soares.',
   path: '/plano-de-saude-empresarial-e-familiar'
@@ -99,7 +99,7 @@ export default function PlanoSaudeLandingPage() {
               <h2>Ponto-chave da análise</h2>
               <p>
                 A pergunta central costuma ser quais hospitais e rede de atendimento a pessoa deseja. Essa resposta muda
-                completamente o caminho da busca e da proposta comercial.
+                completamente o caminho da busca e da proposta.
               </p>
             </article>
           </div>

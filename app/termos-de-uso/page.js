@@ -19,7 +19,7 @@ export default function TermsPage() {
             <p className="eyebrow">Termos</p>
             <h1>Termos de Uso</h1>
             <p className="subhead">
-              Estes termos descrevem as condições gerais de uso do site institucional e comercial da H Soares Seguros.
+              Estes termos descrevem as condições gerais de uso do site institucional e de atendimento da H Soares Seguros.
             </p>
           </div>
         </section>
@@ -28,7 +28,7 @@ export default function TermsPage() {
           <div className="container legal-shell">
             <h2>1. Natureza do site</h2>
             <p>
-              O site tem caráter institucional e comercial. Ele apresenta produtos, conteúdos explicativos, formulários
+              O site tem caráter institucional e informativo. Ele apresenta produtos, conteúdos explicativos, formulários
               de contato e, em determinados casos, direciona o visitante para ambientes oficiais de seguradoras ou
               plataformas parceiras para continuidade da contratação.
             </p>
@@ -54,7 +54,7 @@ export default function TermsPage() {
             <h2>5. Atualizações</h2>
             <p>
               A H Soares pode atualizar conteúdos, produtos, formulários e fluxos do site sempre que necessário para
-              refletir mudanças operacionais, comerciais, regulatórias ou tecnológicas.
+              refletir mudanças de atendimento, regulatórias ou tecnológicas.
             </p>
           </div>
         </section>

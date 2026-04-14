@@ -5,7 +5,7 @@ import { StructuredData } from '@/components/structured-data';
 import { buildOrganizationSchema, buildPageMetadata, siteConfig } from '@/lib/site';
 
 export const metadata = buildPageMetadata({
-  title: 'Institucional',
+  title: 'Institucional H Soares Seguros: 30 anos e atendimento consultivo',
   description:
     'Conheça a H Soares Corretora de Seguros LTDA: 30 anos de mercado, atuação consultiva, foco em Seguro Fiança, Auto, Saúde e proteção patrimonial.',
   path: '/institucional'
@@ -32,11 +32,10 @@ export default function InstitutionalPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Institucional</p>
-            <h1>30 anos de mercado com operação comercial forte e postura consultiva.</h1>
+            <h1>30 anos de mercado com atendimento consultivo e foco em orientar bem cada decisão.</h1>
             <p className="subhead">
-              A H Soares Corretora de Seguros LTDA atua com visão institucional, atendimento humano e foco em fechar
-              com mais segurança. A corretora atende pessoas, famílias, imóveis, imobiliárias e empresas com leitura
-              clara de cobertura, risco e enquadramento.
+              A H Soares Corretora de Seguros LTDA atua com atendimento humano, experiência de mercado e leitura clara
+              de cobertura, risco e enquadramento para pessoas, famílias, imóveis, imobiliárias e empresas.
             </p>
           </div>
         </section>
@@ -46,7 +45,7 @@ export default function InstitutionalPage() {
             <article>
               <h2>Quem somos</h2>
               <p>
-                A H Soares construiu sua atuação com base em relacionamento, seriedade comercial e acompanhamento
+                A H Soares construiu sua atuação com base em relacionamento, seriedade no atendimento e acompanhamento
                 próximo da jornada de contratação. O foco é orientar bem para o cliente decidir com confiança.
               </p>
             </article>
@@ -60,7 +59,7 @@ export default function InstitutionalPage() {
             <article>
               <h2>Como atendemos</h2>
               <p>
-                A operação prioriza WhatsApp, páginas de produto completas, formulários de lead e, quando aplicável,
+                A jornada prioriza WhatsApp, páginas de produto completas, formulários de lead e, quando aplicável,
                 direcionamento ao ambiente oficial da seguradora parceira para concluir a contratação.
               </p>
             </article>
@@ -73,8 +72,8 @@ export default function InstitutionalPage() {
               <h2>Diferenciais da corretora</h2>
               <ul>
                 <li>30 anos de mercado do seguro.</li>
-                <li>Atendimento comercial com leitura consultiva.</li>
-                <li>Operação forte em locação com Seguro Fiança e Seguro Imobiliário.</li>
+                <li>Atendimento consultivo com leitura clara de cobertura e perfil.</li>
+                <li>Especialidade em locação com Seguro Fiança e Seguro Imobiliário.</li>
                 <li>Relacionamento com grandes seguradoras do mercado.</li>
               </ul>
             </article>
@@ -83,7 +82,7 @@ export default function InstitutionalPage() {
               <ul>
                 <li>Razão social: H Soares Corretora de Seguros LTDA.</li>
                 <li>CNPJ: 11.194.245.0001-13.</li>
-                <li>Canal principal: WhatsApp comercial.</li>
+                <li>Canal principal: WhatsApp.</li>
                 <li>E-mail institucional: contato@hsoaresseguros.com.br.</li>
               </ul>
             </article>
@@ -95,7 +94,7 @@ export default function InstitutionalPage() {
             <div>
               <p className="eyebrow">Falar com a H Soares</p>
               <h2>Quer entender qual produto faz mais sentido para o seu caso?</h2>
-              <p>Use o WhatsApp para atendimento comercial rápido ou navegue direto pelas páginas de produto.</p>
+              <p>Use o WhatsApp para atendimento rápido ou navegue direto pelas páginas de produto.</p>
             </div>
             <div className="cta-row">
               <a className="btn btn-primary" href={siteConfig.whatsapp} target="_blank" rel="noopener noreferrer">

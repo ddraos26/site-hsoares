@@ -30,13 +30,13 @@ export default function PrivacyPolicyPage() {
             <h2>1. Dados coletados</h2>
             <p>
               O site pode coletar dados informados voluntariamente em formulários, como nome, telefone, e-mail,
-              informações do produto desejado, dados necessários para análise comercial e arquivos anexados.
+              informações do produto desejado, dados necessários para análise do pedido e arquivos anexados.
             </p>
 
             <h2>2. Finalidade do uso</h2>
             <p>
-              Os dados são utilizados para atendimento comercial, simulações, análise preliminar, retorno de contato,
-              encaminhamento ao fluxo da seguradora parceira e melhoria da operação de atendimento da corretora.
+              Os dados são utilizados para atendimento, simulações, análise preliminar, retorno de contato,
+              encaminhamento ao fluxo da seguradora parceira e melhoria do atendimento da corretora.
             </p>
 
             <h2>3. Compartilhamento</h2>
@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
             <h2>4. Cookies e analytics</h2>
             <p>
               O site pode utilizar cookies e ferramentas analíticas para medir navegação, páginas acessadas e eventos
-              de conversão, sempre com objetivo de melhoria operacional e comercial.
+              de interação, sempre com objetivo de melhoria da experiência e do atendimento.
             </p>
 
             <h2>5. Direitos do titular</h2>

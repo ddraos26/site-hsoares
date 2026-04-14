@@ -1,485 +1,777 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { DailyChecklistPanel, DailyChecklistSummary } from '@/components/admin/daily-checklist-panel';
+import { fetchAdminJson, primeAdminJsonCache } from '@/lib/admin/client-fetch-cache';
+import { resolveDashboardHref } from '@/lib/admin/core/dashboard-route-catalog';
+import { formatPageLabel } from '@/lib/admin/page-presentation';
 
-function dateRange() {
-  const end = new Date();
-  const start = new Date();
-  start.setDate(start.getDate() - 7);
+const formatNumber = (value) => new Intl.NumberFormat('pt-BR').format(Number(value || 0));
+const formatPercent = (value) => `${Number(value || 0).toFixed(1)}%`;
+const formatCurrency = (value) =>
+  value == null
+    ? 'Conectar mídia'
+    : new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        maximumFractionDigits: 2
+      }).format(Number(value || 0));
+
+function openAdminCard(router, href, basePath) {
+  if (!href) return;
+  router.push(resolveDashboardHref(href, basePath));
+}
+
+function getInteractiveCardProps(router, href, basePath) {
+  if (!href) return {};
+
   return {
-    from: start.toISOString().slice(0, 10),
-    to: end.toISOString().slice(0, 10)
+    role: 'link',
+    tabIndex: 0,
+    onClick: () => openAdminCard(router, href, basePath),
+    onKeyDown: (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openAdminCard(router, href, basePath);
+      }
+    }
   };
 }
 
-function formatDateTime(value) {
-  if (!value) return '-';
-  return new Date(value).toLocaleString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+function DeltaBadge({ delta }) {
+  if (!delta || delta.percent == null) {
+    return <span className="exec-delta exec-delta--flat">sem base</span>;
+  }
+
+  const tone = delta.diff > 0 ? 'up' : delta.diff < 0 ? 'down' : 'flat';
+  const signal = delta.diff > 0 ? '+' : '';
+  return <span className={`exec-delta exec-delta--${tone}`}>{signal}{delta.percent}%</span>;
 }
 
-function formatStatus(status) {
+function KpiCard({ label, value, helper, delta, tone = 'blue', href, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, href, basePath);
+
   return (
-    {
-      novo: 'Novo',
-      em_contato: 'Em contato',
-      ganho: 'Ganho',
-      perdido: 'Perdido'
-    }[status] || status
+    <article className={`exec-kpi-card exec-kpi-card--${tone} ${href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <div className="exec-kpi-foot">
+        <small>{helper}</small>
+        <DeltaBadge delta={delta} />
+      </div>
+    </article>
   );
 }
 
-function summarizeStatuses(rows) {
-  const counts = {
-    novo: 0,
-    em_contato: 0,
-    ganho: 0,
-    perdido: 0
-  };
-
-  (rows || []).forEach((row) => {
-    counts[row.lead_status] = row.total;
-  });
-
-  return counts;
-}
-
-function maxByTotal(rows) {
-  return Math.max(1, ...(rows || []).map((row) => row.total || 0));
-}
-
-const DEFAULT_GOALS = {
-  daily: 5,
-  weekly: 25
-};
-
-export default function DashboardClient() {
-  const defaults = useMemo(() => dateRange(), []);
-  const [from, setFrom] = useState(defaults.from);
-  const [to, setTo] = useState(defaults.to);
-  const [product, setProduct] = useState('');
-  const [owner, setOwner] = useState('');
-  const [dailyGoal, setDailyGoal] = useState(DEFAULT_GOALS.daily);
-  const [weeklyGoal, setWeeklyGoal] = useState(DEFAULT_GOALS.weekly);
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const statusCounts = useMemo(() => summarizeStatuses(data?.leadStatusSummary), [data]);
-  const lossReasonMax = useMemo(() => maxByTotal(data?.lossReasons), [data]);
-  const dailyProgress = Math.min(100, Math.round(((data?.summary?.todayLeads || 0) / Math.max(1, dailyGoal)) * 100));
-  const weeklyProgress = Math.min(100, Math.round(((data?.summary?.weekLeads || 0) / Math.max(1, weeklyGoal)) * 100));
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem('hsoares-admin-goals');
-      if (!stored) return;
-      const parsed = JSON.parse(stored);
-      if (parsed.daily) setDailyGoal(Number(parsed.daily));
-      if (parsed.weekly) setWeeklyGoal(Number(parsed.weekly));
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(
-        'hsoares-admin-goals',
-        JSON.stringify({ daily: dailyGoal, weekly: weeklyGoal })
-      );
-    } catch {}
-  }, [dailyGoal, weeklyGoal]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let interval;
-
-    async function load() {
-      setLoading(true);
-      const params = new URLSearchParams({ from, to });
-      if (product) params.set('product', product);
-      if (owner) params.set('owner', owner);
-      const response = await fetch(`/api/admin/dashboard?${params.toString()}`, { signal: controller.signal });
-      const payload = await response.json();
-      setData(payload);
-      setLoading(false);
-    }
-
-    load().catch(() => setLoading(false));
-    interval = window.setInterval(() => {
-      load().catch(() => null);
-    }, 20000);
-
-    return () => {
-      controller.abort();
-      window.clearInterval(interval);
-    };
-  }, [from, to, product, owner]);
-
-  if (loading && !data) {
-    return <p>Carregando métricas...</p>;
-  }
+function ComparisonCard({ title, rows, href, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, href, basePath);
 
   return (
-    <div className="admin-stack">
-      <section className="admin-toolbar admin-filters">
-        <label>
-          De
-          <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
-        </label>
-        <label>
-          Até
-          <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
-        </label>
-        <label>
-          Produto
-          <input
-            value={product}
-            onChange={(e) => setProduct(e.target.value)}
-            placeholder="slug do produto"
-          />
-        </label>
-        <label>
-          Responsável
-          <input
-            value={owner}
-            onChange={(e) => setOwner(e.target.value)}
-            placeholder="Ex.: Rodolfo"
-          />
-        </label>
-        <div className="admin-toolbar-note">
-          <span>Atualização automática</span>
-          <strong>{product || owner ? 'Painel filtrado' : 'A cada 20 segundos'}</strong>
+    <article className={`exec-panel ${href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <div className="exec-panel-head">
+        <div>
+          <span>Comparativo</span>
+          <h3>{title}</h3>
+        </div>
+      </div>
+
+      <div className="exec-comparison-list">
+        {rows.map((row) => (
+          <div key={row.label}>
+            <div>
+              <strong>{row.label}</strong>
+              <small>{row.value}</small>
+            </div>
+            <DeltaBadge delta={row.delta} />
+          </div>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function LeaderCard({ label, item, type = 'best', href, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, href, basePath);
+
+  return (
+    <article className={`exec-leader-card exec-leader-card--${type} ${href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <span>{label}</span>
+      {item ? (
+        <>
+          <strong>{item.label || (item.pagePath ? formatPageLabel(item.pagePath) : item.slug)}</strong>
+          <p>
+            {formatNumber(item.leads || 0)} leads · {formatPercent(item.leadRate || 0)} lead rate
+          </p>
+        </>
+      ) : (
+        <>
+          <strong>Sem massa crítica</strong>
+          <p>Ainda não há dado suficiente nesse recorte.</p>
+        </>
+      )}
+    </article>
+  );
+}
+
+function PriorityAction({ item, href, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, href, basePath);
+
+  return (
+    <div className={`exec-priority-item exec-priority-item--${item.tone} ${href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <span>{item.bucket}</span>
+      <strong>{item.title}</strong>
+      <p>{item.recommendation}</p>
+    </div>
+  );
+}
+
+function RefreshPriorityItem({ item, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, item.href, basePath);
+
+  return (
+    <div className={`exec-refresh-item exec-refresh-item--${item.statusTone || 'premium'} ${item.href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <div className="exec-refresh-head">
+        <span>{item.entityType === 'product' ? 'Produto' : 'Página'}</span>
+        <b>{item.priorityLabel}</b>
+      </div>
+      <strong>{item.title}</strong>
+      <p>{item.reason}</p>
+      <small>{item.signals}</small>
+      <div className="exec-refresh-meta">
+        <small>{item.statusLabel}</small>
+        <small>{item.ageLabel} · nova leitura em {item.cadenceLabel}</small>
+      </div>
+    </div>
+  );
+}
+
+function PageRankingItem({ item, router, basePath }) {
+  const interactiveProps = getInteractiveCardProps(router, item.href, basePath);
+
+  return (
+    <div className={`exec-page-rank-item exec-page-rank-item--${item.tone || 'premium'} ${item.href ? 'admin-actionable-card' : ''}`} {...interactiveProps}>
+      <div className="exec-page-rank-head">
+        <span>{item.statusLabel}</span>
+        <b>Score {item.priorityScore}</b>
+      </div>
+      <strong>{item.label}</strong>
+      <p>{item.recommendation || item.headline || 'Essa página já está no radar principal do dashboard.'}</p>
+      <div className="exec-page-rank-meta">
+        <small>{item.views} visitas</small>
+        <small>{item.leads} leads</small>
+        <small>{formatPercent(item.leadRate)} conversão · {item.priorityLabel}</small>
+      </div>
+    </div>
+  );
+}
+
+function PageBucketCard({ eyebrow, title, description, items, emptyText, router, basePath, tone = 'premium' }) {
+  return (
+    <article className={`exec-page-bucket exec-page-bucket--${tone}`}>
+      <div className="exec-page-bucket-head">
+        <div>
+          <span>{eyebrow}</span>
+          <h4>{title}</h4>
+        </div>
+        <small>{description}</small>
+      </div>
+      <div className="exec-page-rank-list">
+        {items?.length ? items.map((item) => (
+          <PageRankingItem key={item.pagePath} item={item} router={router} basePath={basePath} />
+        )) : <p className="dashboard-card-empty">{emptyText}</p>}
+      </div>
+    </article>
+  );
+}
+
+export default function DashboardClient({ apiBase = '/api/admin', initialData = null, basePath = '/admin' }) {
+  const router = useRouter();
+  const endpoint = `${apiBase}/executive-dashboard`;
+  const [data, setData] = useState(initialData);
+  const [loading, setLoading] = useState(!initialData);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (initialData) {
+      primeAdminJsonCache(endpoint, initialData);
+      setData(initialData);
+      setLoading(false);
+      setError(null);
+      return undefined;
+    }
+
+    const load = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetchAdminJson(endpoint);
+
+        if (response?.error) {
+          throw new Error(response.detail || response.error);
+        }
+
+        setData(response);
+      } catch (err) {
+        setError(err.message || 'Falha ao carregar o dashboard executivo.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    void load();
+    return undefined;
+  }, [endpoint, initialData]);
+
+  if (loading) {
+    return <p className="dashboard-card-empty">Montando o dashboard executivo...</p>;
+  }
+
+  if (error) {
+    return <p className="dashboard-error">{error}</p>;
+  }
+
+  if (!data) {
+    return <p className="dashboard-card-empty">Ainda não há dados suficientes para o dashboard executivo.</p>;
+  }
+
+  const executionCenter = data.executionCenter || {};
+  const operations = data.operations || { summary: {}, focus: {}, items: [] };
+  const nextOperation = operations.focus?.nextOperation || null;
+  const aiRuntime = data.aiRuntime || {};
+  const autonomy = aiRuntime.autonomy || null;
+  const nextCentralAction = data.centralPriorities?.actions?.[0] || null;
+  const secondaryActions = data.centralPriorities?.actions?.slice(1, 3) || [];
+  const businessFlow = data.businessFlow || {};
+  const auditPriorities = data.auditPriorities || { items: [] };
+  const pageRanking = data.pageRanking || { items: [] };
+  const firstAuditPriority = businessFlow.firstAuditPriority || auditPriorities.items?.[0] || null;
+  const checklistSummary = data.dailyChecklist?.summary || {};
+  const topSeoOpportunity =
+    data.opportunities?.find((item) => item?.query) ||
+    (data.centralPriorities?.bestOpportunity?.query ? data.centralPriorities.bestOpportunity : null);
+  const topAlert = data.alerts?.[0] || null;
+  const heroSignals = [
+    {
+      label: 'Rotina de hoje',
+      tone: 'success',
+      value: checklistSummary.total ? `${checklistSummary.completed || 0}/${checklistSummary.total}` : 'Sem rotina fechada',
+      detail:
+        checklistSummary.pending != null
+          ? `${checklistSummary.pending} pendencias para fechar o dia`
+          : 'A rotina ainda esta sendo organizada'
+    },
+    {
+      label: 'Prioridade de venda',
+      tone: 'warning',
+      value: nextCentralAction?.priority || data.centralPriorities.productToPrioritize?.priority || 'Media',
+      detail:
+        nextCentralAction?.bucket
+          ? `${nextCentralAction.bucket} puxando o dia`
+          : 'A frente com mais impacto subiu para o topo'
+    },
+    {
+      label: 'Depois do principal',
+      tone: 'premium',
+      value: firstAuditPriority?.title || 'Sem urgencia agora',
+      detail:
+        firstAuditPriority?.cadenceLabel
+          ? `A IA volta em ${firstAuditPriority.cadenceLabel}`
+          : 'O restante segue estavel por enquanto'
+    }
+  ];
+  const guidanceSteps = [
+    {
+      title: 'Principal',
+      description: businessFlow.headline || data.commandCenter?.title || 'A IA já separou a frente principal do dia para você.'
+    },
+    {
+      title: 'Motivo',
+      description: businessFlow.whyNow || nextCentralAction?.diagnosis || data.commandCenter?.recommendation || 'Entenda o que está segurando o crescimento antes de reagir.'
+    },
+    {
+      title: 'Depois disso',
+      description: firstAuditPriority ? `Se sobrar energia hoje, a próxima releitura da IA deve voltar para ${firstAuditPriority.title.toLowerCase()}.` : 'Depois do principal, siga para a próxima rota que ainda trava crescimento.'
+    }
+  ];
+
+  return (
+    <div className="exec-shell">
+      <section className="exec-hero">
+        <div className="exec-hero-main">
+          <p className="eyebrow">Resumo comercial de hoje</p>
+          <h3>{data.commandCenter.title}</h3>
+          <p>{data.commandCenter.diagnosis}</p>
+
+          <div className="exec-hero-signal-row">
+            {heroSignals.map((signal) => (
+              <article key={signal.label} className={`exec-hero-signal-card exec-hero-signal-card--${signal.tone || 'neutral'}`}>
+                <span>{signal.label}</span>
+                <strong>{signal.value}</strong>
+                <small>{signal.detail}</small>
+              </article>
+            ))}
+          </div>
+
+          {nextCentralAction ? (
+            <article
+              className="exec-hero-primary admin-actionable-card"
+              {...getInteractiveCardProps(router, nextCentralAction.href || '/admin/copiloto', basePath)}
+            >
+              <span>{businessFlow.actionLabel || 'Frente principal do dia'}</span>
+              <strong>{businessFlow.headline || nextCentralAction.title}</strong>
+              <p>{businessFlow.nextStep || nextCentralAction.recommendation || nextCentralAction.reason}</p>
+              <small>{businessFlow.whyNow || data.commandCenter.recommendation || 'Comece aqui para destravar o que mais pesa em clique, lead ou venda hoje.'}</small>
+            </article>
+          ) : null}
+
+          {secondaryActions.length ? (
+            <div className="exec-priority-list exec-priority-list--hero-secondary">
+              {secondaryActions.map((item) => (
+                <PriorityAction
+                  key={item.id}
+                  item={item}
+                  href={item.href || '/admin/copiloto'}
+                  router={router}
+                  basePath={basePath}
+                />
+              ))}
+            </div>
+          ) : null}
+        </div>
+
+        <aside className="exec-hero-side">
+          <DailyChecklistSummary apiBase={apiBase} basePath={basePath} initialData={data.dailyChecklist || null} />
+
+          <article className="exec-hero-status-card admin-actionable-card" {...getInteractiveCardProps(router, '/admin/insights', basePath)}>
+            <span>Leitura comercial da IA</span>
+            <strong>{autonomy?.label || 'IA acompanhando o negocio'}</strong>
+            <p>{autonomy?.summary || aiRuntime.recommendation || 'A IA segue acompanhando o negocio para organizar o que merece sua atencao primeiro.'}</p>
+            <div className="exec-hero-status-grid">
+              <div>
+                <small>Ritmo</small>
+                <b>{aiRuntime.costModeLabel || 'Sem leitura'}</b>
+              </div>
+              <div>
+                <small>Uso do mes</small>
+                <b>{aiRuntime.budgetUsagePercent != null ? `${Number(aiRuntime.budgetUsagePercent || 0).toFixed(1)}%` : '—'}</b>
+              </div>
+              <div>
+                <small>Proxima frente</small>
+                <b>{firstAuditPriority?.title || 'Sem urgencia agora'}</b>
+              </div>
+              <div>
+                <small>Volta prevista</small>
+                <b>{firstAuditPriority?.cadenceLabel || 'Dentro da meta'}</b>
+              </div>
+            </div>
+            <small className="exec-hero-status-note">
+              {businessFlow.auditSummary || 'A IA escolhe onde voltar primeiro misturando impacto em venda com tempo desde a ultima leitura.'}
+            </small>
+          </article>
+        </aside>
+      </section>
+
+      <section className="exec-page-ranking-shell">
+        <article className="exec-panel exec-panel--page-ranking">
+          <div className="exec-panel-head">
+            <div>
+              <span>Ranking das páginas</span>
+              <h3>{pageRanking.headline || 'Quais páginas estão jogando melhor hoje'}</h3>
+            </div>
+          </div>
+
+          {pageRanking.champion ? (
+            <div className="exec-page-champion admin-actionable-card" {...getInteractiveCardProps(router, pageRanking.champion.href, basePath)}>
+              <div className="exec-page-champion-copy">
+                <b className="exec-page-champion-badge">Pagina campea do dia</b>
+                <span>Página campeã do dia</span>
+                <strong>{pageRanking.champion.label}</strong>
+                <p>{pageRanking.champion.recommendation || pageRanking.champion.headline || 'Essa página está liderando o jogo hoje.'}</p>
+              </div>
+              <div className="exec-page-champion-stats">
+                <div>
+                  <small>Status</small>
+                  <b>{pageRanking.champion.statusLabel}</b>
+                </div>
+                <div>
+                  <small>Score</small>
+                  <b>{pageRanking.champion.priorityScore}</b>
+                </div>
+                <div>
+                  <small>Visitas</small>
+                  <b>{formatNumber(pageRanking.champion.views)}</b>
+                </div>
+                <div>
+                  <small>Leads</small>
+                  <b>{formatNumber(pageRanking.champion.leads)}</b>
+                </div>
+                <div>
+                  <small>Conversão</small>
+                  <b>{formatPercent(pageRanking.champion.leadRate)}</b>
+                </div>
+                <div>
+                  <small>Momento</small>
+                  <b>{pageRanking.champion.priorityLabel}</b>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="dashboard-card-empty">Ainda não há páginas suficientes para destacar uma campeã do dia.</p>
+          )}
+
+          <div className="exec-page-bucket-grid">
+            <PageBucketCard
+              eyebrow="Melhores páginas"
+              title="Já estão dando resultado"
+              description="As páginas que já estão respondendo melhor agora."
+              items={pageRanking.bestPages || []}
+              emptyText="Ainda não há páginas com resposta comercial forte no recorte atual."
+              router={router}
+              basePath={basePath}
+              tone="success"
+            />
+            <PageBucketCard
+              eyebrow="Tráfego sem lead"
+              title="Precisam de ajuda"
+              description="Recebem atenção, mas ainda estão deixando lead na mesa."
+              items={pageRanking.trafficWithoutLead || []}
+              emptyText="Nenhuma página importante está queimando tráfego sem lead agora."
+              router={router}
+              basePath={basePath}
+              tone="danger"
+            />
+            <PageBucketCard
+              eyebrow="Prontas para escalar"
+              title="Valem mais distribuição"
+              description="Convertem bem e podem receber mais força com controle."
+              items={pageRanking.readyToScale || []}
+              emptyText="Ainda não apareceu uma página claramente pronta para escala."
+              router={router}
+              basePath={basePath}
+              tone="premium"
+            />
+          </div>
+        </article>
+      </section>
+
+      <section className="exec-grid-2">
+        <article
+          className="exec-panel admin-actionable-card"
+          {...getInteractiveCardProps(router, topSeoOpportunity?.href || '/dashboard/seo', basePath)}
+        >
+          <div className="exec-panel-head">
+            <div>
+              <span>SEO que pode virar venda</span>
+              <h3>{topSeoOpportunity?.query ? `Atacar "${topSeoOpportunity.query}"` : topSeoOpportunity?.title || 'Sem brecha orgânica dominante agora'}</h3>
+            </div>
+          </div>
+          <div className="exec-alert-list">
+            <div className="exec-alert-card exec-alert-card--success">
+              <strong>Por que apareceu</strong>
+              <p>
+                {topSeoOpportunity?.query
+                  ? 'Essa query já mostra procura real e pode virar clique qualificado se a página responder melhor.'
+                  : topSeoOpportunity?.description || 'Quando o Search Console mostrar uma brecha mais forte, ela sobe aqui.'}
+              </p>
+              <small>
+                {topSeoOpportunity?.query
+                  ? 'Search Console + IA comercial estão usando esse sinal para subir a melhor frente orgânica do momento.'
+                  : 'Assim que aparecer uma brecha orgânica forte, ela entra aqui com contexto comercial.'}
+              </small>
+            </div>
+            <div className="exec-alert-card">
+              <strong>O que fazer</strong>
+              <p>{topSeoOpportunity?.recommendation || 'Abrir o SEO e decidir a próxima melhoria de conteúdo, title, meta ou página de apoio.'}</p>
+              <small>
+                {topSeoOpportunity?.query
+                  ? 'Abra o SEO para trabalhar essa query com mais chance de virar acesso e lead.'
+                  : 'Esse espaço vira o atalho do SEO assim que a IA encontrar um alvo orgânico melhor.'}
+              </small>
+            </div>
+          </div>
+        </article>
+
+        <article
+          className="exec-panel admin-actionable-card"
+          {...getInteractiveCardProps(router, topAlert?.href || '/dashboard/decision-center', basePath)}
+        >
+          <div className="exec-panel-head">
+            <div>
+              <span>Gargalo do momento</span>
+              <h3>{topAlert?.title || 'Nenhum bloqueio forte agora'}</h3>
+            </div>
+          </div>
+          <div className="exec-alert-list">
+            <div className="exec-alert-card exec-alert-card--danger">
+              <strong>O que está segurando venda</strong>
+              <p>{topAlert?.description || 'Não apareceu um bloqueio dominante acima do restante no momento.'}</p>
+              <small>{topAlert?.impact || 'Se surgir um gargalo comercial forte, ele sobe aqui.'}</small>
+            </div>
+            <div className="exec-alert-card">
+              <strong>Leitura rápida</strong>
+              <p>
+                {topAlert
+                  ? 'Esse é o principal ponto perdendo tração agora. Vale tratar antes das frentes secundárias.'
+                  : 'O topo do funil e a conversão estão relativamente estáveis no recorte atual.'}
+              </p>
+              <small>{topAlert ? 'Abra esse contexto para corrigir a perda antes de distribuir mais energia.' : 'Nesse cenário, siga a ordem comercial normal do dashboard.'}</small>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section className="focus-guidance admin-actionable-card">
+        <div className="focus-guidance-main">
+          <h4>Como o dia se organiza</h4>
+          <p>
+            {businessFlow.whyNow || data.commandCenter.diagnosis || 'A IA está separando primeiro o que mexe mais em receita, depois o que precisa de nova leitura e por último o resto.'}
+          </p>
+          <div className="focus-guidance-meta">
+            <div>
+              <strong>{formatNumber(data.centralPriorities.actions.length || 0)}</strong>
+              <span>Frentes abertas hoje</span>
+            </div>
+            <div>
+              <strong>{nextCentralAction?.priority || data.centralPriorities.productToPrioritize?.priority || 'Média'}</strong>
+              <span>Pressão comercial</span>
+            </div>
+            <div>
+              <strong>{firstAuditPriority?.title || data.centralPriorities.productToPrioritize?.label || 'Sem destaque'} </strong>
+              <span>Próxima releitura da IA</span>
+            </div>
+          </div>
+        </div>
+        <div className="focus-steps">
+          {guidanceSteps.map((step) => (
+            <article key={step.title} className="focus-step">
+              <span>{step.title}</span>
+              <strong>{step.description}</strong>
+            </article>
+          ))}
         </div>
       </section>
 
-      <div className="kpi-grid kpi-grid--admin">
-        <article className="kpi-card">
-          <p>Online agora</p>
-          <strong>{data?.summary?.onlineUsers || 0}</strong>
-          <small>Últimos {data?.summary?.activeWindowMinutes || 3} min</small>
-        </article>
-        <article className="kpi-card">
-          <p>Visitas no período</p>
-          <strong>{data?.summary?.totalViews || 0}</strong>
-        </article>
-        <article className="kpi-card">
-          <p>Cliques Porto</p>
-          <strong>{data?.summary?.totalClicks || 0}</strong>
-        </article>
-        <article className="kpi-card">
-          <p>Leads captados</p>
-          <strong>{data?.summary?.totalLeads || 0}</strong>
-        </article>
-        <article className="kpi-card">
-          <p>CTR médio</p>
-          <strong>{data?.summary?.ctr || 0}%</strong>
-        </article>
-        <article className="kpi-card kpi-card--em-contato">
-          <p>Retornos pendentes</p>
-          <strong>{data?.summary?.overdueFollowUps || 0}</strong>
-        </article>
-        <article className="kpi-card kpi-card--novo">
-          <p>Próximos retornos</p>
-          <strong>{data?.summary?.upcomingFollowUps || 0}</strong>
-        </article>
-      </div>
+      <section className="exec-grid-2">
+        <DailyChecklistPanel
+          apiBase={apiBase}
+          basePath={basePath}
+          initialData={data.dailyChecklist || null}
+          compact
+          title="Checklist do dia"
+          eyebrow="Rotina"
+        />
+      </section>
 
-      <div className="kpi-grid kpi-grid--compact">
-        <article className="kpi-card kpi-card--novo">
-          <span>Leads novos</span>
-          <strong>{statusCounts.novo}</strong>
-        </article>
-        <article className="kpi-card kpi-card--em-contato">
-          <span>Em contato</span>
-          <strong>{statusCounts.em_contato}</strong>
-        </article>
-        <article className="kpi-card kpi-card--ganho">
-          <span>Ganhos</span>
-          <strong>{statusCounts.ganho}</strong>
-        </article>
-        <article className="kpi-card kpi-card--perdido">
-          <span>Perdidos</span>
-          <strong>{statusCounts.perdido}</strong>
-        </article>
-      </div>
+      <section className="exec-kpi-grid">
+        <KpiCard
+          label="Visitas hoje"
+          value={formatNumber(data.kpis.visitsToday)}
+          helper="Tráfego observado no site"
+          delta={data.comparisons.todayVsYesterday.visits}
+          tone="blue"
+          chartItems={[
+            { label: 'H', value: data.comparisons.todayVsYesterday.visits.current },
+            { label: '7d', value: data.comparisons.last7VsPrevious7.visits.current },
+            { label: '30d', value: data.comparisons.last30VsPrevious30.visits.current }
+          ]}
+          href="/dashboard/analytics"
+          router={router}
+          basePath={basePath}
+        />
+        <KpiCard
+          label="Leads hoje"
+          value={formatNumber(data.kpis.leadsToday)}
+          helper="Captação comercial do dia"
+          delta={data.comparisons.todayVsYesterday.leads}
+          tone="green"
+          chartItems={[
+            { label: 'H', value: data.comparisons.todayVsYesterday.leads.current },
+            { label: '7d', value: data.comparisons.last7VsPrevious7.leads.current },
+            { label: '30d', value: data.comparisons.last30VsPrevious30.leads.current }
+          ]}
+          href="/admin/leads"
+          router={router}
+          basePath={basePath}
+        />
+        <KpiCard
+          label="Cliques no WhatsApp"
+          value={formatNumber(data.kpis.whatsappClicksToday)}
+          helper="Sinal comercial direto"
+          delta={data.comparisons.todayVsYesterday.whatsappClicks}
+          tone="gold"
+          chartItems={[
+            { label: 'H', value: data.comparisons.todayVsYesterday.whatsappClicks.current },
+            { label: '7d', value: data.comparisons.last7VsPrevious7.whatsappClicks.current },
+            { label: '30d', value: data.comparisons.last30VsPrevious30.whatsappClicks.current }
+          ]}
+          href="/admin/leads"
+          router={router}
+          basePath={basePath}
+        />
+        <KpiCard
+          label="Gasto em anúncios"
+          value={formatCurrency(data.kpis.adSpendToday)}
+          helper={data.kpis.adSpendToday == null ? 'Leitura diária entra quando Meta/Google Ads estiverem conectados' : 'Investimento pago observado hoje'}
+          delta={null}
+          tone="purple"
+          chartItems={[
+            { label: 'Hoje', value: data.kpis.adSpendToday || 0 },
+            { label: 'Pago', value: data.kpis.paidTrafficToday || 0 },
+            { label: 'Org', value: data.kpis.organicTrafficToday || 0 }
+          ]}
+          href="/dashboard/campaigns"
+          router={router}
+          basePath={basePath}
+        />
+        <KpiCard
+          label="Tráfego orgânico"
+          value={formatNumber(data.kpis.organicTrafficToday)}
+          helper="Busca orgânica identificada"
+          delta={null}
+          tone="green"
+          chartItems={[
+            { label: 'Hoje', value: data.kpis.organicTrafficToday || 0 },
+            { label: '7d', value: data.comparisons.last7VsPrevious7.visits.current },
+            { label: '30d', value: data.comparisons.last30VsPrevious30.visits.current }
+          ]}
+          href="/dashboard/seo"
+          router={router}
+          basePath={basePath}
+        />
+        <KpiCard
+          label="CPL hoje"
+          value={data.kpis.costPerLeadToday == null ? 'Aguardando mídia' : formatCurrency(data.kpis.costPerLeadToday)}
+          helper="Custo por lead do dia"
+          delta={null}
+          tone="blue"
+          chartItems={[
+            { label: 'Leads', value: data.kpis.leadsToday || 0 },
+            { label: 'Pago', value: data.kpis.paidTrafficToday || 0 },
+            { label: 'Org', value: data.kpis.organicTrafficToday || 0 }
+          ]}
+          href="/dashboard/campaigns"
+          router={router}
+          basePath={basePath}
+        />
+      </section>
 
-      <div className="admin-panel-grid admin-panel-grid--wide">
-        <section className="admin-card admin-goals-card">
-          <div className="admin-card-head">
-            <h2>Metas comerciais</h2>
-            <span>Hoje e últimos 7 dias</span>
-          </div>
-          <div className="admin-goals-grid">
-            <article className="admin-goal-block">
-              <div className="admin-goal-head">
-                <strong>Meta diária de leads</strong>
-                <input
-                  type="number"
-                  min="1"
-                  value={dailyGoal}
-                  onChange={(e) => setDailyGoal(Math.max(1, Number(e.target.value || 1)))}
-                />
-              </div>
-              <div className="admin-goal-progress-shell" aria-hidden="true">
-                <div className="admin-goal-progress admin-goal-progress--daily" style={{ width: `${Math.max(8, dailyProgress)}%` }} />
-              </div>
-              <div className="admin-goal-foot">
-                <span>{data?.summary?.todayLeads || 0} leads hoje</span>
-                <b>{dailyProgress}%</b>
-              </div>
-            </article>
-
-            <article className="admin-goal-block">
-              <div className="admin-goal-head">
-                <strong>Meta semanal de leads</strong>
-                <input
-                  type="number"
-                  min="1"
-                  value={weeklyGoal}
-                  onChange={(e) => setWeeklyGoal(Math.max(1, Number(e.target.value || 1)))}
-                />
-              </div>
-              <div className="admin-goal-progress-shell" aria-hidden="true">
-                <div className="admin-goal-progress admin-goal-progress--weekly" style={{ width: `${Math.max(8, weeklyProgress)}%` }} />
-              </div>
-              <div className="admin-goal-foot">
-                <span>{data?.summary?.weekLeads || 0} leads nos últimos 7 dias</span>
-                <b>{weeklyProgress}%</b>
-              </div>
-            </article>
-          </div>
-        </section>
-      </div>
-
-      <div className="admin-panel-grid">
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Páginas mais acessadas</h2>
-            <span>Tráfego bruto</span>
-          </div>
-          <ul>
-            {(data?.topPages || []).map((item) => (
-              <li key={item.page_path}>
-                <span>{item.page_path}</span>
-                <strong>{item.views}</strong>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Produtos com mais cliques</h2>
-            <span>Saída para contratação</span>
-          </div>
-          <ul>
-            {(data?.topProducts || []).map((item) => (
-              <li key={item.product_slug || 'na'}>
-                <span>{item.product_slug || 'sem produto'}</span>
-                <strong>{item.clicks}</strong>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Taxa de clique por página</h2>
-            <span>Eficiência de conversão</span>
-          </div>
-          <ul>
-            {(data?.ctrByPage || []).map((item) => (
-              <li key={item.page_path}>
-                <span>{item.page_path}</span>
-                <strong>{item.ctr}%</strong>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
-
-      <div className="admin-panel-grid">
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Leads sem responsável</h2>
-            <span>Distribuição comercial pendente</span>
-          </div>
-          <ul>
-            {(data?.unassignedLeads || []).map((item) => (
-              <li key={item.id}>
-                <span>
-                  <b>{item.nome || 'Lead sem nome'}</b>
-                  <small>{item.product_slug || 'sem produto'}</small>
-                </span>
-                <strong>{formatDateTime(item.created_at)}</strong>
-              </li>
-            ))}
-            {!data?.unassignedLeads?.length ? <li><span>Sem leads sem responsável.</span><strong>OK</strong></li> : null}
-          </ul>
-        </section>
-
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Novos sem retorno</h2>
-            <span>Mais de 12h sem avanço</span>
-          </div>
-          <ul>
-            {(data?.staleNewLeads || []).map((item) => (
-              <li key={item.id}>
-                <span>
-                  <b>{item.nome || 'Lead sem nome'}</b>
-                  <small>{item.product_slug || 'sem produto'}</small>
-                </span>
-                <strong>{formatDateTime(item.updated_at)}</strong>
-              </li>
-            ))}
-            {!data?.staleNewLeads?.length ? <li><span>Nenhum lead novo parado.</span><strong>OK</strong></li> : null}
-          </ul>
-        </section>
-
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Alertas rápidos</h2>
-            <span>Leitura executiva</span>
-          </div>
-          <ul>
-            <li>
-              <span>Leads sem responsável</span>
-              <strong>{data?.summary?.unassignedLeads || 0}</strong>
-            </li>
-            <li>
-              <span>Novos sem retorno</span>
-              <strong>{data?.summary?.staleNewLeads || 0}</strong>
-            </li>
-            <li>
-              <span>Retornos pendentes</span>
-              <strong>{data?.summary?.overdueFollowUps || 0}</strong>
-            </li>
-            <li>
-              <span>Próximos retornos</span>
-              <strong>{data?.summary?.upcomingFollowUps || 0}</strong>
-            </li>
-          </ul>
-        </section>
-      </div>
-
-      <div className="admin-panel-grid admin-panel-grid--wide">
-        <section className="admin-card admin-conversion-card">
-          <div className="admin-card-head">
-            <h2>Conversão por produto</h2>
-            <span>Visitas, cliques e leads no período</span>
-          </div>
-          {(data?.conversionByProduct || []).length ? (
-            <div className="admin-conversion-list">
-              {data.conversionByProduct.map((item) => (
-                <div key={item.product_slug} className="admin-conversion-row">
-                  <div className="admin-conversion-title">
-                    <strong>{item.product_slug}</strong>
-                    <span>{item.views} visitas</span>
-                  </div>
-                  <div className="admin-conversion-metrics">
-                    <span><b>{item.clicks}</b> cliques</span>
-                    <span><b>{item.leads}</b> leads</span>
-                    <span><b>{item.click_rate || 0}%</b> CTR</span>
-                    <span><b>{item.lead_rate || 0}%</b> lead/clique</span>
-                  </div>
-                </div>
-              ))}
+      <section className="exec-grid-2">
+        <article className="exec-panel">
+          <div className="exec-panel-head">
+            <div>
+              <span>Fila de releitura da IA</span>
+              <h3>{auditPriorities.headline || 'Onde a IA deve voltar primeiro'}</h3>
             </div>
-          ) : (
-            <p className="admin-empty-note">Ainda não há volume suficiente para comparar produtos nesse filtro.</p>
-          )}
-        </section>
-      </div>
-
-      <div className="admin-panel-grid admin-panel-grid--wide">
-        <section className="admin-card admin-loss-card">
-          <div className="admin-card-head">
-            <h2>Motivos de perda</h2>
-            <span>Principais objeções no período</span>
           </div>
-          {(data?.lossReasons || []).length ? (
-            <div className="admin-loss-list">
-              {data.lossReasons.map((item) => (
-                <div key={item.loss_reason} className="admin-loss-row">
-                  <div className="admin-loss-copy">
-                    <strong>{item.loss_reason}</strong>
-                    <span>{item.total} lead{item.total > 1 ? 's' : ''}</span>
-                  </div>
-                  <div className="admin-loss-bar-shell" aria-hidden="true">
-                    <div
-                      className="admin-loss-bar"
-                      style={{ width: `${Math.max(10, (item.total / lossReasonMax) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+          <div className="exec-refresh-list">
+            {auditPriorities.items?.length ? auditPriorities.items.slice(0, 4).map((item) => (
+              <RefreshPriorityItem key={item.id} item={item} router={router} basePath={basePath} />
+            )) : <p className="dashboard-card-empty">As leituras principais ainda estão dentro da janela segura.</p>}
+          </div>
+        </article>
+
+        <article className="exec-panel admin-actionable-card" {...getInteractiveCardProps(router, '/dashboard/history', basePath)}>
+          <div className="exec-panel-head">
+            <div>
+              <span>Rastro da IA</span>
+              <h3>{executionCenter.headline || 'Sem registro recente'}</h3>
             </div>
-          ) : (
-            <p className="admin-empty-note">Ainda não há leads perdidos com motivo preenchido no período.</p>
-          )}
-        </section>
-      </div>
-
-      <div className="admin-panel-grid">
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Leads que exigem atenção</h2>
-            <span>Próximo retorno vencido ou sem ação há 48h</span>
           </div>
-          <ul>
-            {(data?.overdueFollowUps || []).map((item) => (
-              <li key={item.id}>
-                <span>
-                  <b>{item.nome || 'Lead sem nome'}</b>
-                  <small>{item.product_slug || 'sem produto'}{item.owner_name ? ` · ${item.owner_name}` : ''}</small>
-                </span>
-                <strong>{item.next_contact_at ? formatDateTime(item.next_contact_at) : 'Sem retorno agendado'}</strong>
-              </li>
-            ))}
-            {!data?.overdueFollowUps?.length ? <li><span>Nenhum lead crítico.</span><strong>OK</strong></li> : null}
-          </ul>
-        </section>
-
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Próximos retornos</h2>
-            <span>Agenda comercial</span>
+          <div className="exec-alert-list">
+            <div className="exec-alert-card exec-alert-card--success">
+              <strong>Registros concluídos</strong>
+              <p>{formatNumber(executionCenter.successfulRuns || 0)} decisões e acompanhamentos já foram registrados.</p>
+              <small>Inclui contexto aprovado, histórico salvo e próximo passo rastreado.</small>
+            </div>
+            <div className="exec-alert-card exec-alert-card--warning">
+              <strong>Acompanhamentos abertos</strong>
+              <p>{formatNumber(executionCenter.pendingReviews || 0)} revisões seguem vivas para medir impacto.</p>
+              <small>O sistema volta para checar resultado, não só sugere e some.</small>
+            </div>
+            <div className="exec-alert-card exec-alert-card--danger">
+              <strong>Pontos bloqueados</strong>
+              <p>{formatNumber((executionCenter.pendingApprovals || 0) + (executionCenter.failedRuns || 0))} itens ainda travam fluxo.</p>
+              <small>Somam decisões suas que ainda faltam e registros que pedem correção.</small>
+            </div>
           </div>
-          <ul>
-            {(data?.upcomingFollowUps || []).map((item) => (
-              <li key={item.id}>
-                <span>
-                  <b>{item.nome || 'Lead sem nome'}</b>
-                  <small>{item.product_slug || 'sem produto'}{item.owner_name ? ` · ${item.owner_name}` : ''}</small>
-                </span>
-                <strong>{formatDateTime(item.next_contact_at)}</strong>
-              </li>
-            ))}
-            {!data?.upcomingFollowUps?.length ? <li><span>Nenhum retorno agendado.</span><strong>-</strong></li> : null}
-          </ul>
-        </section>
+        </article>
+      </section>
 
-        <section className="admin-card admin-list-card">
-          <div className="admin-card-head">
-            <h2>Leads mais recentes</h2>
-            <span>Fila comercial</span>
+      <section className="exec-panel exec-panel--secondary">
+        <div className="exec-panel-head">
+          <div>
+            <span>Leitura analítica</span>
+            <h3>Comparativos para aprofundar a decisão</h3>
           </div>
-          <ul>
-            {(data?.recentLeads || []).map((item) => (
-              <li key={item.id}>
-                <span>
-                  <b>{item.nome || 'Lead sem nome'}</b>
-                  <small>{item.product_slug || 'sem produto'}{item.owner_name ? ` · ${item.owner_name}` : ''}</small>
-                </span>
-                <strong>{formatStatus(item.lead_status)}</strong>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+        </div>
+        <div className="exec-comparison-grid">
+        <ComparisonCard
+          title="Hoje vs ontem"
+          rows={[
+            { label: 'Visitas', value: formatNumber(data.comparisons.todayVsYesterday.visits.current), delta: data.comparisons.todayVsYesterday.visits },
+            { label: 'Leads', value: formatNumber(data.comparisons.todayVsYesterday.leads.current), delta: data.comparisons.todayVsYesterday.leads },
+            { label: 'WhatsApp', value: formatNumber(data.comparisons.todayVsYesterday.whatsappClicks.current), delta: data.comparisons.todayVsYesterday.whatsappClicks },
+            { label: 'Conversão', value: formatPercent(data.comparisons.todayVsYesterday.conversionRate.current), delta: data.comparisons.todayVsYesterday.conversionRate },
+            { label: 'CTR', value: formatPercent(data.comparisons.todayVsYesterday.ctr.current), delta: data.comparisons.todayVsYesterday.ctr }
+          ]}
+          href="/dashboard/analytics"
+          router={router}
+          basePath={basePath}
+        />
+        <ComparisonCard
+          title="Últimos 7 dias vs 7 anteriores"
+          rows={[
+            { label: 'Visitas', value: formatNumber(data.comparisons.last7VsPrevious7.visits.current), delta: data.comparisons.last7VsPrevious7.visits },
+            { label: 'Leads', value: formatNumber(data.comparisons.last7VsPrevious7.leads.current), delta: data.comparisons.last7VsPrevious7.leads },
+            { label: 'WhatsApp', value: formatNumber(data.comparisons.last7VsPrevious7.whatsappClicks.current), delta: data.comparisons.last7VsPrevious7.whatsappClicks },
+            { label: 'Conversão', value: formatPercent(data.comparisons.last7VsPrevious7.conversionRate.current), delta: data.comparisons.last7VsPrevious7.conversionRate },
+            { label: 'CTR', value: formatPercent(data.comparisons.last7VsPrevious7.ctr.current), delta: data.comparisons.last7VsPrevious7.ctr }
+          ]}
+          href="/dashboard/analytics"
+          router={router}
+          basePath={basePath}
+        />
+        <ComparisonCard
+          title="Últimos 30 dias vs 30 anteriores"
+          rows={[
+            { label: 'Visitas', value: formatNumber(data.comparisons.last30VsPrevious30.visits.current), delta: data.comparisons.last30VsPrevious30.visits },
+            { label: 'Leads', value: formatNumber(data.comparisons.last30VsPrevious30.leads.current), delta: data.comparisons.last30VsPrevious30.leads },
+            { label: 'WhatsApp', value: formatNumber(data.comparisons.last30VsPrevious30.whatsappClicks.current), delta: data.comparisons.last30VsPrevious30.whatsappClicks },
+            { label: 'Conversão', value: formatPercent(data.comparisons.last30VsPrevious30.conversionRate.current), delta: data.comparisons.last30VsPrevious30.conversionRate },
+            { label: 'CTR', value: formatPercent(data.comparisons.last30VsPrevious30.ctr.current), delta: data.comparisons.last30VsPrevious30.ctr }
+          ]}
+          href="/dashboard/analytics"
+          router={router}
+          basePath={basePath}
+        />
+        </div>
+      </section>
+
+      <section className="exec-leader-grid">
+        <LeaderCard
+          label={`Melhor produto · ${data.leaderboards.windowLabel}`}
+          item={data.leaderboards.bestProduct}
+          type="best"
+          href={data.leaderboards.bestProduct?.slug ? `/admin/leads?product=${encodeURIComponent(data.leaderboards.bestProduct.slug)}` : '/dashboard/products'}
+          router={router}
+          basePath={basePath}
+        />
+        <LeaderCard
+          label={`Pior produto · ${data.leaderboards.windowLabel}`}
+          item={data.leaderboards.worstProduct}
+          type="worst"
+          href={data.leaderboards.worstProduct?.slug ? `/admin/leads?product=${encodeURIComponent(data.leaderboards.worstProduct.slug)}` : '/dashboard/products'}
+          router={router}
+          basePath={basePath}
+        />
+        <LeaderCard label={`Melhor página · ${data.leaderboards.windowLabel}`} item={data.leaderboards.bestPage} type="best" href="/dashboard/pages" router={router} basePath={basePath} />
+        <LeaderCard label={`Pior página · ${data.leaderboards.windowLabel}`} item={data.leaderboards.worstPage} type="worst" href="/dashboard/pages" router={router} basePath={basePath} />
+        <LeaderCard label={`Melhor campanha · ${data.leaderboards.windowLabel}`} item={data.leaderboards.bestCampaign} type="best" href="/dashboard/campaigns" router={router} basePath={basePath} />
+        <LeaderCard label={`Pior campanha · ${data.leaderboards.windowLabel}`} item={data.leaderboards.worstCampaign} type="worst" href="/dashboard/campaigns" router={router} basePath={basePath} />
+      </section>
+
     </div>
   );
 }

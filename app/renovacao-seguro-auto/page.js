@@ -11,7 +11,7 @@ const faqs = [
   },
   {
     q: 'A apólice atual é obrigatória na renovação?',
-    a: 'No fluxo da H Soares, a renovação pode exigir o envio da apólice atual para estruturar melhor a análise comercial e reduzir ruídos na comparação da proposta nova.'
+    a: 'No fluxo da H Soares, a renovação pode exigir o envio da apólice atual para estruturar melhor a análise e reduzir ruídos na comparação da proposta nova.'
   },
   {
     q: 'Placa e tipo de uso influenciam na renovação?',
@@ -64,10 +64,10 @@ export default function RenovacaoSeguroAutoPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Auto</p>
-            <h1>Renovação de Seguro Auto com leitura melhor da apólice atual.</h1>
+            <h1>Renovação de Seguro Auto com leitura mais clara da apólice atual.</h1>
             <p className="subhead">
               Na renovação, a qualidade da captura pesa muito. A H Soares organiza os dados do segurado, do condutor,
-              do veículo e da apólice vigente para comparar melhor o cenário atual com a nova proposta comercial.
+              do veículo e da apólice vigente para comparar melhor o cenário atual com a nova proposta.
             </p>
             <div className="cta-row">
               <Link className="btn btn-primary" href="/produtos/seguro-auto">
@@ -96,7 +96,7 @@ export default function RenovacaoSeguroAutoPage() {
               <ul>
                 <li>Ajuda a comparar coberturas e estrutura real da proteção vigente.</li>
                 <li>Evita proposta desalinhada com bônus, histórico ou forma de uso.</li>
-                <li>Dá mais clareza para montar um retorno comercial melhor.</li>
+                <li>Dá mais clareza para montar uma resposta melhor.</li>
               </ul>
             </article>
           </div>
@@ -119,10 +119,9 @@ export default function RenovacaoSeguroAutoPage() {
               </p>
             </article>
             <article>
-              <h2>Mais conversão</h2>
+              <h2>Mais confiança</h2>
               <p>
-                Uma renovação bem montada aumenta a confiança do cliente e melhora a chance de fechar sem ruído
-                operacional no meio da jornada.
+                Uma renovação bem montada aumenta a confiança do cliente e ajuda a avançar sem ruído no meio da jornada.
               </p>
             </article>
           </div>

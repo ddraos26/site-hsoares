@@ -24,7 +24,7 @@ const faqs = [
 ];
 
 export const metadata = buildPageMetadata({
-  title: 'Seguro Fiança para Imobiliárias',
+  title: 'Seguro Fiança para Imobiliárias: plataforma, análise e operação',
   description:
     'Seguro Fiança para Imobiliárias com plataforma própria, análise automática, retorno na hora e Seguro Imobiliário no mesmo fluxo da locação.',
   path: '/seguro-fianca-para-imobiliarias'
@@ -68,10 +68,10 @@ export default function SeguroFiancaImobiliariasPage() {
         <section className="section page-hero">
           <div className="container page-hero-shell">
             <p className="eyebrow">Imobiliárias</p>
-            <h1>Seguro Fiança para Imobiliárias com operação mais rápida e previsível.</h1>
+            <h1>Seguro Fiança para Imobiliárias com fluxo mais rápido e previsível.</h1>
             <p className="subhead">
               A H Soares estruturou uma jornada própria para imobiliárias parceiras que precisam ganhar velocidade de
-              aprovação, visualizar Seguro Fiança e Seguro Imobiliário no mesmo fluxo e reduzir gargalos no fechamento
+              aprovação, visualizar Seguro Fiança e Seguro Imobiliário no mesmo fluxo e reduzir gargalos na formalização
               da locação.
             </p>
             <div className="cta-row">
@@ -105,7 +105,7 @@ export default function SeguroFiancaImobiliariasPage() {
               <h2>Operação forte para locação</h2>
               <p>
                 A proposta é dar mais escala, previsibilidade e organização para quem opera várias locações e precisa
-                de uma resposta comercial mais rápida.
+                de uma resposta mais rápida.
               </p>
             </article>
           </div>

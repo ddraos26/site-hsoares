@@ -17,6 +17,43 @@ function sanitize(value, limit = 120) {
   return String(value || '').trim().slice(0, limit);
 }
 
+async function fetchTopPages(sql, { fromDate, toDate, productLike, campaignLike }) {
+  const rows = await sql`
+    SELECT page_path, COUNT(*)::int AS views
+    FROM page_views
+    WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
+      AND (${productLike}::text IS NULL OR page_path ILIKE ${productLike})
+      AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+    GROUP BY page_path
+    ORDER BY views DESC
+    LIMIT 10
+  `;
+
+  return rows.map((row) => ({
+    page_path: row.page_path,
+    views: row.views || 0
+  }));
+}
+
+async function fetchTopProducts(sql, { fromDate, toDate, product, campaignLike }) {
+  const rows = await sql`
+    SELECT product_slug, COUNT(*)::int AS clicks
+    FROM conversion_events
+    WHERE event_type = 'porto_click'
+      AND created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
+      AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+      AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+    GROUP BY product_slug
+    ORDER BY clicks DESC
+    LIMIT 10
+  `;
+
+  return rows.map((row) => ({
+    product_slug: row.product_slug,
+    clicks: row.clicks || 0
+  }));
+}
+
 export async function GET(request) {
   try {
     const sql = getDb();
@@ -24,14 +61,20 @@ export async function GET(request) {
     const { fromDate, toDate } = resolveRange(searchParams);
     const product = sanitize(searchParams.get('product'));
     const owner = sanitize(searchParams.get('owner'));
+    const campaign = sanitize(searchParams.get('campaign'));
     const productLike = product ? `%${product}%` : null;
     const ownerLike = owner ? `%${owner}%` : null;
+    const campaignLike = campaign ? `%${campaign}%` : null;
+    const rangeMs = toDate.getTime() - fromDate.getTime();
+    const prevToDate = new Date(fromDate.getTime() - 1);
+    const prevFromDate = new Date(prevToDate.getTime() - rangeMs);
 
     const [viewsRow] = await sql`
       SELECT COUNT(*)::int AS total
       FROM page_views
       WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${productLike}::text IS NULL OR page_path ILIKE ${productLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
     `;
 
     const [clicksRow] = await sql`
@@ -40,6 +83,8 @@ export async function GET(request) {
       WHERE event_type = 'porto_click'
         AND created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
     `;
 
     const [leadsRow] = await sql`
@@ -48,6 +93,34 @@ export async function GET(request) {
       WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+    `;
+
+    const [prevViewsRow] = await sql`
+      SELECT COUNT(*)::int AS total
+      FROM page_views
+      WHERE created_at BETWEEN ${prevFromDate.toISOString()} AND ${prevToDate.toISOString()}
+        AND (${productLike}::text IS NULL OR page_path ILIKE ${productLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+    `;
+
+    const [prevClicksRow] = await sql`
+      SELECT COUNT(*)::int AS total
+      FROM conversion_events
+      WHERE event_type = 'porto_click'
+        AND created_at BETWEEN ${prevFromDate.toISOString()} AND ${prevToDate.toISOString()}
+        AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
+    `;
+
+    const [prevLeadsRow] = await sql`
+      SELECT COUNT(*)::int AS total
+      FROM leads
+      WHERE created_at BETWEEN ${prevFromDate.toISOString()} AND ${prevToDate.toISOString()}
+        AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+        AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
     `;
 
     const leadStatusSummary = await sql`
@@ -56,29 +129,15 @@ export async function GET(request) {
       WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       GROUP BY lead_status
     `;
 
-    const topPages = await sql`
-      SELECT page_path, COUNT(*)::int AS views
-      FROM page_views
-      WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
-        AND (${productLike}::text IS NULL OR page_path ILIKE ${productLike})
-      GROUP BY page_path
-      ORDER BY views DESC
-      LIMIT 10
-    `;
+    const topPages = await fetchTopPages(sql, { fromDate, toDate, productLike, campaignLike });
+    const previousTopPages = await fetchTopPages(sql, { fromDate: prevFromDate, toDate: prevToDate, productLike, campaignLike });
 
-    const topProducts = await sql`
-      SELECT product_slug, COUNT(*)::int AS clicks
-      FROM conversion_events
-      WHERE event_type = 'porto_click'
-        AND created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
-        AND (${product || null}::text IS NULL OR product_slug = ${product || null})
-      GROUP BY product_slug
-      ORDER BY clicks DESC
-      LIMIT 10
-    `;
+    const topProducts = await fetchTopProducts(sql, { fromDate, toDate, product, campaignLike });
+    const previousTopProducts = await fetchTopProducts(sql, { fromDate: prevFromDate, toDate: prevToDate, product, campaignLike });
 
     const ctrByPage = await sql`
       WITH views AS (
@@ -86,6 +145,7 @@ export async function GET(request) {
         FROM page_views
         WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
           AND (${productLike}::text IS NULL OR page_path ILIKE ${productLike})
+          AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         GROUP BY page_path
       ),
       clicks AS (
@@ -94,6 +154,7 @@ export async function GET(request) {
         WHERE event_type = 'porto_click'
           AND created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
           AND (${product || null}::text IS NULL OR product_slug = ${product || null})
+          AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         GROUP BY page_path
       )
       SELECT
@@ -119,6 +180,7 @@ export async function GET(request) {
       WHERE lead_status IN ('novo', 'em_contato')
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         AND (
           (next_contact_at IS NOT NULL AND next_contact_at <= now())
           OR (next_contact_at IS NULL AND updated_at <= now() - interval '48 hours')
@@ -141,6 +203,7 @@ export async function GET(request) {
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
         AND next_contact_at IS NOT NULL
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         AND next_contact_at > now()
       ORDER BY next_contact_at ASC
       LIMIT 8
@@ -158,6 +221,7 @@ export async function GET(request) {
       FROM leads
       WHERE (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       ORDER BY created_at DESC
       LIMIT 8
     `;
@@ -171,6 +235,7 @@ export async function GET(request) {
         AND created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       GROUP BY 1
       ORDER BY total DESC, loss_reason ASC
       LIMIT 8
@@ -183,8 +248,9 @@ export async function GET(request) {
           COUNT(*)::int AS views
         FROM page_views
         WHERE created_at BETWEEN ${fromDate.toISOString()} AND ${toDate.toISOString()}
-          AND page_path LIKE '/produtos/%'
-          AND (${product || null}::text IS NULL OR split_part(replace(page_path, '/produtos/', ''), '/', 1) = ${product || null})
+        AND page_path LIKE '/produtos/%'
+        AND (${product || null}::text IS NULL OR split_part(replace(page_path, '/produtos/', ''), '/', 1) = ${product || null})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         GROUP BY 1
       ),
       product_clicks AS (
@@ -228,6 +294,9 @@ export async function GET(request) {
     const totalClicks = clicksRow?.total || 0;
     const activeWindowMinutes = 3;
     const onlineSince = new Date(Date.now() - activeWindowMinutes * 60 * 1000).toISOString();
+    const prevTotalViews = prevViewsRow?.total || 0;
+    const prevTotalClicks = prevClicksRow?.total || 0;
+    const prevTotalLeads = prevLeadsRow?.total || 0;
 
     const [onlineRow] = await sql`
       WITH active_sessions AS (
@@ -235,12 +304,14 @@ export async function GET(request) {
         FROM page_views
         WHERE session_id IS NOT NULL
           AND created_at >= ${onlineSince}
+          AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
         UNION
         SELECT session_id
         FROM conversion_events
         WHERE session_id IS NOT NULL
           AND event_type = 'heartbeat'
           AND created_at >= ${onlineSince}
+          AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       )
       SELECT COUNT(DISTINCT session_id)::int AS total
       FROM active_sessions
@@ -252,6 +323,7 @@ export async function GET(request) {
       WHERE created_at >= date_trunc('day', timezone('America/Sao_Paulo', now())) AT TIME ZONE 'America/Sao_Paulo'
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
     `;
 
     const [weekLeadsRow] = await sql`
@@ -260,6 +332,7 @@ export async function GET(request) {
       WHERE created_at >= now() - interval '7 days'
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND (${ownerLike}::text IS NULL OR owner_name ILIKE ${ownerLike})
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
     `;
 
     const unassignedLeads = await sql`
@@ -277,6 +350,7 @@ export async function GET(request) {
           owner_name IS NULL
           OR NULLIF(TRIM(owner_name), '') IS NULL
         )
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       ORDER BY created_at DESC
       LIMIT 8
     `;
@@ -294,9 +368,31 @@ export async function GET(request) {
       WHERE lead_status = 'novo'
         AND (${product || null}::text IS NULL OR product_slug = ${product || null})
         AND updated_at <= now() - interval '12 hours'
+        AND (${campaignLike}::text IS NULL OR utm_campaign ILIKE ${campaignLike})
       ORDER BY updated_at ASC
       LIMIT 8
     `;
+
+    const summaryCtr = totalViews ? Number(((totalClicks / totalViews) * 100).toFixed(2)) : 0;
+    const prevCtr = prevTotalViews ? Number(((prevTotalClicks / prevTotalViews) * 100).toFixed(2)) : 0;
+    const comparison = {
+      views: {
+        current: totalViews,
+        previous: prevTotalViews
+      },
+      clicks: {
+        current: totalClicks,
+        previous: prevTotalClicks
+      },
+      leads: {
+        current: leadsRow?.total || 0,
+        previous: prevTotalLeads
+      },
+      ctr: {
+        current: summaryCtr,
+        previous: prevCtr
+      }
+    };
 
     return NextResponse.json({
       summary: {
@@ -305,7 +401,7 @@ export async function GET(request) {
         totalViews,
         totalClicks,
         totalLeads: leadsRow?.total || 0,
-        ctr: totalViews ? Number(((totalClicks / totalViews) * 100).toFixed(2)) : 0,
+        ctr: summaryCtr,
         overdueFollowUps: overdueFollowUps.length,
         upcomingFollowUps: upcomingFollowUps.length,
         todayLeads: todayLeadsRow?.total || 0,
@@ -315,7 +411,9 @@ export async function GET(request) {
       },
       leadStatusSummary,
       topPages,
+      previousTopPages,
       topProducts,
+      previousTopProducts,
       ctrByPage,
       overdueFollowUps,
       upcomingFollowUps,
