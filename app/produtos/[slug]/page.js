@@ -776,18 +776,6 @@ function CellPhoneProductPage({ product }) {
 
             <div className="travel-page__hero-visual">
               <div className="travel-page__visual-frame travel-page__visual-frame--cellphone">
-                <div className="travel-page__visual-copy">
-                  <p>Vida digital protegida</p>
-                  <h2>Seu celular concentra banco, WhatsApp, fotos e acessos importantes</h2>
-                  <span>
-                    Em vez de tratar o aparelho como algo comum, vale olhar para o valor real que ele tem na sua rotina
-                    e no seu bolso.
-                  </span>
-                </div>
-              </div>
-              <div className="travel-page__tip-card">
-                <p>Dica</p>
-                <strong>Confira as regras de elegibilidade e siga para a contratação oficial da Porto Seguro.</strong>
               </div>
             </div>
           </div>
@@ -887,12 +875,6 @@ function CellPhoneProductPage({ product }) {
                   Se surgir qualquer dúvida sobre cobertura, elegibilidade ou preenchimento, a corretora ajuda antes
                   e depois da contratação.
                 </span>
-
-                <div className="travel-page__support-points">
-                  <div>Ambiente oficial Porto Seguro</div>
-                  <div>Apoio consultivo da H Soares</div>
-                  <div>Processo simples e transparente</div>
-                </div>
               </div>
             </article>
           </div>
