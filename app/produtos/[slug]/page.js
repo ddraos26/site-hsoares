@@ -108,6 +108,13 @@ function PremiumIcon({ name }) {
         <path d="M20 11.5c0 4.1-3.8 7.5-8.5 7.5-1.1 0-2.1-0.2-3-0.5L4 20l1.3-3.5C4.5 15.2 4 13.9 4 12.5 4 8.4 7.8 5 12.5 5S20 7.4 20 11.5z" />
       </svg>
     ),
+    phone: (
+      <svg {...common}>
+        <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+        <path d="M10.5 6h3" />
+        <path d="M11.8 18.2h.4" />
+      </svg>
+    ),
     document: (
       <svg {...common}>
         <path d="M8 3h6l4 4v14H8z" />
@@ -278,255 +285,132 @@ const SEO_SUPPORT_LINKS = {
 };
 
 const CELL_PHONE_PAGE = {
-  highlights: ['Somente Porto Seguro', 'Proteção para iPhone e premium', 'Até 12x sem juros', 'Apoio da H Soares'],
-  quickFacts: [
+  benefits: [
+    {
+      icon: 'phone',
+      title: 'Celular caro, prejuízo alto',
+      text:
+        'Um iPhone, Samsung Galaxy ou Xiaomi premium pode custar milhares de reais. Um imprevisto pode pesar no bolso.'
+    },
     {
       icon: 'shield',
-      value: '3 formas de proteger um prejuízo que pode custar caro',
-      label: 'Você escolhe entre leituras que podem incluir roubo, quebra acidental e furto simples, conforme o plano contratado.'
+      title: 'Roubo e furto acontecem rápido',
+      text:
+        'Basta um momento de distração para perder o aparelho, seus acessos e parte da sua rotina digital.'
+    },
+    {
+      icon: 'chat',
+      title: 'Você depende dele todos os dias',
+      text: 'WhatsApp, bancos, clientes, fotos, redes sociais e autenticação ficam concentrados no celular.'
     },
     {
       icon: 'clock',
-      value: '365 dias de vigência após a emissão',
-      label: 'Depois da aprovação e emissão da apólice, a cobertura passa a valer sem carência.'
+      title: 'Contratação digital',
+      text: 'Você segue para o ambiente oficial da Porto Seguro e pode contar com apoio da H Soares se tiver dúvidas.'
+    }
+  ],
+  coverages: [
+    {
+      icon: 'shield',
+      title: 'Roubo',
+      text: 'Proteção em caso de roubo, conforme as regras da seguradora e o plano contratado.'
+    },
+    {
+      icon: 'lock',
+      title: 'Furto mediante arrombamento',
+      text: 'Cobertura para furto com vestígio, conforme o plano contratado.'
     },
     {
       icon: 'document',
-      value: 'Contratação digital, rápida e guiada',
-      label: 'Você informa o modelo, realiza o pagamento e faz a verificação do aparelho dentro do fluxo oficial da Porto.'
+      title: 'Quebra acidental',
+      text: 'Pode incluir danos como queda, curto-circuito, oxidação por líquido e outros eventos previstos no plano.'
     },
     {
-      icon: 'star',
-      value: 'Até aparelho usado pode ser elegível',
-      label: 'A Porto aceita aparelho usado dentro da regra vigente, hoje com limite de até 24 meses da compra pelo primeiro dono.'
+      icon: 'phone',
+      title: 'Furto simples',
+      text: 'Disponível em planos específicos, quando contratado.'
     }
   ],
-  painCards: [
-    {
-      icon: 'lock',
-      title: 'O prejuízo não é só perder o aparelho',
-      text:
-        'Perder um celular hoje pode travar banco, trabalho, autenticação, contatos e rotina. Em muitos casos, a dor maior está no que para junto com ele.'
-    },
-    {
-      icon: 'bolt',
-      title: 'Trocar um smartphone premium sem planejar pesa',
-      text:
-        'Quem usa iPhone e outros modelos de alto valor sabe que uma reposição inesperada pode bagunçar o orçamento em minutos.'
-    },
-    {
-      icon: 'chat',
-      title: 'Cobertura errada dá falsa sensação de segurança',
-      text:
-        'Preço baixo sozinho não protege ninguém. O que faz diferença é contratar uma leitura coerente com o risco que mais preocupa no seu dia a dia.'
-    },
-    {
-      icon: 'tools',
-      title: 'Decidir antes do problema quase sempre custa menos',
-      text:
-        'Quando o aparelho já é importante para a sua vida pessoal ou profissional, esperar o imprevisto costuma ser a parte mais cara da decisão.'
-    }
+  profilePoints: [
+    'usa iPhone, Samsung Galaxy, Xiaomi ou outro smartphone de alto valor',
+    'trabalha pelo celular',
+    'usa banco, WhatsApp, Instagram e aplicativos importantes no aparelho',
+    'circula bastante com o celular na rua',
+    'quer evitar o prejuízo de comprar outro aparelho do zero'
   ],
-  planCards: [
-    {
-      eyebrow: 'Mais enxuto',
-      title: 'Roubo',
-      accent: 'blue',
-      description:
-        'Para quem quer começar protegendo o risco de abordagem e levar a cotação para o essencial.',
-      items: ['Roubo', 'Furto com vestígio de crime', 'Entrada mais acessível para quem quer agir agora'],
-      idealFor: 'Ideal para quem circula bastante e quer atacar primeiro o risco de rua.'
-    },
-    {
-      eyebrow: 'Mais equilibrado',
-      title: 'Quebra + roubo',
-      accent: 'gold',
-      description:
-        'Mistura risco de roubo com dano acidental, um dos cenários mais comuns para quem usa o celular o dia inteiro.',
-      items: ['Roubo', 'Quebra acidental', 'Cobertura mais equilibrada para rotina intensa'],
-      idealFor: 'Faz muito sentido para iPhone e smartphones premium expostos a queda, correria e uso constante.'
-    },
-    {
-      eyebrow: 'Mais protegido',
-      title: 'Quebra + roubo + furto simples',
-      accent: 'ink',
-      description:
-        'Leitura mais ampla para quem quer incluir também o cenário em que o aparelho desaparece sem vestígio de arrombamento.',
-      items: ['Roubo', 'Quebra acidental', 'Furto simples'],
-      idealFor: 'Indicada para quem quer dormir mais tranquilo com a opção mais abrangente da linha.'
-    }
-  ],
-  compareRows: [
-    {
-      label: 'Roubo',
-      values: ['Sim', 'Sim', 'Sim']
-    },
-    {
-      label: 'Furto com vestígio de crime',
-      values: ['Sim', 'Sim', 'Sim']
-    },
-    {
-      label: 'Quebra acidental',
-      values: ['Não', 'Sim', 'Sim']
-    },
-    {
-      label: 'Furto simples',
-      values: ['Não', 'Não', 'Sim']
-    },
-    {
-      label: 'Perfil que costuma escolher',
-      values: [
-        'Quem quer proteger o principal risco de rua gastando menos',
-        'Quem quer equilíbrio entre proteção e custo-benefício',
-        'Quem quer a opção mais completa disponível'
-      ]
-    }
-  ],
-  audienceCards: [
-    {
-      icon: 'star',
-      title: 'Quem acabou de investir em um celular caro',
-      text:
-        'Nos primeiros dias, o aparelho já está em uso e ainda sem proteção. Para muita gente, esse é o momento em que a cotação mais faz sentido.'
-    },
-    {
-      icon: 'building',
-      title: 'Quem trabalha, vende ou atende pelo celular',
-      text:
-        'Se o aparelho ajuda você a faturar, responder cliente, aprovar pagamento ou autenticar acesso, ficar sem ele custa mais do que parece.'
-    },
-    {
-      icon: 'chat',
-      title: 'Quem usa banco, app e autenticação o dia inteiro',
-      text:
-        'Quando um único aparelho concentra vida financeira e rotina digital, um sinistro deixa de ser incômodo e vira bloqueio.'
-    },
-    {
-      icon: 'shield',
-      title: 'Quem prefere previsibilidade a prejuízo surpresa',
-      text:
-        'Muita gente contrata porque prefere encaixar uma proteção no orçamento a correr o risco de comprar outro celular do zero.'
-    }
-  ],
-  journeySteps: [
+  steps: [
     {
       number: '01',
-      title: 'Entenda qual leitura protege melhor o seu cenário',
-      text:
-        'Você pode falar com a H Soares antes para comparar o risco principal: roubo, quebra ou a necessidade de uma opção mais abrangente.'
+      title: 'Clique no botão de contratação',
+      text: 'Você será direcionado para o ambiente oficial da Porto Seguro.'
     },
     {
       number: '02',
-      title: 'Vá para a contratação oficial da Porto',
-      text:
-        'O link leva para o ambiente oficial, onde você informa o modelo do aparelho, escolhe a leitura de cobertura e define o pagamento.'
+      title: 'Siga para o ambiente oficial',
+      text: 'Veja as opções disponíveis com calma e confira as regras do produto.'
     },
     {
       number: '03',
-      title: 'Faça a verificação do celular no app',
-      text:
-        'A jornada pede conferência do aparelho e validação pelo aplicativo da Porto dentro do processo digital.'
+      title: 'Confira coberturas e elegibilidade',
+      text: 'Analise o plano, a leitura de cobertura e as condições vigentes.'
     },
     {
       number: '04',
-      title: 'Aguarde a análise e receba a apólice',
-      text:
-        'Se aprovado, a Porto informa o resultado no e-mail cadastrado e envia a apólice em até 48 horas.'
+      title: 'Finalize a contratação digital',
+      text: 'Preencha os dados solicitados e siga as etapas da Porto.'
+    },
+    {
+      number: '05',
+      title: 'Conte com apoio da H Soares',
+      text: 'Se tiver dúvidas, nossa equipe pode orientar antes ou durante o processo.'
     }
   ],
-  ruleCards: [
+  authorityCards: [
     {
-      icon: 'clock',
-      title: 'Vigência e ativação',
-      text:
-        'Depois da aprovação, a Porto informa vigência de 365 dias sem carência, contada a partir da emissão da apólice.'
-    },
-    {
-      icon: 'document',
-      title: 'Aparelho usado e comprovação',
-      text:
-        'Aparelho usado pode ser elegível na regra atual de até 24 meses do primeiro dono. A forma de comprovar aquisição segue relevante no processo e no eventual sinistro.'
-    },
-    {
-      icon: 'star',
-      title: 'Pagamento',
-      text:
-        'A contratação pode ser parcelada em até 12x sem juros no cartão de crédito. A Porto também informa 5% de desconto no Cartão Porto Bank.'
-    },
-    {
-      icon: 'lock',
-      title: 'App Porto durante a vigência',
-      text:
-        'Durante a vigência, a Porto orienta manter o app instalado e a biometria facial ativa no aparelho segurado.'
+      icon: 'shield',
+      title: '30 anos de mercado',
+      text: 'Experiência para orientar clientes com clareza e responsabilidade.'
     },
     {
       icon: 'chat',
-      title: 'Cancelamento',
-      text:
-        'Se precisar, o cancelamento pode ser solicitado a qualquer momento, mediante validação dos dados do segurado e da apólice.'
+      title: 'Atendimento consultivo',
+      text: 'A H Soares ajuda a esclarecer coberturas, elegibilidade e próximos passos.'
     },
     {
-      icon: 'shield',
-      title: 'Cobertura depende do aparelho e do plano',
-      text:
-        'O desenho final da proteção varia conforme modelo, elegibilidade e o que estiver disponível no fluxo oficial da Porto no momento da sua cotação.'
+      icon: 'document',
+      title: 'Redirecionamento oficial',
+      text: 'A contratação segue pelo ambiente oficial disponibilizado pela Porto Seguro.'
+    },
+    {
+      icon: 'family',
+      title: 'Apoio antes e depois',
+      text: 'Você não fica sozinho tentando entender tudo.'
     }
   ],
-  imageCards: [
+  faqs: [
     {
-      image: '/assets/blog/seguro-celular-compra-recente.webp',
-      alt: 'Celulares premium para representar aparelho novo',
-      title: 'Quanto antes você cotar, menor a chance de ficar descoberto',
-      text:
-        'Quem compra um aparelho novo normalmente passa a enxergar o seguro de outro jeito assim que lembra quanto custaria repor o mesmo modelo.'
+      q: 'O Seguro Celular da Porto cobre roubo?',
+      a: 'Sim, a Porto possui plano com cobertura para roubo, conforme as condições do produto contratado.'
     },
     {
-      image: '/assets/blog/seguro-celular-cobertura-card.webp',
-      alt: 'Composição de smartphone premium',
-      title: 'Em celular caro, decidir só por preço costuma sair caro',
-      text:
-        'A boa cotação não é a mais barata a qualquer custo. É a que protege o risco que realmente poderia machucar o seu bolso.'
+      q: 'Cobre quebra de tela?',
+      a: 'A cobertura de quebra acidental pode estar disponível conforme o plano escolhido e as regras da seguradora.'
     },
     {
-      image: '/assets/blog/seguro-celular-vigencia-card.webp',
-      alt: 'Smartphone premium em uso',
-      title: 'Rotina intensa aumenta o valor percebido da proteção',
-      text:
-        'Rua, trabalho, transporte, viagens e uso constante fazem muita gente entender rápido por que esse seguro vale a análise.'
+      q: 'Cobre furto simples?',
+      a: 'A Porto possui plano que pode incluir furto simples, quando essa cobertura for contratada.'
+    },
+    {
+      q: 'Posso contratar para iPhone usado?',
+      a: 'Depende das regras de elegibilidade da Porto Seguro no momento da contratação, como modelo, tempo de uso e condições do aparelho.'
+    },
+    {
+      q: 'A contratação é feita no site da H Soares?',
+      a: 'A H Soares direciona você para o ambiente oficial da Porto Seguro, onde a contratação é realizada.'
     }
   ],
-  faq: [
-    {
-      q: 'O Seguro Celular Porto cobre o que exatamente?',
-      a:
-        'A linha de Seguro Celular da Porto organiza a proteção em formatos que podem envolver roubo, quebra acidental e furto simples, conforme o plano escolhido e o aparelho elegível no fluxo oficial.'
-    },
-    {
-      q: 'Posso contratar para aparelho usado?',
-      a:
-        'Sim. A Porto informa que aparelho usado pode ser aceito quando atende à regra de elegibilidade vigente, incluindo o limite de até 24 meses de uso a partir da compra pelo primeiro dono.'
-    },
-    {
-      q: 'Preciso de nota fiscal para contratar?',
-      a:
-        'A Porto informa que a nota fiscal não é obrigatória em todos os casos para contratar, mas a comprovação de aquisição do aparelho segue importante para análise e eventual sinistro. No caso de aparelho usado, vale conferir a regra exibida no fluxo oficial.'
-    },
-    {
-      q: 'Em quanto tempo o seguro fica ativo?',
-      a:
-        'Depois da verificação do aparelho, a Porto informa o resultado por e-mail. Se aprovado, a apólice é enviada em até 48 horas e a vigência passa a contar da emissão.'
-    },
-    {
-      q: 'Preciso manter o App Porto instalado?',
-      a:
-        'Sim. Nas orientações oficiais da Porto, o app deve permanecer instalado e a biometria facial ativa no celular segurado durante a vigência.'
-    },
-    {
-      q: 'Posso cancelar o seguro depois?',
-      a:
-        'Sim. A Porto informa que o cancelamento pode ser solicitado a qualquer momento, sem permanência mínima, mediante validação dos dados do segurado e da apólice.'
-    }
-  ]
+  finalCopy:
+    'Seu celular faz parte da sua rotina, do seu trabalho e da sua vida digital. Veja as opções disponíveis para proteger seu aparelho com a Porto Seguro.'
 };
 
 const PORTO_CARD_PAGE = {
@@ -824,100 +708,107 @@ function SupportLinksSection({ items, title }) {
   );
 }
 
+function SectionHeader({ eyebrow, title, description, align = 'center' }) {
+  return (
+    <div className={`travel-page__section-head${align === 'left' ? ' travel-page__section-head--left' : ''}`}>
+      <p className="travel-page__eyebrow">{eyebrow}</p>
+      <h2>{title}</h2>
+      {description ? <p>{description}</p> : null}
+    </div>
+  );
+}
+
 function getWhatsAppHref(message) {
   return `https://wa.me/5511972064288?text=${encodeURIComponent(message)}`;
 }
 
-function CellPhoneProductPage({ product, supportLinks }) {
+function CellPhoneProductPage({ product }) {
   const whatsappHref = getWhatsAppHref('Olá, quero cotar o Seguro Celular da Porto com a H Soares.');
 
   return (
     <>
-      <section className="section premium-product-hero cell-phone-hero">
+      <section className="travel-page__hero">
         <div className="container">
-          <ProductBreadcrumb category={product.category} name={product.name} />
-          <div className="cell-phone-hero-grid">
-            <div className="premium-product-copy cell-phone-hero-copy">
-              <p className="eyebrow">{product.category}</p>
-              <h1>Seguro Celular Porto para proteger seu iPhone antes que um imprevisto vire prejuízo</h1>
-              <p className="subhead">
-                Seu celular concentra banco, trabalho, autenticação e rotina. Aqui você entende em poucos minutos qual
-                cobertura faz sentido para o seu perfil e segue para a contratação oficial da Porto com mais
-                segurança.
+          <nav className="travel-page__breadcrumb" aria-label="Breadcrumb">
+            <Link href="/">Início</Link>
+            <span>/</span>
+            <Link href="/#produtos">Produtos</Link>
+            <span>/</span>
+            <span>{product.name}</span>
+          </nav>
+
+          <div className="travel-page__hero-grid">
+            <div className="travel-page__hero-copy">
+              <span className="travel-page__badge">{product.category}</span>
+              <h1>Seguro Celular Porto para proteger seu iPhone, Samsung ou Xiaomi</h1>
+              <p className="travel-page__lead">
+                Roubo, furto e quebra acidental podem gerar um prejuízo alto em poucos segundos. Contrate seu Seguro
+                Celular de forma digital, com redirecionamento para o ambiente oficial da Porto Seguro e apoio
+                consultivo da H Soares.
               </p>
-              <div className="product-highlights">
-                {CELL_PHONE_PAGE.highlights.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
+
+              <div className="travel-page__actions">
+                <TrackedPortoLink
+                  className="travel-page__btn travel-page__btn--accent"
+                  href={product.portoUrl}
+                  productSlug={product.slug}
+                  ctaLabel="Contratar Seguro Celular pela Porto"
+                  ctaPosition="hero_primary"
+                  pageSection="hero"
+                  templateType="product_page"
+                >
+                  Contratar Seguro Celular pela Porto
+                </TrackedPortoLink>
+                <TrackedExternalLink
+                  className="travel-page__btn travel-page__btn--ghost"
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  eventType="whatsapp_click"
+                  productSlug={product.slug}
+                  objective="cell_phone_support"
+                  payload={{ cta_position: 'hero_secondary', page_section: 'hero', template_type: 'product_page' }}
+                >
+                  Falar no WhatsApp
+                </TrackedExternalLink>
               </div>
-              <div className="cta-row cell-phone-hero-actions">
-                <ProductCtaButton
-                  product={product}
-                  label="Quero Cotar Meu Celular"
-                  payload={{ cta_position: 'hero_primary', page_section: 'hero', template_type: 'product_page' }}
-                />
-                <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  Quero ajuda no WhatsApp
-                </a>
-                <a className="btn btn-ghost" href="#comparativo-coberturas">
-                  Comparar coberturas
-                </a>
-              </div>
-              <p className="cell-phone-hero-note">
-                Se o custo de reposição apertaria seu bolso, esta página foi feita para tirar a dúvida mais importante:
-                qual proteção faz sentido para você antes do clique final.
-              </p>
             </div>
 
-            <div className="cell-phone-hero-visual">
-              <figure className="cell-phone-hero-media">
-                <SafeImage
-                  src="/assets/blog/seguro-celular-hero-177.webp"
-                  alt="Linha de celulares premium da Porto"
-                  loading="eager"
-                />
-              </figure>
-              <aside className="cell-phone-floating-card">
-                <div className="cell-phone-floating-brand">
-                  <SafeImage src="/assets/PORTO.png" alt="Porto Seguro" />
-                  <span>Produto atual vendido pela H Soares</span>
+            <div className="travel-page__hero-visual">
+              <div className="travel-page__visual-frame travel-page__visual-frame--cellphone">
+                <div className="travel-page__visual-copy">
+                  <p>Vida digital protegida</p>
+                  <h2>Seu celular concentra banco, WhatsApp, fotos e acessos importantes</h2>
+                  <span>
+                    Em vez de tratar o aparelho como algo comum, vale olhar para o valor real que ele tem na sua rotina
+                    e no seu bolso.
+                  </span>
                 </div>
-                <h2>O que vai te ajudar a decidir melhor</h2>
-                <ul>
-                  <li>Resumo rápido dos níveis de proteção</li>
-                  <li>Perfis que mais se beneficiam da contratação</li>
-                  <li>CTAs distribuídos para você cotar na hora certa</li>
-                </ul>
-              </aside>
+              </div>
+              <div className="travel-page__tip-card">
+                <p>Dica</p>
+                <strong>Confira as regras de elegibilidade e siga para a contratação oficial da Porto Seguro.</strong>
+              </div>
             </div>
-          </div>
-
-          <div className="cell-phone-kpi-grid">
-            {CELL_PHONE_PAGE.quickFacts.map((item) => (
-              <article key={item.value} className="cell-phone-kpi-card">
-                <PremiumIcon name={item.icon} />
-                <strong>{item.value}</strong>
-                <p>{item.label}</p>
-              </article>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="travel-page__section">
         <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Por que isso vira prioridade</p>
-            <h2>Quando perder o celular bagunçaria sua vida, o seguro passa a fazer sentido</h2>
-            <p>
-              O ponto aqui não é empurrar cobertura. É mostrar quando proteger o aparelho é uma decisão inteligente
-              para evitar dor financeira e operacional.
-            </p>
-          </div>
-          <div className="cell-phone-pain-grid">
-            {CELL_PHONE_PAGE.painCards.map((card) => (
-              <article key={card.title} className="cell-phone-info-card">
-                <PremiumIcon name={card.icon} />
+          <SectionHeader
+            eyebrow="Benefícios"
+            title="Por que proteger seu celular?"
+            description="Seu aparelho concentra trabalho, comunicação, autenticação, fotos e acesso a bancos. Quando algo acontece, o impacto costuma ser rápido e caro."
+            align="left"
+          />
+
+          <div className="travel-page__benefit-grid travel-page__benefit-grid--cellphone">
+            {CELL_PHONE_PAGE.benefits.map((card) => (
+              <article key={card.title} className="travel-page__benefit-card travel-page__benefit-card--cellphone">
+                <div className="travel-page__icon">
+                  <PremiumIcon name={card.icon} />
+                </div>
                 <h3>{card.title}</h3>
                 <p>{card.text}</p>
               </article>
@@ -926,151 +817,99 @@ function CellPhoneProductPage({ product, supportLinks }) {
         </div>
       </section>
 
-      <section className="section section-soft-blue" id="comparativo-coberturas">
+      <section className="travel-page__section travel-page__section--soft" id="coberturas">
         <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Compare antes de contratar</p>
-            <h2>Veja em segundos qual formato de proteção combina mais com o seu risco</h2>
-            <p>
-              Em vez de olhar só para o preço, compare o cenário que mais preocupa. É isso que normalmente separa uma
-              boa decisão de uma contratação rasa.
-            </p>
-          </div>
+          <SectionHeader
+            eyebrow="Coberturas"
+            title="Principais coberturas do Seguro Celular"
+            description="As coberturas, franquias, elegibilidade e limites dependem do plano escolhido e das regras vigentes da Porto Seguro no momento da contratação."
+          />
 
-          <div className="cell-phone-plan-grid">
-            {CELL_PHONE_PAGE.planCards.map((plan) => (
-              <article key={plan.title} className={`cell-phone-plan-card cell-phone-plan-card--${plan.accent}`}>
-                <p className="eyebrow">{plan.eyebrow}</p>
-                <h3>{plan.title}</h3>
-                <p>{plan.description}</p>
-                <ul>
-                  {plan.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-                <strong>{plan.idealFor}</strong>
-                <div className="cell-phone-plan-actions">
-                  <ProductCtaButton
-                    product={product}
-                    label="Cotar esse nível"
-                    payload={{ cta_position: 'card_cta', page_section: 'comparativo', template_type: 'product_page' }}
-                  />
+          <div className="travel-page__coverage-grid travel-page__coverage-grid--cellphone">
+            {CELL_PHONE_PAGE.coverages.map((card) => (
+              <article key={card.title} className="travel-page__coverage-card travel-page__coverage-card--cellphone">
+                <div className="travel-page__icon">
+                  <PremiumIcon name={card.icon} />
                 </div>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
               </article>
             ))}
           </div>
+          <div className="travel-page__notice">
+            <strong>Importante:</strong> as coberturas, franquias, elegibilidade e limites dependem do plano
+            escolhido e das regras vigentes da Porto Seguro no momento da contratação.
+          </div>
+          <div className="travel-page__center-actions">
+            <TrackedPortoLink
+              className="travel-page__btn travel-page__btn--primary"
+              href={product.portoUrl}
+              productSlug={product.slug}
+              ctaLabel="Contratar Seguro Celular pela Porto"
+              ctaPosition="coverage_cta"
+              pageSection="coberturas"
+              templateType="product_page"
+            >
+              Contratar Seguro Celular pela Porto
+            </TrackedPortoLink>
+          </div>
+        </div>
+      </section>
 
-          <div className="cell-phone-table-shell">
-            <table className="cell-phone-compare-table">
-              <thead>
-                <tr>
-                  <th>Leitura da cobertura</th>
-                  <th>Roubo</th>
-                  <th>Quebra + roubo</th>
-                  <th>Quebra + roubo + furto simples</th>
-                </tr>
-              </thead>
-              <tbody>
-                {CELL_PHONE_PAGE.compareRows.map((row) => (
-                  <tr key={row.label}>
-                    <th>{row.label}</th>
-                    {row.values.map((value, index) => (
-                      <td key={`${row.label}-${index}`}>{value}</td>
-                    ))}
-                  </tr>
+      <section className="travel-page__section">
+        <div className="container">
+          <SectionHeader
+            eyebrow="Indicação"
+            title="Esse seguro faz sentido para você se:"
+            description="A leitura abaixo ajuda a entender se o Seguro Celular conversa com o seu perfil de uso e com o valor real do aparelho."
+            align="left"
+          />
+
+          <div className="travel-page__guided-grid">
+            <article className="travel-page__copy-card">
+              <h3>Perfil indicado</h3>
+              <div className="travel-page__checklist">
+                {CELL_PHONE_PAGE.profilePoints.map((item) => (
+                  <div key={item} className="travel-page__checklist-item">
+                    <PremiumIcon name="shield" />
+                    <span>{item}</span>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </article>
 
-          <p className="cell-phone-disclaimer">
-            A disponibilidade final depende do aparelho, da elegibilidade e do que estiver ativo na contratação oficial
-            da Porto no momento da sua cotação.
-          </p>
-        </div>
-      </section>
+            <article className="travel-page__support-card travel-page__support-card--cellphone">
+              <div className="travel-page__support-image travel-page__support-image--cellphone" />
+              <div className="travel-page__support-copy">
+                <p>Contratação digital</p>
+                <h3>Você segue para o ambiente oficial da Porto com apoio da H Soares</h3>
+                <span>
+                  Se surgir qualquer dúvida sobre cobertura, elegibilidade ou preenchimento, a corretora ajuda antes
+                  e depois da contratação.
+                </span>
 
-      <section className="section">
-        <div className="container cell-phone-story-grid">
-          <div className="cell-phone-story-copy">
-            <div className="section-head section-head-readable section-head-left">
-              <p className="eyebrow">Quem mais se beneficia</p>
-              <h2>Os perfis que costumam enxergar valor mais rápido no Seguro Celular</h2>
-              <p>
-                Se você se reconhece em um ou mais perfis abaixo, a cotação tende a fazer muito mais sentido do que
-                parece à primeira vista.
-              </p>
-            </div>
-            <div className="cell-phone-profile-grid">
-              {CELL_PHONE_PAGE.audienceCards.map((card) => (
-                <article key={card.title} className="cell-phone-profile-card">
-                  <PremiumIcon name={card.icon} />
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="cell-phone-story-visual">
-            <figure className="cell-phone-stack-card cell-phone-stack-card--transparent">
-              <SafeImage
-                src="/assets/blog/seguro-celular-story-fan-transparent.webp"
-                alt="iPhone em composição lateral com várias cores"
-              />
-              <figcaption>
-                Não é só sobre ter seguro. É sobre escolher uma cobertura à altura do valor do seu aparelho.
-              </figcaption>
-            </figure>
-            <figure className="cell-phone-stack-card">
-              <SafeImage
-                src="/assets/blog/seguro-celular-story-hands-transparent.webp"
-                alt="Dois iPhones sendo segurados pelas mãos"
-              />
-              <figcaption>Quando a reposição pesa no bolso, o seguro deixa de parecer excesso e passa a parecer inteligência.</figcaption>
-            </figure>
+                <div className="travel-page__support-points">
+                  <div>Ambiente oficial Porto Seguro</div>
+                  <div>Apoio consultivo da H Soares</div>
+                  <div>Processo simples e transparente</div>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <section className="travel-page__section travel-page__section--soft">
         <div className="container">
-          <div className="cell-phone-cta-band">
-            <div>
-              <p className="eyebrow">Seu próximo passo</p>
-              <h2>Se o prejuízo seria alto, vale resolver isso hoje em poucos minutos</h2>
-              <p>
-                Você pode seguir direto para o ambiente oficial da Porto ou falar com a H Soares antes para alinhar
-                cobertura, elegibilidade e melhor escolha.
-              </p>
-            </div>
-            <div className="cta-row cell-phone-band-actions">
-              <ProductCtaButton
-                product={product}
-                label="Quero cotar agora"
-                payload={{ cta_position: 'footer_cta', page_section: 'final_cta', template_type: 'product_page' }}
-              />
-              <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                Falar com especialista
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+          <SectionHeader
+            eyebrow="Como contratar"
+            title="Como contratar seu Seguro Celular"
+            description="O caminho é digital e leva você para o ambiente oficial da Porto Seguro, com apoio da H Soares se precisar de orientação."
+          />
 
-      <section className="section">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Como funciona na prática</p>
-            <h2>O caminho até a apólice, sem surpresa e sem enrolação</h2>
-            <p>
-              A contratação da Porto é digital, mas muita gente trava por não entender a verificação do aparelho ou a
-              ativação. Aqui o processo fica claro do início ao fim.
-            </p>
-          </div>
-          <div className="cell-phone-journey-grid">
-            {CELL_PHONE_PAGE.journeySteps.map((step) => (
-              <article key={step.number} className="cell-phone-step-card">
+          <div className="travel-page__step-grid">
+            {CELL_PHONE_PAGE.steps.map((step) => (
+              <article key={step.number} className="travel-page__step-card">
                 <span>{step.number}</span>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
@@ -1080,20 +919,20 @@ function CellPhoneProductPage({ product, supportLinks }) {
         </div>
       </section>
 
-      <section className="section section-soft-blue">
+      <section className="travel-page__section">
         <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Antes de contratar</p>
-            <h2>Os detalhes que evitam dúvida, arrependimento e abandono da cotação</h2>
-            <p>
-              Aqui estão os pontos que mais pesam na decisão: aparelho usado, comprovação, pagamento, ativação, app e
-              cancelamento.
-            </p>
-          </div>
-          <div className="cell-phone-rule-grid">
-            {CELL_PHONE_PAGE.ruleCards.map((card) => (
-              <article key={card.title} className="cell-phone-rule-card">
-                <PremiumIcon name={card.icon} />
+          <SectionHeader
+            eyebrow="Autoridade H Soares"
+            title="Contrate com apoio de uma corretora com 30 anos de mercado"
+            description="A H Soares Corretora de Seguros orienta clientes na escolha de seguros com atendimento humano, clareza nas coberturas e direcionamento para os canais oficiais de contratação."
+          />
+
+          <div className="travel-page__authority-grid">
+            {CELL_PHONE_PAGE.authorityCards.map((card) => (
+              <article key={card.title} className="travel-page__authority-card">
+                <div className="travel-page__icon">
+                  <PremiumIcon name={card.icon} />
+                </div>
                 <h3>{card.title}</h3>
                 <p>{card.text}</p>
               </article>
@@ -1102,56 +941,86 @@ function CellPhoneProductPage({ product, supportLinks }) {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Se ainda está comparando</p>
-            <h2>Três leituras rápidas para sentir quando o seguro compensa</h2>
-            <p>
-              Se alguma dessas situações conversa com a sua rotina, vale avançar para a cotação com mais convicção.
-            </p>
-          </div>
-          <div className="cell-phone-image-grid">
-            {CELL_PHONE_PAGE.imageCards.map((card) => (
-              <article key={card.title} className="cell-phone-image-card">
-                <SafeImage src={card.image} alt={card.alt} />
-                <div>
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="travel-page__section travel-page__section--faq" id="faq">
+        <div className="container travel-page__faq-shell">
+          <SectionHeader
+            eyebrow="FAQ"
+            title="Perguntas frequentes sobre o Seguro Celular"
+            description="Respostas diretas para ajudar você a avançar com mais segurança e menos dúvida."
+          />
 
-      <section className="section" id="faq-celular">
-        <div className="container faq-shell">
-          <h2>Perguntas que mais travam a decisão</h2>
-          <div className="faq-list">
-            {CELL_PHONE_PAGE.faq.map((faq) => (
-              <details key={faq.q}>
+          <div className="travel-page__faq-list">
+            {CELL_PHONE_PAGE.faqs.map((faq) => (
+              <details key={faq.q} className="travel-page__faq-item">
                 <summary>{faq.q}</summary>
-                <p>{faq.a}</p>
+                <div>
+                  <p>{faq.a}</p>
+                </div>
               </details>
             ))}
           </div>
+
+          <div className="travel-page__center-actions">
+            <TrackedPortoLink
+              className="travel-page__btn travel-page__btn--primary"
+              href={product.portoUrl}
+              productSlug={product.slug}
+              ctaLabel="Contratar Seguro Celular pela Porto"
+              ctaPosition="faq_cta"
+              pageSection="faq"
+              templateType="product_page"
+            >
+              Contratar Seguro Celular pela Porto
+            </TrackedPortoLink>
+          </div>
         </div>
       </section>
 
-      <SupportLinksSection
-        items={supportLinks}
-        title="Conteúdos rápidos da H Soares para você chegar na cotação com mais convicção"
-      />
-
-      <section className="section">
+      <section className="travel-page__section travel-page__section--cta" id="cotar">
         <div className="container">
-          <ProductConversion product={product} />
+          <div className="travel-page__final-band">
+            <div className="travel-page__final-copy">
+              <p className="travel-page__eyebrow">CTA final</p>
+              <h2>Proteja seu celular antes que o prejuízo aconteça</h2>
+              <p>{CELL_PHONE_PAGE.finalCopy}</p>
+
+              <div className="travel-page__actions">
+                <TrackedPortoLink
+                  className="travel-page__btn travel-page__btn--accent"
+                  href={product.portoUrl}
+                  productSlug={product.slug}
+                  ctaLabel="Contratar Seguro Celular pela Porto"
+                  ctaPosition="final_band"
+                  pageSection="final_cta"
+                  templateType="product_page"
+                >
+                  Contratar Seguro Celular pela Porto
+                </TrackedPortoLink>
+                <TrackedExternalLink
+                  className="travel-page__btn travel-page__btn--ghost"
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  eventType="whatsapp_click"
+                  productSlug={product.slug}
+                  objective="cell_phone_support"
+                  payload={{ cta_position: 'final_secondary', page_section: 'final_cta', template_type: 'product_page' }}
+                >
+                  Falar no WhatsApp
+                </TrackedExternalLink>
+              </div>
+
+              <p className="travel-page__subnote">Contratação digital com apoio consultivo da H Soares.</p>
+            </div>
+
+            <div className="travel-page__final-visual travel-page__final-visual--cellphone" />
+          </div>
         </div>
       </section>
     </>
   );
 }
+
 
 function PortoCardProductPage({ product, supportLinks }) {
   const whatsappHref = getWhatsAppHref('Olá, quero entender qual Cartão Porto combina com o meu perfil.');
@@ -1652,9 +1521,9 @@ export default async function ProductPage({ params }) {
     <>
       <StructuredData data={productSchemas} />
       <SiteHeader />
-      <main className={`product-page product-page--${product.slug}`}>
+      <main className={isCellPhone ? 'travel-page travel-page--cellphone' : `product-page product-page--${product.slug}`}>
         {isCellPhone ? (
-          <CellPhoneProductPage product={product} supportLinks={supportLinks} />
+          <CellPhoneProductPage product={product} />
         ) : isPortoCard ? (
           <PortoCardProductPage product={product} supportLinks={supportLinks} />
         ) : isResidential ? (

@@ -943,6 +943,154 @@
   width: 100%;
 }
 
+.travel-page--cellphone {
+  overflow-x: hidden;
+}
+
+.travel-page--cellphone .travel-page__hero {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(125, 211, 252, 0.18) 0%, transparent 26%),
+    radial-gradient(circle at 84% 14%, rgba(227, 255, 4, 0.08) 0%, transparent 22%),
+    linear-gradient(135deg, #041221 0%, #09233d 52%, #143f64 100%);
+}
+
+.travel-page--cellphone .travel-page__hero-copy h1 {
+  max-width: 12.2ch;
+}
+
+.travel-page--cellphone .travel-page__lead {
+  max-width: 64ch;
+}
+
+.travel-page--cellphone .travel-page__visual-frame--cellphone {
+  background:
+    linear-gradient(180deg, rgba(4, 18, 33, 0.08) 0%, rgba(4, 18, 33, 0.48) 100%),
+    url('/assets/blog/seguro-celular-hero-177.webp') center 60% / cover no-repeat;
+}
+
+.travel-page--cellphone .travel-page__support-image--cellphone {
+  min-height: 260px;
+  background:
+    linear-gradient(180deg, rgba(4, 18, 33, 0.08) 0%, rgba(4, 18, 33, 0.26) 100%),
+    url('/assets/blog/seguro-celular-story-fan-transparent.webp') center 54% / cover no-repeat;
+}
+
+.travel-page--cellphone .travel-page__final-visual--cellphone {
+  background:
+    linear-gradient(180deg, rgba(4, 18, 33, 0.06) 0%, rgba(4, 18, 33, 0.28) 100%),
+    url('/assets/blog/seguro-celular-story-hands-transparent.webp') center 58% / cover no-repeat;
+}
+
+.travel-page--cellphone .travel-page__benefit-grid--cellphone {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.travel-page--cellphone .travel-page__benefit-card--cellphone {
+  min-height: 100%;
+}
+
+.travel-page--cellphone .travel-page__benefit-card--cellphone .travel-page__icon,
+.travel-page--cellphone .travel-page__coverage-card--cellphone .travel-page__icon,
+.travel-page--cellphone .travel-page__authority-card .travel-page__icon {
+  margin-bottom: 16px;
+}
+
+.travel-page--cellphone .travel-page__coverage-grid--cellphone {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.travel-page__checklist {
+  display: grid;
+  gap: 0;
+  margin-top: 28px;
+}
+
+.travel-page__checklist-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 16px 0;
+  border-top: 1px solid var(--travel-card-border);
+}
+
+.travel-page__checklist-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.travel-page__checklist-item span {
+  color: var(--travel-copy);
+  line-height: 1.8;
+}
+
+.travel-page__step-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.travel-page__step-card,
+.travel-page__authority-card {
+  border: 1px solid var(--travel-card-border);
+  border-radius: 30px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 251, 255, 0.96) 100%);
+  padding: 26px;
+  box-shadow:
+    0 16px 38px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.travel-page__step-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 18px;
+  background: rgba(34, 211, 238, 0.12);
+  color: #0891b2;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.travel-page__step-card h3,
+.travel-page__authority-card h3 {
+  margin: 18px 0 0;
+  font-size: 1.18rem;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--travel-slate);
+}
+
+.travel-page__step-card p,
+.travel-page__authority-card p {
+  margin: 12px 0 0;
+  color: var(--travel-copy);
+  line-height: 1.82;
+}
+
+.travel-page__authority-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 40px;
+}
+
+.travel-page__authority-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.travel-page__authority-card:hover,
+.travel-page__step-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.08);
+}
+
 @media (max-width: 1180px) {
   .travel-page__difference-layout,
   .travel-page__destination-grid,
@@ -954,6 +1102,13 @@
   .travel-page__tip-card {
     left: 18px;
     top: 18px;
+  }
+
+  .travel-page--cellphone .travel-page__benefit-grid--cellphone,
+  .travel-page--cellphone .travel-page__coverage-grid--cellphone,
+  .travel-page--cellphone .travel-page__step-grid,
+  .travel-page--cellphone .travel-page__authority-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -988,6 +1143,11 @@
 
   .travel-page__benefit-grid,
   .travel-page__metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-page--cellphone .travel-page__step-grid,
+  .travel-page--cellphone .travel-page__authority-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1037,7 +1197,11 @@
   .travel-page__coverage-grid,
   .travel-page__destination-grid,
   .travel-page__profile-chips,
-  .travel-page__difference-grid {
+  .travel-page__difference-grid,
+  .travel-page--cellphone .travel-page__benefit-grid--cellphone,
+  .travel-page--cellphone .travel-page__coverage-grid--cellphone,
+  .travel-page--cellphone .travel-page__step-grid,
+  .travel-page--cellphone .travel-page__authority-grid {
     grid-template-columns: 1fr;
   }
 
