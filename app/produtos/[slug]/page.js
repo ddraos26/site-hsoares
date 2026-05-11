@@ -2,6 +2,8 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 import { ProductConversion, ProductCtaButton } from '@/components/product-conversion';
+import { PortoCardHeroCarousel } from '@/components/porto-card-hero-carousel';
+import { PortoCardVersionSection } from '@/components/porto-card-version-section';
 import { SafeImage } from '@/components/safe-image';
 import { ServicesCarousel } from '@/components/services-carousel';
 import { SiteFooter } from '@/components/site-footer';
@@ -414,238 +416,479 @@ const CELL_PHONE_PAGE = {
 };
 
 const PORTO_CARD_PAGE = {
-  highlights: ['6 versões oficiais', 'PortoPlus e benefícios Porto', 'App + carteiras digitais', 'Pedido oficial da Porto'],
-  quickFacts: [
+  highlights: ['Escolha por perfil', 'PortoPlus e mobilidade', 'App com controle real', 'Pedido oficial preservado'],
+  carouselSlides: [
     {
-      icon: 'document',
-      value: '6 versões na prateleira oficial',
-      label:
-        'Sem anuidade, Internacional, Gold, Platinum, Mastercard Black e Visa Infinite aparecem na página oficial consultada em 29 de março de 2026.'
+      eyebrow: 'Versão ideal',
+      title: 'Cartão Porto Bank: escolha a versão ideal para o seu perfil',
+      subtitle:
+        'Compare benefícios, entenda as diferenças entre as opções e siga para a solicitação oficial com mais clareza e segurança.',
+      ctaLabel: 'Solicitar Cartão Porto',
+      image: '/assets/blog/porto-version-cards/cartao_black.webp',
+      alt: 'Cartão Porto Bank Mastercard Black em destaque',
+      tone: 'blue',
+      artLayout: 'black',
+      artwork: [
+        {
+          src: '/assets/blog/porto-version-cards/cartao_black.webp',
+          variant: 'primary',
+          className: 'is-mastercard-black'
+        }
+      ],
+      note: 'Use a leitura guiada para alinhar expectativa, faixa do cartão e próximo passo oficial.'
     },
     {
-      icon: 'clock',
-      value: 'Sem anuidade ou 12 meses grátis para começar',
-      label:
-        'A Porto destaca cartão sem anuidade e isenção inicial em Internacional, Gold e Platinum, com desconto calculado conforme o gasto mensal depois do período promocional.'
+      eyebrow: 'Benefícios',
+      title: 'Mais benefícios, praticidade e vantagens no dia a dia',
+      subtitle:
+        'Conheça versões com benefícios exclusivos, gestão digital e condições que fazem sentido para diferentes perfis.',
+      ctaLabel: 'Ver benefícios do cartão',
+      image: '/assets/blog/porto-card-platinum-user-trimmed.png',
+      alt: 'Cartão Porto Bank Platinum em destaque',
+      tone: 'silver',
+      artLayout: 'offset',
+      artwork: [
+        {
+          src: '/assets/blog/porto-card-platinum-user-trimmed.png',
+          variant: 'primary',
+          className: 'is-platinum'
+        },
+        {
+          src: '/assets/blog/porto-card-blue-user-trimmed.png',
+          variant: 'secondary',
+          className: 'is-blue-accent'
+        }
+      ],
+      note: 'A proposta fica mais forte quando o uso real do cartão conversa com o que você espera dele.'
     },
     {
-      icon: 'star',
-      value: 'Pontuação de 1 a 3 pontos por US$ 1',
-      label:
-        'Na base oficial consultada, Internacional e Gold acumulam 1 ponto, Platinum 1,5 e Black ou Infinite chegam a 3 pontos por dólar gasto no Brasil.'
-    },
-    {
-      icon: 'chat',
-      value: 'App Porto para controlar a rotina do cartão',
-      label:
-        'A Porto informa consulta de gastos, fatura, limite, bloqueio, desbloqueio, aviso viagem, carteiras digitais e acesso a meios de pagamento no aplicativo.'
+      eyebrow: 'Apoio consultivo',
+      title: 'Pedido com mais segurança e orientação antes de continuar',
+      subtitle:
+        'A H Soares Seguros ajuda você a entender melhor as opções antes de seguir para o ambiente oficial da Porto.',
+      ctaLabel: 'Continuar para solicitação',
+      image: '/assets/blog/porto-card-blue-user-trimmed.png',
+      alt: 'Cartão Porto Bank azul em destaque',
+      tone: 'ink',
+      artLayout: 'single',
+      artwork: [
+        {
+          src: '/assets/blog/porto-card-blue-user-trimmed.png',
+          variant: 'primary'
+        }
+      ],
+      note: 'Se a dúvida ainda estiver entre duas faixas, vale parar um instante e comparar com calma.'
     }
   ],
   versionCards: [
     {
-      eyebrow: 'Entrada inteligente',
-      title: 'Sem anuidade',
-      accent: 'ice',
-      image: 'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Basic.png',
-      alt: 'Cartão Porto Bank sem anuidade oficial',
-      details: [
-        'Renda mínima de R$ 1.000',
-        'Anuidade gratuita sem gasto mensal',
-        'App, carteiras digitais, cartão adicional, Tag Porto e Shell Box'
+      title: 'Porto Bank Mastercard Black',
+      versionKey: 'mastercard-black',
+      image: '/assets/blog/porto-version-cards/cartao_black.webp',
+      alt: 'Cartão Porto Bank Mastercard Black',
+      badge: 'IOF ZERO',
+      benefits: [
+        [
+          { text: 'Acumule até ' },
+          { text: '3,5 pontos', emphasis: true },
+          { text: ' para cada dólar gasto.' }
+        ],
+        [
+          { text: 'Salas VIP ao redor do mundo: A partir de 08/04/2026 conte com ' },
+          { text: '6 acessos gratuitos por ano', emphasis: true }
+        ],
+        [
+          {
+            text: 'Resgate a partir de R$ 150 OFF em seguros, financiamento ou serviços Porto com seus pontos.',
+            emphasis: true
+          }
+        ]
       ],
-      fit:
-        'Boa rota para quem quer começar sem custo fixo e ainda usar benefícios práticos do ecossistema Porto.'
+      detail: {
+        drawerTitle: 'Detalhes do Porto Bank Mastercard Black',
+        drawerSubtitle: 'Detalhes do Cartão Porto Bank Mastercard Black',
+        intro: ['Aprovação sujeita à análise de crédito', 'Cobertura internacional'],
+        sections: [
+          {
+            title: 'Sobre a anuidade',
+            blocks: [
+              { type: 'paragraph', text: 'Grátis nos 12 primeiros meses, para novos clientes*', emphasis: true },
+              { type: 'paragraph', text: 'Depois disso, você tem a parcela mensal da anuidade grátis ao atingir:' },
+              {
+                type: 'list',
+                items: [
+                  'Gastos por fatura superior ou igual a R$ 10.000,00',
+                  'Ou a partir de R$ 100 mil em fundos no produto Investimentos Porto Bank.'
+                ]
+              },
+              {
+                type: 'paragraph',
+                text: 'Caso não cumpra pelo menos um desses requisitos, a mensalidade é de apenas R$ 89,00 por mês*.'
+              },
+              { type: 'paragraph', text: 'Até 4 cartões adicionais sem anuidade.', emphasis: true },
+              {
+                type: 'note',
+                text:
+                  '*Esta condição se aplica somente à primeira bandeira, para novos clientes. Na aquisição de um novo cartão de 2ª bandeira, o cliente será isento e poderá somar os gastos dos dois cartões para isenção total ou parcial da anuidade do 1º cartão.'
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Porto',
+            blocks: [
+              {
+                type: 'list',
+                items: [
+                  'PortoPlus: Acumule até 3,5 pontos a cada dólar gasto no Cartão de Crédito Porto Bank Mastercard Black. Consulte as regras e condições;',
+                  'Salas VIP: A partir de 08/04/2026 conte com 6 acessos gratuitos por ano em centenas de lounges ao redor do mundo;',
+                  'Salas Vip Mastercard Black: Acesso ilimitado para titulares e adicionais às salas Mastercard Black Terminal 3 do aeroporto de Guarulhos, condicionado ao gasto mínimo de R$ 15 mil acumulado nas três últimas faturas fechadas do cartão, em conformidade com as regras estabelecidas pela bandeira.',
+                  'Tag Porto Bank grátis e sem mensalidade;',
+                  'Desconto em combustíveis com Shell Box;',
+                  'Descontos no Porto Seguro Auto ou Azul Seguro Auto. Consulte as condições;',
+                  '5% de desconto nos demais seguros: Residencial, Bike, Celular, Viagem, Vida e Equipamentos Portáteis;',
+                  'Pré-vendas e descontos exclusivos em shows/eventos;',
+                  'Porto Serviço: 20% de desconto na contratação de serviços para Casa e Auto.',
+                  'Gastronomia Porto Bank: Até 15% de desconto e amenidades em restaurantes selecionados. Saiba mais'
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Mastercard Black',
+            blocks: [
+              {
+                type: 'list',
+                items: ['Proteção de compras;', 'Garantia estendida original;', 'Vantagens para suas viagens;']
+              }
+            ]
+          }
+        ]
+      }
     },
     {
-      eyebrow: 'Uso recorrente',
-      title: 'Internacional',
-      accent: 'blue',
-      image:
-        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Imagem-1-Porto-Seguro-International.png',
-      alt: 'Cartão Porto Internacional oficial',
-      details: [
-        'Renda mínima de R$ 1.000',
-        '12 meses de anuidade grátis na 1ª bandeira',
-        '1 ponto por US$ 1 e gratuidade a partir de R$ 2.500 em gasto mensal'
+      title: 'Porto Bank Visa Infinite',
+      versionKey: 'visa-infinite',
+      image: '/assets/blog/porto-card-infinite-user-trimmed.png',
+      alt: 'Cartão Porto Bank Visa Infinite',
+      badge: 'IOF ZERO',
+      benefits: [
+        [
+          { text: 'Acumule até ' },
+          { text: '3,5 pontos', emphasis: true },
+          { text: ' para cada dólar gasto.' }
+        ],
+        [
+          { text: 'Salas VIP ao redor do mundo: A partir de 08/04/2026 conte com ' },
+          { text: '6 acessos gratuitos por ano', emphasis: true }
+        ],
+        [
+          {
+            text: 'Resgate a partir de R$ 150 OFF em seguros, financiamento ou serviços Porto com seus pontos.',
+            emphasis: true
+          }
+        ]
       ],
-      fit:
-        'Faz sentido quando você já quer pontuar e usar o cartão como principal no dia a dia.'
+      detail: {
+        drawerTitle: 'Detalhes do Porto Bank Visa Infinite',
+        drawerSubtitle: 'Detalhes do Cartão Porto Bank Visa Infinite',
+        intro: ['Aprovação sujeita à análise de crédito', 'Cobertura internacional'],
+        sections: [
+          {
+            title: 'Sobre a anuidade',
+            blocks: [
+              { type: 'paragraph', text: 'Grátis nos 12 primeiros meses, para novos clientes*', emphasis: true },
+              {
+                type: 'paragraph',
+                text: 'Depois disso, você tem a parcela mensal da anuidade grátis ao atingir:'
+              },
+              {
+                type: 'list',
+                items: [
+                  'Gastos por fatura superior ou igual a R$ 10.000,00',
+                  'Ou a partir de R$ 100 mil em fundos no produto Investimentos Porto Bank.'
+                ]
+              },
+              {
+                type: 'paragraph',
+                text: 'Caso não cumpra pelo menos um desses requisitos, a mensalidade é de apenas R$ 89,00 por mês*.'
+              },
+              { type: 'paragraph', text: 'Até 4 cartões adicionais sem anuidade.', emphasis: true },
+              {
+                type: 'note',
+                text:
+                  '*Esta condição se aplica somente à primeira bandeira, para novos clientes. Na aquisição de um novo cartão de 2ª bandeira, o cliente será isento e poderá somar os gastos dos dois cartões para isenção total ou parcial da anuidade do 1º cartão.'
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Porto',
+            blocks: [
+              {
+                type: 'list',
+                items: [
+                  'PortoPlus: Acumule até 3,5 pontos a cada dólar gasto no Cartão de Crédito Porto Bank Visa Infinite. Consulte as regras e condições;',
+                  'Salas VIP: A partir de 08/04/2026 conte com 6 acessos gratuitos por ano em centenas de lounges ao redor do mundo.',
+                  'Tag Porto Bank grátis e sem mensalidade;',
+                  'Desconto em combustíveis com Shell Box;',
+                  'Descontos no Porto Seguro Auto ou Azul Seguro Auto. Consulte as condições;',
+                  '5% de desconto nos demais seguros: Residencial, Bike, Celular, Viagem, Vida e Equipamentos Portáteis;',
+                  'Pré-vendas e descontos exclusivos em shows/eventos;',
+                  'Porto Serviço: 20% de desconto na contratação de serviços para Casa e Auto.',
+                  'Gastronomia Porto Bank: Até 15% de desconto e amenidades em restaurantes selecionados. Saiba mais'
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Visa Infinite',
+            blocks: [
+              {
+                type: 'list',
+                items: ['Proteção de compras;', 'Garantia estendida original;', 'Vantagens para suas viagens;']
+              }
+            ]
+          }
+        ]
+      }
     },
     {
-      eyebrow: 'Mais benefícios',
-      title: 'Gold',
-      accent: 'gold',
+      title: 'Porto Bank Platinum',
+      versionKey: 'platinum',
+      image: '/assets/blog/porto-card-platinum-user-trimmed.png',
+      alt: 'Cartão Porto Bank Platinum',
+      badge: 'IOF ZERO',
+      benefits: [
+        [
+          { text: 'Acumule até ' },
+          { text: '1,5 pontos', emphasis: true },
+          { text: ' para cada dólar gasto.' }
+        ],
+        [
+          {
+            text: 'Resgate a partir de R$ 150 OFF em seguros, financiamento ou serviços Porto com seus pontos.',
+            emphasis: true
+          }
+        ]
+      ],
+      detail: {
+        drawerTitle: 'Detalhes do Porto Bank Platinum',
+        drawerSubtitle: 'Detalhes do Cartão Porto Bank Platinum',
+        intro: ['Aprovação sujeita à análise de crédito', 'Cobertura internacional'],
+        sections: [
+          {
+            title: 'Sobre a anuidade',
+            blocks: [
+              { type: 'paragraph', text: 'Grátis nos 12 primeiros meses, para novos clientes*', emphasis: true },
+              {
+                type: 'paragraph',
+                text: 'Depois disso, você tem a parcela mensal da anuidade grátis ao atingir:'
+              },
+              {
+                type: 'list',
+                items: [
+                  'Gastos por fatura superior ou igual a R$ 3.500,00',
+                  'Ou a partir de R$ 50 mil em fundos no produto Investimentos Porto Bank.'
+                ]
+              },
+              {
+                type: 'paragraph',
+                text: 'Caso não cumpra pelo menos um desses requisitos, a mensalidade é de apenas R$ 59,00 por mês*.'
+              },
+              { type: 'paragraph', text: 'Até 4 cartões adicionais sem anuidade.', emphasis: true },
+              {
+                type: 'note',
+                text:
+                  '*Esta condição se aplica somente à primeira bandeira, para novos clientes. Na aquisição de um novo cartão de 2ª bandeira, o cliente será isento e poderá somar os gastos dos dois cartões para isenção total ou parcial da anuidade do 1º cartão.'
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Porto',
+            blocks: [
+              {
+                type: 'list',
+                items: [
+                  'PortoPlus: Acumule até 1,5 pontos a cada dólar gasto no Cartão de Crédito Porto Bank Platinum. Consulte as regras e condições;',
+                  'Tag Porto Bank grátis e sem mensalidade;',
+                  'Desconto em combustíveis com Shell Box;',
+                  'Descontos no Porto Seguro Auto ou Azul Seguro Auto. Consulte as condições;',
+                  '5% de desconto nos demais seguros: Residencial, Bike, Celular, Viagem, Vida e Equipamentos Portáteis;',
+                  'Pré-vendas e descontos exclusivos em shows/eventos;',
+                  'Porto Serviço: 20% de desconto na contratação de serviços para Casa e Auto.',
+                  'Gastronomia Porto Bank: Até 15% de desconto e amenidades em restaurantes selecionados. Saiba mais'
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Benefício das bandeiras',
+            blocks: [
+              {
+                type: 'list',
+                items: ['Vantagens para suas viagens;']
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      title: 'Porto Bank Gold',
+      versionKey: 'gold',
       image: 'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Gold.png',
-      alt: 'Cartão Porto Bank Gold oficial',
-      details: [
-        'Renda mínima de R$ 1.000',
-        '12 meses de anuidade grátis na 1ª bandeira',
-        '1 ponto por US$ 1, Tag Porto, Shell Box e gratuidade a partir de R$ 4.000 em gasto mensal'
+      alt: 'Cartão Porto Bank Gold',
+      badge: 'IOF ZERO',
+      benefits: [
+        [
+          { text: 'Acumule até ' },
+          { text: '1,0 pontos', emphasis: true },
+          { text: ' para cada dólar gasto.' }
+        ],
+        [
+          {
+            text: 'Resgate a partir de R$ 150 OFF em seguros, financiamento ou serviços Porto com seus pontos.',
+            emphasis: true
+          }
+        ],
+        [
+          { text: 'Tag de pedágio grátis', emphasis: true },
+          { text: ' e sem mensalidade.' }
+        ]
       ],
-      fit:
-        'Boa leitura para quem quer um pacote mais completo da Porto sem subir cedo demais para a faixa premium.'
-    },
-    {
-      eyebrow: 'Intermediário forte',
-      title: 'Platinum',
-      accent: 'silver',
-      image:
-        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Platinum.png',
-      alt: 'Cartão Porto Bank Platinum oficial',
-      details: [
-        'Renda mínima de R$ 10.000',
-        '12 meses de anuidade grátis na 1ª bandeira',
-        '1,5 ponto por US$ 1 e gratuidade a partir de R$ 6.500 em gasto mensal'
-      ],
-      fit:
-        'Entra melhor para quem gasta mais, quer pontuar melhor e começar a destravar uma categoria superior.'
-    },
-    {
-      eyebrow: 'Premium',
-      title: 'Black ou Infinite',
-      accent: 'ink',
-      image:
-        'https://www.portoseguro.com.br/NovoInstitucional/static_files/images/cartao-de-credito/plasticos/Porto_Bank_Visa_Infinite.png',
-      alt: 'Cartão Porto Bank Visa Infinite oficial',
-      details: [
-        'Associação mediante convite',
-        'Até 3 pontos por US$ 1',
-        '10 acessos anuais a mais de 2 mil salas VIP e acesso ilimitado à Sala VIP Coworking'
-      ],
-      fit:
-        'Leitura para perfis de maior relacionamento e uso premium, com foco forte em viagem e benefícios superiores.'
+      detail: {
+        drawerTitle: 'Detalhes do Porto Bank Gold',
+        drawerSubtitle: 'Detalhes do Cartão Porto Bank Gold',
+        intro: ['Aprovação sujeita à análise de crédito', 'Cobertura internacional'],
+        sections: [
+          {
+            title: 'Sobre a anuidade',
+            blocks: [
+              { type: 'paragraph', text: 'Grátis nos 12 primeiros meses, para novos clientes*', emphasis: true },
+              {
+                type: 'paragraph',
+                text: 'Depois disso, você tem a parcela mensal da anuidade grátis ao atingir:'
+              },
+              {
+                type: 'list',
+                items: [
+                  'Gastos por fatura superior ou igual a R$ 3.500,00',
+                  'Ou a partir de R$ 50 mil em fundos no produto Investimentos Porto Bank.'
+                ]
+              },
+              {
+                type: 'paragraph',
+                text: 'Caso não cumpra pelo menos um desses requisitos, a mensalidade é de apenas R$ 39,00 por mês*.'
+              },
+              { type: 'paragraph', text: 'Até 3 cartões adicionais sem anuidade.', emphasis: true },
+              {
+                type: 'note',
+                text:
+                  '*Esta condição se aplica somente à primeira bandeira, para novos clientes. Na aquisição de um novo cartão de 2ª bandeira, o cliente será isento e poderá somar os gastos dos dois cartões para isenção total ou parcial da anuidade do 1º cartão.'
+              }
+            ]
+          },
+          {
+            title: 'Benefícios Porto',
+            blocks: [
+              {
+                type: 'list',
+                items: [
+                  'PortoPlus: Acumule até 1,0 pontos a cada dólar gasto no Cartão de Crédito Porto Bank Gold. Consulte as regras e condições;',
+                  'Tag Porto Bank grátis e sem mensalidade;',
+                  'Desconto em combustíveis com Shell Box;',
+                  'Descontos no Porto Seguro Auto ou Azul Seguro Auto. Consulte as condições;',
+                  '5% de desconto nos demais seguros: Residencial, Bike, Celular, Viagem, Vida e Equipamentos Portáteis;',
+                  'Pré-vendas e descontos exclusivos em shows/eventos;',
+                  'Porto Serviço: 20% de desconto na contratação de serviços para Casa e Auto.',
+                  'Gastronomia Porto Bank: Até 15% de desconto e amenidades em restaurantes selecionados. Saiba mais'
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Benefícios das bandeiras',
+            blocks: [
+              {
+                type: 'list',
+                items: ['Proteção de compras;', 'Proteção de preço;', 'Garantia estendida original;', 'Vantagens para suas viagens;']
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
-  benefitCards: [
+  appHighlights: [
+    'Cartão virtual, fatura, limite e gastos no mesmo ambiente',
+    'Aviso viagem, bloqueio e desbloqueio em poucos toques',
+    'Tag Porto Bank, Shell Box e mais serviços conectados ao app',
+    'Mais praticidade para resolver a rotina sem fricção'
+  ],
+  ecosystemFeature: {
+    eyebrow: 'Ecossistema Porto',
+    title: 'O cartão ganha outra presença quando o benefício aparece na rotina de verdade',
+    text:
+      'PortoPlus, Tag Porto Bank, Shell Box e serviços Porto ajudam o cartão a sair da ficha técnica e entrar no seu dia a dia com mais valor percebido.',
+    image: '/assets/blog/porto-humanized/cc-portoplus.webp',
+    alt: 'Identidade visual do PortoPlus com mala e símbolo colorido',
+    highlights: ['PortoPlus para viagens e descontos', 'Benefícios conectados ao uso real', 'Ecossistema útil no dia a dia']
+  },
+  ecosystemCards: [
     {
-      icon: 'star',
-      title: 'PortoPlus para milhas, viagens e descontos',
+      eyebrow: 'Tag Porto Bank',
+      title: 'Mobilidade que elimina etapas no pedágio e no estacionamento',
       text:
-        'Ao concentrar gastos no cartão, você acumula pontos para resgatar milhas aéreas, hospedagem, produtos, serviços e descontos dentro do ecossistema Porto.'
+        'A Tag Porto Bank reforça o lado prático do cartão e ajuda a transformar o uso em uma experiência mais fluida na rua.',
+      image: '/assets/blog/porto-humanized/card-tag-porto.webp',
+      alt: 'Tag Porto Bank azul em perspectiva',
+      accent: 'tag'
     },
     {
-      icon: 'bolt',
-      title: 'Tag Porto e Shell Box no uso diário',
+      eyebrow: 'Shell Box',
+      title: 'Desconto em combustível para o benefício aparecer no uso real',
       text:
-        'Nas versões mais robustas, a Porto conecta o cartão com mobilidade prática: Tag Porto sem mensalidade em categorias elegíveis e desconto no abastecimento pelo Shell Box.'
+        'O cartão deixa de ser abstrato quando também conversa com abastecimento e momentos recorrentes da rotina.',
+      image: '/assets/blog/porto-humanized/cc-shell-box.webp',
+      alt: 'Imagem de posto de combustível representando o Shell Box',
+      accent: 'shell'
     },
     {
-      icon: 'document',
-      title: 'App, carteiras digitais e cartão virtual',
+      eyebrow: 'Serviços Porto',
+      title: 'Benefícios que encostam em assistência e conveniência da marca',
       text:
-        'Apple Pay, Samsung Pay, Google Pay, consulta de fatura, gestão de limite, bloqueio e aviso viagem aparecem na jornada digital oficial do cartão.'
-    },
-    {
-      icon: 'shield',
-      title: 'Benefícios que crescem para quem usa Porto',
-      text:
-        'A proposta ganha valor quando você também aproveita descontos em seguros, serviços e condições especiais da marca, e não só uma linha de crédito.'
+        'Quem já vive a Porto em seguros e serviços percebe mais valor quando o cartão entra nesse mesmo ecossistema.',
+      image: '/assets/blog/porto-humanized/moco-servico.webp',
+      alt: 'Profissional da Porto realizando um serviço residencial',
+      accent: 'service'
     }
   ],
-  proofCards: [
+  lifestyleHero: {
+    eyebrow: 'Mais humano',
+    title: 'O Cartão Porto faz mais sentido quando entra na sua rotina com leveza',
+    text:
+      'Pagar com o celular, acompanhar tudo no app e sentir os benefícios em momentos reais deixa a página menos fria e o produto muito mais desejável.',
+    image: '/assets/blog/porto-humanized/moca-celular-2.webp',
+    alt: 'Mulher sorrindo segurando o Cartão Porto Bank',
+    highlights: ['Pagamento por aproximação', 'Carteiras digitais', 'Controle no app']
+  },
+  lifestyleCards: [
     {
-      icon: 'shield',
-      title: '30 anos de mercado no posicionamento da corretora',
+      eyebrow: 'Carteira digital',
+      title: 'Cartão e celular andando juntos no dia a dia',
       text:
-        'A H Soares se apresenta institucionalmente como corretora com 30 anos de mercado, atendimento consultivo e foco em pessoas, imóveis e empresas.',
-      href: '/institucional',
-      linkLabel: 'Ver institucional'
+        'Cartão virtual, aproximação e gestão rápida ajudam o produto a parecer útil antes mesmo de entrar no pedido oficial.',
+      image: '/assets/blog/porto-humanized/cartao-e-celular.webp',
+      alt: 'Celular azul com cartão Porto Bank preto em destaque',
+      accent: 'ink'
     },
     {
-      icon: 'building',
-      title: 'Corretora identificada e com CNPJ público',
-      text: `${siteConfig.legalName} opera com identificação institucional clara no site, incluindo o CNPJ ${siteConfig.cnpj}.`,
-      href: '/institucional',
-      linkLabel: 'Ver dados da corretora'
-    },
-    {
-      icon: 'chat',
-      title: 'Canal humano real quando surgir dúvida',
+      eyebrow: 'Produto em foco',
+      title: 'Uma vitrine mais premium para sentir valor além da comparação técnica',
       text:
-        'Se a escolha entre as versões travar, existe apoio por WhatsApp e contato institucional. O suporte entra como apoio, sem esconder a rota oficial da Porto.',
-      href: '/contato',
-      linkLabel: 'Abrir contato'
-    },
-    {
-      icon: 'document',
-      title: 'Pedido e informação em rota oficial',
-      text:
-        'As condições desta página foram organizadas a partir do conteúdo oficial da Porto, e o CTA principal segue para o pedido oficial com rastreamento do clique.',
-      href: 'https://www.portoseguro.com.br/sites/institucional/cartao-de-credito',
-      linkLabel: 'Ver fonte oficial Porto',
-      external: true
-    }
-  ],
-  fitCards: [
-    {
-      icon: 'lock',
-      title: 'Quem quer economizar na mensalidade',
-      text:
-        'Sem anuidade, Internacional e Gold fazem mais sentido quando a prioridade é controlar custo fixo sem abrir mão de benefícios práticos.'
-    },
-    {
-      icon: 'chat',
-      title: 'Quem quer usar o cartão como principal',
-      text:
-        'Internacional, Gold e Platinum crescem quando o gasto mensal ajuda a derrubar a anuidade e o PortoPlus começa a devolver valor real.'
-    },
-    {
-      icon: 'family',
-      title: 'Quem viaja e usa benefícios premium',
-      text:
-        'Platinum, Black e Infinite fazem mais sentido para quem quer pontuação maior, salas VIP, seguro viagem e um pacote mais robusto.'
-    }
-  ],
-  detailCards: [
-    {
-      icon: 'clock',
-      title: 'Anuidade que muda com o uso',
-      text:
-        'Na FAQ oficial, a Porto informa 1 ano de anuidade grátis para conhecer o cartão e, depois disso, desconto calculado conforme o gasto mensal. Em algumas faixas, a mensalidade pode ficar zerada.'
-    },
-    {
-      icon: 'star',
-      title: 'Pontos já começam sem cadastro separado',
-      text:
-        'Segundo a Porto, você não precisa se cadastrar para começar a pontuar. Os pontos já passam a ser gerados no PortoPlus e podem ser consultados no WhatsApp, no app ou na área do cliente.'
-    },
-    {
-      icon: 'shield',
-      title: 'Validade de 24 meses para os pontos',
-      text:
-        'A Porto informa validade de 24 meses para os pontos do programa de relacionamento a partir da data de aquisição do cartão.'
-    },
-    {
-      icon: 'chat',
-      title: 'App resolve a rotina do cartão',
-      text:
-        'A FAQ oficial cita acompanhamento de gastos, fatura, limite, bloqueio, desbloqueio e aviso viagem, além de acesso a meios de pagamento como cartão virtual.'
-    }
-  ],
-  journeySteps: [
-    {
-      number: '01',
-      title: 'Defina a faixa certa antes de pedir',
-      text:
-        'Comece escolhendo entre sem anuidade, faixa intermediária ou premium com base no seu gasto mensal, na renda e no tipo de benefício que você realmente vai usar.'
-    },
-    {
-      number: '02',
-      title: 'Clique no link oficial da Porto',
-      text:
-        'O CTA principal desta página leva para o ambiente oficial da Porto com o atalho correto para iniciar a solicitação.'
-    },
-    {
-      number: '03',
-      title: 'Preencha seus dados e siga a análise',
-      text:
-        'A jornada digital do Porto Bank faz a leitura cadastral e a análise de crédito para definir se o pedido segue e em quais condições.'
-    },
-    {
-      number: '04',
-      title: 'Use a H Soares apenas como apoio se precisar',
-      text:
-        'Se alguma dúvida travar a escolha entre as versões, você pode chamar a H Soares no WhatsApp antes de concluir. O pedido continua sendo oficial da Porto.'
+        'Quando a apresentação do cartão aparece com mais intenção visual, a decisão fica mais aspiracional e menos burocrática.',
+      image: '/assets/blog/porto-humanized/cartoes-mesa.webp',
+      alt: 'Cartões Porto Bank em composição editorial sobre base geométrica',
+      accent: 'editorial'
     }
   ]
 };
@@ -1003,256 +1246,146 @@ function CellPhoneProductPage({ product }) {
   );
 }
 
+function PortoCardIntroSections({ product }) {
+  const ctaProduct = {
+    slug: product.slug,
+    portoUrl: product.portoUrl
+  };
+
+  return (
+    <>
+      <section className="porto-card-intro-section">
+        <PortoCardHeroCarousel product={ctaProduct} slides={PORTO_CARD_PAGE.carouselSlides} />
+      </section>
+
+      <section className="section porto-card-version-section" id="comparar-cartoes">
+        <div className="container">
+          <div className="porto-card-version-shell">
+            <div className="section-head section-head-readable porto-card-section-head porto-card-version-head">
+              <p className="eyebrow">Compare as versões</p>
+              <h2>Escolha o cartão Porto que combina com seu momento</h2>
+              <p>
+                Compare os principais planos, veja os benefícios de cada perfil e avance para a contratação pelos
+                canais oficiais da Porto.
+              </p>
+            </div>
+
+            <PortoCardVersionSection
+              product={ctaProduct}
+              cards={PORTO_CARD_PAGE.versionCards}
+              note="A contratação é realizada pelos canais oficiais da Porto, com orientação da H Soares Seguros."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="section porto-card-ecosystem-section section-soft-blue">
+        <div className="container">
+          <div className="section-head section-head-readable porto-card-section-head porto-card-visual-head">
+            <p className="eyebrow">Benefícios percebidos</p>
+            <h2>O ecossistema Porto ajuda o cartão a parecer mais útil, mais vivo e menos técnico</h2>
+            <p>
+              Quando o benefício aparece em viagem, abastecimento, mobilidade, app e serviços, o produto ganha contexto
+              de uso e deixa de parecer apenas uma comparação fria de faixas.
+            </p>
+          </div>
+
+          <div className="porto-card-ecosystem-layout">
+            <article className="porto-card-ecosystem-feature">
+              <div className="porto-card-ecosystem-feature-copy">
+                <p className="eyebrow">{PORTO_CARD_PAGE.ecosystemFeature.eyebrow}</p>
+                <h3>{PORTO_CARD_PAGE.ecosystemFeature.title}</h3>
+                <p>{PORTO_CARD_PAGE.ecosystemFeature.text}</p>
+
+                <div className="porto-card-ecosystem-highlights">
+                  {PORTO_CARD_PAGE.ecosystemFeature.highlights.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="porto-card-ecosystem-feature-media">
+                <SafeImage src={PORTO_CARD_PAGE.ecosystemFeature.image} alt={PORTO_CARD_PAGE.ecosystemFeature.alt} />
+              </div>
+            </article>
+
+            <div className="porto-card-ecosystem-grid">
+              {PORTO_CARD_PAGE.ecosystemCards.map((card) => (
+                <article key={card.title} className={`porto-card-ecosystem-card porto-card-ecosystem-card--${card.accent}`}>
+                  <div className="porto-card-ecosystem-card-media">
+                    <SafeImage src={card.image} alt={card.alt} />
+                  </div>
+                  <div className="porto-card-ecosystem-card-copy">
+                    <p className="eyebrow">{card.eyebrow}</p>
+                    <h3>{card.title}</h3>
+                    <p>{card.text}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section porto-card-human-section">
+        <div className="container">
+          <div className="section-head section-head-readable porto-card-section-head porto-card-visual-head">
+            <p className="eyebrow">Mais contexto de uso</p>
+            <h2>Menos página fria, mais sensação de produto real na rotina</h2>
+            <p>
+              O Cartão Porto fica mais persuasivo quando a apresentação mostra gente, celular, app e percepção de
+              produto, e não apenas regras, faixa e renda.
+            </p>
+          </div>
+
+          <div className="porto-card-human-grid">
+            <article className="porto-card-human-hero-card">
+              <div className="porto-card-human-hero-copy">
+                <p className="eyebrow">{PORTO_CARD_PAGE.lifestyleHero.eyebrow}</p>
+                <h3>{PORTO_CARD_PAGE.lifestyleHero.title}</h3>
+                <p>{PORTO_CARD_PAGE.lifestyleHero.text}</p>
+
+                <div className="porto-card-human-highlights">
+                  {PORTO_CARD_PAGE.lifestyleHero.highlights.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="porto-card-human-hero-media">
+                <SafeImage src={PORTO_CARD_PAGE.lifestyleHero.image} alt={PORTO_CARD_PAGE.lifestyleHero.alt} />
+              </div>
+            </article>
+
+            <div className="porto-card-human-stack">
+              {PORTO_CARD_PAGE.lifestyleCards.map((card) => (
+                <article key={card.title} className={`porto-card-human-side-card porto-card-human-side-card--${card.accent}`}>
+                  <div className="porto-card-human-side-copy">
+                    <p className="eyebrow">{card.eyebrow}</p>
+                    <h3>{card.title}</h3>
+                    <p>{card.text}</p>
+                  </div>
+
+                  <div className="porto-card-human-side-media">
+                    <SafeImage src={card.image} alt={card.alt} />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </>
+  );
+}
 
 function PortoCardProductPage({ product, supportLinks }) {
   const whatsappHref = getWhatsAppHref('Olá, quero entender qual Cartão Porto combina com o meu perfil.');
 
   return (
     <>
-      <section className="section premium-product-hero porto-card-hero">
-        <div className="container">
-          <ProductBreadcrumb category={product.category} name={product.name} />
-          <div className="porto-card-hero-grid">
-            <div className="premium-product-copy porto-card-hero-copy">
-              <p className="eyebrow">{product.category}</p>
-              <h1>Cartão Porto Bank: escolha a versão certa e vá para o pedido oficial com mais clareza</h1>
-              <p className="subhead">
-                Sem anuidade, Internacional, Gold, Platinum e cartões premium por convite. Aqui você entende qual
-                versão combina com sua renda, seu gasto e o tipo de benefício que realmente vai usar antes de seguir
-                para o pedido oficial da Porto.
-              </p>
-              <div className="product-highlights">
-                {PORTO_CARD_PAGE.highlights.map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-              <div className="cta-row porto-card-hero-actions">
-                <ProductCtaButton
-                  product={product}
-                  label="Ir para o pedido oficial da Porto"
-                  payload={{ cta_placement: 'hero-primary', page_template: 'porto-card-dedicated' }}
-                />
-                <TrackedExternalLink
-                  className="btn btn-ghost"
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  eventType="whatsapp_click"
-                  productSlug={product.slug}
-                  objective="porto_support"
-                  payload={{ cta_placement: 'hero-support', page_template: 'porto-card-dedicated', channel: 'whatsapp' }}
-                >
-                  Tirar dúvida no WhatsApp
-                </TrackedExternalLink>
-                <a className="btn btn-ghost" href="#comparar-cartoes">
-                  Comparar versões
-                </a>
-              </div>
-              <p className="porto-card-hero-note">
-                A aprovação depende da análise de crédito do Porto Bank. As informações desta página foram organizadas
-                a partir das páginas oficiais consultadas em 29 de março de 2026.
-              </p>
-            </div>
-
-            <div className="porto-card-hero-visual">
-              <figure className="porto-card-hero-media">
-                <SafeImage
-                  src="/assets/blog/porto-hero-option-2-crop.webp"
-                  alt="Cartões Porto Bank em destaque"
-                  loading="eager"
-                />
-              </figure>
-
-              <aside className="porto-card-floating-card">
-                <div className="porto-card-floating-brand">
-                  <SafeImage src="/assets/blog/porto-logo.png" alt="Porto" />
-                  <span>Leitura oficial organizada pela H Soares</span>
-                </div>
-                <h2>O que você vai resolver aqui</h2>
-                <ul>
-                  <li>Entender qual faixa do cartão combina com sua renda e gasto mensal</li>
-                  <li>Ver onde a anuidade pesa, cai ou deixa de existir</li>
-                  <li>Seguir para o pedido oficial da Porto com menos dúvida e mais contexto</li>
-                </ul>
-              </aside>
-            </div>
-          </div>
-
-          <div className="porto-card-kpi-grid">
-            {PORTO_CARD_PAGE.quickFacts.map((item) => (
-              <article key={item.value} className="porto-card-kpi-card">
-                <PremiumIcon name={item.icon} />
-                <strong>{item.value}</strong>
-                <p>{item.label}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section" id="comparar-cartoes">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Compare as versões</p>
-            <h2>Do cartão sem anuidade ao premium, veja onde cada faixa faz mais sentido</h2>
-            <p>
-              A melhor escolha não sai pelo nome mais forte nem pela aparência do cartão. Ela sai da combinação entre
-              renda, gasto mensal e benefícios que você realmente vai usar.
-            </p>
-          </div>
-
-          <div className="porto-card-version-grid">
-            {PORTO_CARD_PAGE.versionCards.map((card) => (
-              <article key={card.title} className={`porto-card-version-card porto-card-version-card--${card.accent}`}>
-                <p className="eyebrow">{card.eyebrow}</p>
-                <div className="porto-card-version-media">
-                  <SafeImage src={card.image} alt={card.alt} />
-                </div>
-                <h3>{card.title}</h3>
-                <ul>
-                  {card.details.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-                <strong>{card.fit}</strong>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-soft-blue">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Benefícios que pesam no uso real</p>
-            <h2>O Cartão Porto cresce quando o benefício sai do papel e entra na rotina</h2>
-            <p>
-              A proposta não se resume a limite e bandeira. O valor aparece quando pontos, app, mobilidade e descontos
-              no ecossistema Porto conversam com a sua rotina.
-            </p>
-          </div>
-
-          <div className="porto-card-benefit-grid">
-            {PORTO_CARD_PAGE.benefitCards.map((card) => (
-              <article key={card.title} className="porto-card-info-card">
-                <PremiumIcon name={card.icon} />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Sinais de confiança</p>
-            <h2>Prova comercial mais forte, sem inventar depoimento ou prometer aprovação</h2>
-            <p>
-              Em vez de usar prova genérica, a página reforça sinais verificáveis da corretora, do atendimento e da
-              rota oficial da Porto. Isso aumenta confiança sem vender uma promessa que não depende da H Soares.
-            </p>
-          </div>
-
-          <div className="porto-card-proof-grid">
-            {PORTO_CARD_PAGE.proofCards.map((card) => (
-              <article key={card.title} className="porto-card-info-card porto-card-proof-card">
-                <PremiumIcon name={card.icon} />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-                {card.external ? (
-                  <TrackedExternalLink
-                    className="link-btn"
-                    href={card.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    eventType="important_link_click"
-                    productSlug={product.slug}
-                    objective="porto_source_reference"
-                    payload={{ cta_placement: 'proof-source', page_template: 'porto-card-dedicated' }}
-                  >
-                    {card.linkLabel}
-                  </TrackedExternalLink>
-                ) : (
-                  <Link href={card.href} className="link-btn">
-                    {card.linkLabel}
-                  </Link>
-                )}
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Como escolher sem errar</p>
-            <h2>Três leituras simples para saber qual faixa merece sua atenção primeiro</h2>
-            <p>
-              Se você souber em qual cenário se encaixa, a decisão fica muito mais rápida e o clique no pedido oficial
-              passa a fazer mais sentido.
-            </p>
-          </div>
-
-          <div className="porto-card-fit-grid">
-            {PORTO_CARD_PAGE.fitCards.map((card) => (
-              <article key={card.title} className="porto-card-info-card porto-card-fit-card">
-                <PremiumIcon name={card.icon} />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section-soft-blue">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Antes de pedir</p>
-            <h2>Os detalhes oficiais que mais evitam dúvida e pedido desalinhado</h2>
-            <p>
-              Esses pontos costumam travar a decisão: anuidade, pontuação, validade dos pontos, uso do app e o que a
-              Porto realmente exige na jornada.
-            </p>
-          </div>
-
-          <div className="porto-card-detail-grid">
-            {PORTO_CARD_PAGE.detailCards.map((card) => (
-              <article key={card.title} className="porto-card-info-card porto-card-detail-card">
-                <PremiumIcon name={card.icon} />
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <div className="section-head section-head-readable">
-            <p className="eyebrow">Como pedir</p>
-            <h2>O caminho mais seguro para sair da dúvida e entrar no pedido oficial</h2>
-            <p>
-              A H Soares ajuda na leitura, mas a ação principal desta página é levar você para o ambiente oficial da
-              Porto quando a escolha da faixa já estiver clara.
-            </p>
-          </div>
-
-          <div className="porto-card-journey-grid">
-            {PORTO_CARD_PAGE.journeySteps.map((step) => (
-              <article key={step.number} className="porto-card-step-card">
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PortoCardIntroSections product={product} />
 
       <section className="section">
         <div className="container faq-shell">

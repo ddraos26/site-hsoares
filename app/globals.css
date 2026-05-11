@@ -11,6 +11,415 @@
   --shadow: 0 18px 50px rgba(0, 33, 107, 0.1);
 }
 
+.product-page--cartao-credito-porto-bank .porto-card-version-section {
+  background: #ffffff;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .container {
+  width: min(1760px, calc(100vw - 48px));
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-shell {
+  padding-top: 10px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-shell::before {
+  content: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 38px;
+  overflow: visible;
+  padding-bottom: 0;
+  scroll-snap-type: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100%;
+  padding: 20px 20px 24px;
+  border: 1px solid #d9dde3;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card::before {
+  content: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card:hover {
+  transform: none;
+  border-color: #d9dde3;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 176px;
+  margin: 0 0 18px;
+  padding: 0;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: min(100%, 320px);
+  max-height: 182px;
+  object-fit: contain;
+  filter: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-image--mastercard-black img,
+.product-page--cartao-credito-porto-bank .porto-card-version-image--visa-infinite img {
+  max-width: min(100%, 300px);
+  max-height: 178px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-image--platinum img,
+.product-page--cartao-credito-porto-bank .porto-card-version-image--gold img {
+  max-width: min(100%, 320px);
+  max-height: 188px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card h3 {
+  margin: 0;
+  color: #22262d;
+  font-size: clamp(1.4rem, 1.5vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-badge {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 76px;
+  margin-top: 16px;
+  padding: 0 18px;
+  border-radius: 16px;
+  background: #eef3ee;
+  color: #22262d;
+  font-size: clamp(1.1rem, 1.05vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-divider {
+  height: 1px;
+  margin-top: 14px;
+  background: #d7d7d7;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-benefits {
+  display: grid;
+  gap: 30px;
+  margin-top: 14px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-benefits p {
+  margin: 0;
+  color: #53575d;
+  font-size: clamp(0.98rem, 0.95vw, 1.08rem);
+  line-height: 1.44;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-benefits strong {
+  color: #3a3d42;
+  font-weight: 700;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-actions {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #0b57d0;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-link:hover {
+  color: #0a4cc0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-link:focus-visible {
+  outline: 2px solid rgba(11, 87, 208, 0.28);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.product-page--cartao-credito-porto-bank .porto-card-version-link:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.porto-card-detail-drawer-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 170;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.porto-card-detail-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 18, 35, 0.44);
+}
+
+.porto-card-detail-drawer {
+  position: relative;
+  width: min(760px, calc(100vw - 24px));
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 28px 0 0 28px;
+  box-shadow: -24px 0 60px rgba(8, 25, 67, 0.2);
+  overflow: hidden;
+}
+
+.porto-card-detail-drawer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px 18px;
+}
+
+.porto-card-detail-drawer-top h3 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(2rem, 2.5vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+}
+
+.porto-card-detail-drawer-subtitle {
+  margin: 14px 0 0;
+  color: #252b34;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.porto-card-detail-drawer-close {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #374151;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.porto-card-detail-drawer-close:hover {
+  background: rgba(17, 24, 39, 0.06);
+}
+
+.porto-card-detail-drawer-close:focus-visible {
+  outline: 2px solid rgba(11, 87, 208, 0.28);
+  outline-offset: 2px;
+}
+
+.porto-card-detail-drawer-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0 32px 32px;
+}
+
+.porto-card-detail-drawer-intro {
+  display: grid;
+  gap: 10px;
+}
+
+.porto-card-detail-drawer-intro p {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.porto-card-detail-drawer-section {
+  margin-top: 28px;
+}
+
+.porto-card-detail-drawer-section h4 {
+  margin: 0 0 12px;
+  color: #111827;
+  font-size: 1.24rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.porto-card-detail-drawer-paragraph,
+.porto-card-detail-drawer-note {
+  margin: 0;
+  color: #202732;
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+.porto-card-detail-drawer-section .porto-card-detail-drawer-paragraph + .porto-card-detail-drawer-paragraph,
+.porto-card-detail-drawer-section .porto-card-detail-drawer-paragraph + .porto-card-detail-drawer-note,
+.porto-card-detail-drawer-section .porto-card-detail-drawer-list + .porto-card-detail-drawer-paragraph,
+.porto-card-detail-drawer-section .porto-card-detail-drawer-list + .porto-card-detail-drawer-note {
+  margin-top: 14px;
+}
+
+.porto-card-detail-drawer-paragraph.is-strong {
+  font-weight: 800;
+}
+
+.porto-card-detail-drawer-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-left: 20px;
+  color: #202732;
+  font-size: 1rem;
+  line-height: 1.62;
+}
+
+.porto-card-detail-drawer-note {
+  color: #4b5563;
+  font-size: 0.94rem;
+}
+
+.porto-card-detail-drawer-footer {
+  flex: 0 0 auto;
+  padding: 18px 32px calc(18px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(209, 213, 219, 0.9);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.porto-card-detail-drawer-cta {
+  width: 100%;
+  min-height: 54px;
+}
+
+@media (max-width: 1180px) {
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .container {
+    width: min(calc(100vw - 32px), 1320px);
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card {
+    padding: 20px;
+  }
+
+  .porto-card-detail-drawer {
+    width: min(720px, calc(100vw - 16px));
+  }
+}
+
+@media (max-width: 640px) {
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .container {
+    width: min(calc(100vw - 20px), 1320px);
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-image {
+    min-height: 150px;
+    margin-bottom: 14px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-section .porto-card-version-image img {
+    max-width: min(100%, 280px);
+    max-height: 164px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-badge {
+    min-height: 64px;
+    margin-top: 14px;
+  }
+
+  .product-page--cartao-credito-porto-bank .porto-card-version-benefits {
+    gap: 22px;
+  }
+
+  .porto-card-detail-drawer {
+    width: 100vw;
+    border-radius: 0;
+  }
+
+  .porto-card-detail-drawer-top {
+    padding: 18px 18px 14px;
+  }
+
+  .porto-card-detail-drawer-top h3 {
+    font-size: 1.8rem;
+  }
+
+  .porto-card-detail-drawer-subtitle {
+    margin-top: 12px;
+    font-size: 0.98rem;
+  }
+
+  .porto-card-detail-drawer-body {
+    padding: 0 18px 24px;
+  }
+
+  .porto-card-detail-drawer-section {
+    margin-top: 24px;
+  }
+
+  .porto-card-detail-drawer-list,
+  .porto-card-detail-drawer-paragraph,
+  .porto-card-detail-drawer-note,
+  .porto-card-detail-drawer-intro p {
+    font-size: 0.98rem;
+  }
+
+  .porto-card-detail-drawer-footer {
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom));
+  }
+}
+
 .travel-page {
   --travel-ink: #041221;
   --travel-ink-soft: #07182d;
@@ -2931,21 +3340,14 @@ h3 {
   line-height: 1.7;
 }
 
-.porto-card-version-grid,
-.porto-card-benefit-grid,
-.porto-card-proof-grid,
-.porto-card-fit-grid,
-.porto-card-detail-grid,
-.porto-card-journey-grid {
+.porto-card-version-grid {
   margin-top: 28px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 18px;
 }
 
-.porto-card-version-card,
-.porto-card-info-card,
-.porto-card-step-card {
+.porto-card-version-card {
   border: 1px solid #d9e2f2;
   border-radius: 24px;
   background: #ffffff;
@@ -2989,32 +3391,22 @@ h3 {
   color: #ffffff;
 }
 
-.porto-card-version-media {
+.porto-card-version-image {
   min-height: 144px;
-  border-radius: 20px;
-  border: 1px solid rgba(216, 225, 242, 0.9);
-  background: rgba(255, 255, 255, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 8px 0 2px;
 }
 
-.porto-card-version-card--ink .porto-card-version-media {
-  border-color: rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.porto-card-version-media img {
+.porto-card-version-image img {
   display: block;
   width: 100%;
   max-height: 112px;
   object-fit: contain;
 }
 
-.porto-card-version-card h3,
-.porto-card-info-card h3,
-.porto-card-step-card h3 {
+.porto-card-version-card h3 {
   margin: 0;
   font-size: 1.18rem;
   color: #172236;
@@ -3042,35 +3434,6 @@ h3 {
 .porto-card-version-card--ink ul,
 .porto-card-version-card--ink .eyebrow {
   color: rgba(255, 255, 255, 0.84);
-}
-
-.porto-card-info-card h3 {
-  margin-top: 18px;
-}
-
-.porto-card-proof-card .link-btn {
-  display: inline-flex;
-  margin-top: 18px;
-}
-
-.porto-card-info-card p,
-.porto-card-step-card p {
-  margin: 10px 0 0;
-  color: #56637d;
-  line-height: 1.75;
-}
-
-.porto-card-step-card span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 48px;
-  height: 32px;
-  border-radius: 999px;
-  background: #eef3fd;
-  color: #123f97;
-  font-weight: 800;
-  letter-spacing: 0.08em;
 }
 
 .porto-card-cta-band {
@@ -3122,6 +3485,1334 @@ h3 {
 
 .porto-card-band-actions .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.14);
+}
+
+.porto-card-intro-section {
+  padding: 0 0 36px;
+  overflow: clip;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 44, 143, 0.08), transparent 24%),
+    radial-gradient(circle at 84% 12%, rgba(79, 136, 255, 0.08), transparent 22%),
+    linear-gradient(180deg, #fbfdff 0%, #f4f8ff 58%, #ffffff 100%);
+}
+
+.product-page--cartao-credito-porto-bank .product-breadcrumb {
+  display: none !important;
+}
+
+.porto-card-carousel--hero {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  overflow: clip;
+}
+
+.porto-card-carousel__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 26px -22px rgba(15, 23, 42, 0.32);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #1d4ed8;
+}
+
+.porto-card-carousel__frame {
+  position: relative;
+  display: block;
+  padding: 0;
+  overflow: clip;
+}
+
+.porto-card-carousel__viewport {
+  position: relative;
+  min-height: 560px;
+  overflow: hidden;
+  border-radius: 0;
+  border: 0;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 44, 143, 0.06), transparent 24%),
+    radial-gradient(circle at 86% 12%, rgba(79, 136, 255, 0.06), transparent 22%),
+    linear-gradient(180deg, #fbfdff 0%, #f4f8ff 58%, #ffffff 100%);
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.porto-card-carousel__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(24px);
+  pointer-events: none;
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.porto-card-carousel__slide.is-active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.porto-card-carousel__backdrop,
+.porto-card-carousel__slide::before,
+.porto-card-carousel__slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.porto-card-carousel__slide::before {
+  background:
+    linear-gradient(90deg, rgba(252, 253, 255, 0.98) 0%, rgba(252, 253, 255, 0.95) 19%, rgba(251, 252, 255, 0.87) 35%, rgba(250, 252, 255, 0.58) 49%, rgba(250, 252, 255, 0.2) 66%, rgba(250, 252, 255, 0.06) 80%, rgba(255, 255, 255, 0) 90%);
+  z-index: 1;
+}
+
+.porto-card-carousel__slide::after {
+  inset: auto 0 0;
+  height: 110px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(17, 24, 39, 0.08) 100%);
+  z-index: 1;
+}
+
+.porto-card-carousel__backdrop {
+  z-index: 0;
+}
+
+.porto-card-carousel__slide--blue {
+  background: linear-gradient(135deg, #f7fbff 0%, #edf4ff 34%, #ffffff 78%);
+}
+
+.porto-card-carousel__slide--blue .porto-card-carousel__backdrop {
+  background:
+    radial-gradient(circle at 72% 30%, rgba(103, 157, 255, 0.18), transparent 22%),
+    radial-gradient(circle at 86% 72%, rgba(15, 91, 106, 0.12), transparent 24%);
+}
+
+.porto-card-carousel__slide--silver {
+  background: linear-gradient(135deg, #fbfcfe 0%, #f2f5f8 38%, #ffffff 82%);
+}
+
+.porto-card-carousel__slide--silver .porto-card-carousel__backdrop {
+  background:
+    radial-gradient(circle at 74% 32%, rgba(196, 204, 216, 0.28), transparent 24%),
+    radial-gradient(circle at 88% 75%, rgba(120, 134, 160, 0.12), transparent 24%);
+}
+
+.porto-card-carousel__slide--ink {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2f7 38%, #ffffff 84%);
+}
+
+.porto-card-carousel__slide--ink .porto-card-carousel__backdrop {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(59, 83, 133, 0.16), transparent 22%),
+    radial-gradient(circle at 86% 76%, rgba(15, 23, 42, 0.12), transparent 24%);
+}
+
+.porto-card-carousel__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 36px clamp(28px, 4vw, 72px) 34px;
+}
+
+.porto-card-carousel__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 580px;
+}
+
+.porto-card-carousel__copy h1,
+.porto-card-carousel__copy h2 {
+  margin: 18px 0 0;
+  max-width: 12ch;
+  font-size: clamp(3rem, 4.45vw, 4.85rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+  color: #0f172a;
+  text-wrap: balance;
+}
+
+.porto-card-carousel__subtitle {
+  margin: 18px 0 0;
+  max-width: 46ch;
+  color: rgba(15, 23, 42, 0.7);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.porto-card-carousel__actions {
+  margin-top: 26px;
+}
+
+.porto-card-carousel__cta {
+  min-width: 270px;
+  min-height: 52px;
+  padding-inline: 24px;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  box-shadow: 0 20px 40px -28px rgba(0, 44, 143, 0.4);
+}
+
+.porto-card-carousel__note {
+  margin: 18px 0 0;
+  max-width: 40ch;
+  color: rgba(15, 23, 42, 0.54);
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.porto-card-carousel__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 26px clamp(24px, 4vw, 72px) 32px;
+  pointer-events: none;
+}
+
+.porto-card-carousel__art-stage {
+  position: relative;
+  width: min(42vw, 720px);
+  height: min(76%, 500px);
+  margin-right: clamp(6px, 1.2vw, 18px);
+}
+
+.porto-card-carousel__art-stage::before,
+.porto-card-carousel__art-stage::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+.porto-card-carousel__art-stage::before {
+  inset: 10% 12% 18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.58) 28%, rgba(255, 255, 255, 0.14) 58%, rgba(255, 255, 255, 0) 76%);
+  filter: blur(22px);
+  opacity: 0.92;
+}
+
+.porto-card-carousel__art-stage::after {
+  left: 12%;
+  right: 10%;
+  bottom: 6%;
+  height: 16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(15, 23, 42, 0.22) 0%, rgba(15, 23, 42, 0.12) 32%, rgba(15, 23, 42, 0) 72%);
+  filter: blur(14px);
+}
+
+.porto-card-carousel__art-stage--blue::before {
+  background: radial-gradient(circle, rgba(218, 236, 255, 0.98) 0%, rgba(182, 216, 255, 0.72) 30%, rgba(126, 178, 255, 0.18) 58%, rgba(255, 255, 255, 0) 78%);
+}
+
+.porto-card-carousel__art-stage--silver::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.98) 0%, rgba(235, 240, 247, 0.78) 30%, rgba(168, 184, 203, 0.18) 58%, rgba(255, 255, 255, 0) 78%);
+}
+
+.porto-card-carousel__art-stage--ink::before {
+  background: radial-gradient(circle, rgba(232, 238, 247, 0.98) 0%, rgba(190, 206, 226, 0.72) 30%, rgba(95, 120, 160, 0.18) 58%, rgba(255, 255, 255, 0) 78%);
+}
+
+.porto-card-carousel__art-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.porto-card-carousel__art-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 48px rgba(15, 23, 42, 0.22));
+}
+
+.porto-card-carousel__art-card--primary {
+  inset: 0;
+  z-index: 2;
+}
+
+.porto-card-carousel__art-card--secondary {
+  left: 4%;
+  bottom: 10%;
+  width: 36%;
+  height: 36%;
+  z-index: 1;
+  opacity: 0.98;
+}
+
+.porto-card-carousel__art--duo .porto-card-carousel__art-stage {
+  width: min(40vw, 620px);
+  height: min(68%, 420px);
+}
+
+.porto-card-carousel__art--black .porto-card-carousel__art-stage {
+  width: min(42vw, 700px);
+  height: min(72%, 430px);
+}
+
+.porto-card-carousel__art--black .porto-card-carousel__art-card--primary.is-mastercard-black {
+  inset: 0 0 2% 4%;
+}
+
+.porto-card-carousel__art--black .porto-card-carousel__art-card--primary.is-mastercard-black img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: none;
+}
+
+.porto-card-carousel__art--duo .porto-card-carousel__art-card--primary.is-duo {
+  inset: 2% 0 0 6%;
+}
+
+.porto-card-carousel__art--duo .porto-card-carousel__art-card--primary img {
+  transform: translateY(10px) scale(0.96);
+}
+
+.porto-card-carousel__art--offset .porto-card-carousel__art-stage {
+  width: min(40vw, 650px);
+  height: min(72%, 440px);
+}
+
+.porto-card-carousel__art--offset .porto-card-carousel__art-card--primary {
+  inset: 1% 0 4% 10%;
+}
+
+.porto-card-carousel__art--offset .porto-card-carousel__art-card--primary.is-platinum img {
+  transform: translateY(8px) scale(0.95);
+}
+
+.porto-card-carousel__art--offset .porto-card-carousel__art-card--secondary.is-blue-accent {
+  left: 3%;
+  bottom: 9%;
+  width: 34%;
+  height: 34%;
+  transform: rotate(-8deg);
+}
+
+.porto-card-carousel__art--offset .porto-card-carousel__art-card--secondary img {
+  filter: drop-shadow(0 18px 34px rgba(15, 23, 42, 0.18));
+}
+
+.porto-card-carousel__art--single .porto-card-carousel__art-stage {
+  width: min(40vw, 650px);
+  height: min(70%, 400px);
+}
+
+.porto-card-carousel__art--single .porto-card-carousel__art-card--primary {
+  inset: 2% 0 6% 8%;
+}
+
+.porto-card-carousel__art--single .porto-card-carousel__art-card--primary.is-infinite img {
+  transform: translateY(8px) scale(0.94);
+}
+
+.porto-card-carousel__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.74);
+  color: rgba(15, 23, 42, 0.82);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 16px 32px -22px rgba(15, 23, 42, 0.26);
+  backdrop-filter: blur(14px);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.porto-card-carousel__arrow--prev {
+  left: clamp(12px, 1.6vw, 26px);
+  transform: translateY(-50%);
+}
+
+.porto-card-carousel__arrow--next {
+  right: clamp(12px, 1.6vw, 26px);
+  transform: translateY(-50%);
+}
+
+.porto-card-carousel__arrow:hover {
+  transform: translateY(calc(-50% - 1px));
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 36px -22px rgba(15, 23, 42, 0.3);
+}
+
+.porto-card-carousel__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 34px -22px rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(14px);
+  transform: translateX(-50%);
+}
+
+.porto-card-carousel__dot {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.18);
+  cursor: pointer;
+  transition:
+    width 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.porto-card-carousel__dot:hover {
+  transform: scale(1.04);
+}
+
+.porto-card-carousel__dot.is-active {
+  width: 26px;
+  background: #0f5b6a;
+}
+
+.porto-card-version-section {
+  padding-top: 4px;
+  padding-bottom: 62px;
+  background:
+    radial-gradient(circle at 16% 0%, rgba(0, 61, 175, 0.07), transparent 20%),
+    linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+}
+
+.porto-card-version-section .container {
+  width: min(1760px, calc(100vw - 28px));
+}
+
+.porto-card-version-shell {
+  position: relative;
+  padding: 12px 0 0;
+}
+
+.porto-card-version-shell::before {
+  content: '';
+  position: absolute;
+  inset: 24px 1% -18px;
+  border-radius: 44px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(0, 86, 210, 0.08), transparent 24%),
+    radial-gradient(circle at 82% 18%, rgba(254, 203, 103, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(248, 251, 255, 0.98) 0%, rgba(255, 255, 255, 0.88) 100%);
+  border: 1px solid rgba(219, 230, 247, 0.96);
+  box-shadow: 0 28px 60px rgba(18, 41, 93, 0.07);
+  pointer-events: none;
+}
+
+.porto-card-version-head {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.porto-card-visual-head {
+  max-width: 860px;
+}
+
+.porto-card-version-section .porto-card-version-grid {
+  position: relative;
+  z-index: 1;
+  margin-top: 38px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+.porto-card-version-section .porto-card-version-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid rgba(205, 219, 242, 0.94);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(247, 250, 255, 0.96) 100%);
+  box-shadow:
+    0 16px 34px rgba(13, 36, 88, 0.08),
+    0 4px 12px rgba(13, 36, 88, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.porto-card-version-section .porto-card-version-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(142, 172, 226, 0.96);
+  box-shadow:
+    0 24px 46px rgba(13, 36, 88, 0.12),
+    0 8px 18px rgba(13, 36, 88, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94);
+}
+
+.porto-card-version-section .porto-card-version-card::before {
+  content: '';
+  position: absolute;
+  inset: -14% auto auto 56%;
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 76%);
+  pointer-events: none;
+}
+
+.porto-card-version-section .porto-card-version-topline {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.porto-card-version-section .porto-card-version-card .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 34px;
+  margin: 0;
+  padding: 0 13px;
+  border: 1px solid rgba(189, 206, 234, 0.94);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(241, 246, 255, 0.92) 100%);
+  color: #0f429f;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.porto-card-version-section .porto-card-version-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(203, 216, 240, 0.96);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(245, 248, 255, 0.88) 100%);
+  color: #324b74;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.96);
+}
+
+.porto-card-version-section .porto-card-version-card--ice {
+  background:
+    radial-gradient(circle at top right, rgba(133, 193, 255, 0.16), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--blue {
+  background:
+    radial-gradient(circle at top right, rgba(54, 113, 216, 0.18), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--gold {
+  background:
+    radial-gradient(circle at top right, rgba(255, 190, 94, 0.18), transparent 36%),
+    linear-gradient(180deg, #ffffff 0%, #fff8ee 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--silver {
+  background:
+    radial-gradient(circle at top right, rgba(198, 206, 221, 0.24), transparent 36%),
+    linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--ink {
+  border-color: rgba(34, 53, 92, 0.24);
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(145deg, #0c162a 0%, #18253e 58%, #25385f 100%);
+  box-shadow:
+    0 24px 48px rgba(9, 18, 38, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.porto-card-version-section .porto-card-version-card--ink .eyebrow {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-tag {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.porto-card-version-section .porto-card-version-image {
+  display: grid;
+  place-items: center;
+  min-height: 168px;
+  margin-top: 18px;
+  padding: 10px 4px 4px;
+}
+
+.porto-card-version-section .porto-card-version-image img {
+  width: auto;
+  max-width: min(100%, 224px);
+  max-height: 126px;
+  object-position: center;
+  filter: drop-shadow(0 16px 24px rgba(14, 31, 70, 0.14));
+}
+
+.porto-card-version-section .porto-card-version-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.porto-card-version-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.porto-card-version-section .porto-card-version-card h3 {
+  margin: 0;
+  font-size: 1.16rem;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #14284d;
+}
+
+.porto-card-version-highlight {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 44, 143, 0.12);
+  background: rgba(0, 44, 143, 0.07);
+  color: #002c8f;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.porto-card-version-highlight--soft {
+  border-color: rgba(0, 44, 143, 0.08);
+  background: rgba(0, 44, 143, 0.05);
+  color: #24467f;
+}
+
+.porto-card-version-section .porto-card-version-lead {
+  margin: 12px 0 0;
+  color: #495a79;
+  font-size: 0.93rem;
+  line-height: 1.62;
+}
+
+.porto-card-version-section .porto-card-version-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.porto-card-version-section .porto-card-version-metrics span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 212, 240, 0.78);
+  background: rgba(14, 53, 146, 0.06);
+  color: #183b84;
+  font-size: 0.77rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-lead {
+  color: rgba(236, 241, 255, 0.78);
+}
+
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-metrics span {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.porto-card-version-section .porto-card-version-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  color: #44536f;
+  line-height: 1.6;
+  font-size: 0.89rem;
+}
+
+.porto-card-version-section .porto-card-version-card li {
+  position: relative;
+  padding: 10px 12px 10px 34px;
+  border: 1px solid rgba(222, 231, 245, 0.86);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.porto-card-version-section .porto-card-version-card li::before {
+  content: '✓';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 44, 143, 0.1);
+  color: #0f459f;
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 1;
+}
+
+.porto-card-version-section .porto-card-version-fit {
+  margin-top: 18px;
+  padding: 14px 14px 15px;
+  border: 1px solid rgba(188, 211, 239, 0.92);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(243, 248, 255, 0.96) 0%, rgba(237, 246, 255, 0.92) 100%);
+}
+
+.porto-card-version-section .porto-card-version-fit strong {
+  display: block;
+  margin: 0;
+  color: #163980;
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.porto-card-version-section .porto-card-version-fit p {
+  margin: 8px 0 0;
+  color: #1d3d6f;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.porto-card-version-section .porto-card-version-card--ink h3,
+.porto-card-version-section .porto-card-version-card--ink ul,
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-fit p {
+  color: rgba(245, 248, 255, 0.96);
+}
+
+.porto-card-version-section .porto-card-version-card--ink li {
+  border-color: rgba(156, 188, 246, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.porto-card-version-section .porto-card-version-card--ink li::before {
+  background: rgba(227, 255, 4, 0.18);
+  color: rgba(227, 255, 4, 0.95);
+}
+
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-fit {
+  border-color: rgba(156, 188, 246, 0.16);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--ink .porto-card-version-fit strong {
+  color: rgba(183, 203, 255, 0.9);
+}
+
+.porto-card-version-actions {
+  margin-top: 18px;
+}
+
+.porto-card-version-note {
+  margin: 18px auto 0;
+  max-width: 760px;
+  text-align: center;
+  color: #4b5e7e;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.porto-card-plan-cta {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #0b3aa3 0%, #1254d6 55%, #1b6dff 100%);
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 16px 28px rgba(9, 57, 170, 0.2);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.porto-card-plan-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 45%);
+  opacity: 0.7;
+  transform: translateX(-28%);
+  transition: transform 220ms ease, opacity 220ms ease;
+}
+
+.porto-card-plan-cta:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #1248c4 0%, #2a73ff 100%);
+  box-shadow: 0 22px 36px rgba(9, 57, 170, 0.26);
+}
+
+.porto-card-plan-cta:hover::before {
+  transform: translateX(18%);
+  opacity: 1;
+}
+
+.porto-card-plan-cta:focus-visible {
+  outline: 3px solid rgba(40, 104, 255, 0.28);
+  outline-offset: 3px;
+}
+
+.porto-card-version-section .porto-card-version-card--ice .porto-card-plan-cta {
+  background: linear-gradient(135deg, #103d9d 0%, #1c5fe0 55%, #2e78ff 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--blue .porto-card-plan-cta {
+  background: linear-gradient(135deg, #0a409f 0%, #1558e2 54%, #2870ff 100%);
+}
+
+.porto-card-version-card--gold .porto-card-plan-cta {
+  background: linear-gradient(135deg, #0e3077 0%, #2152c2 54%, #3a7dff 100%);
+}
+
+.porto-card-version-section .porto-card-version-card--silver .porto-card-plan-cta {
+  background: linear-gradient(135deg, #0c3c9d 0%, #1457d7 54%, #2d75ff 100%);
+}
+
+.porto-card-version-card--ink .porto-card-plan-cta {
+  background: linear-gradient(135deg, #f6f9ff 0%, #d9e7ff 100%);
+  color: #10203d;
+  border-color: rgba(9, 18, 38, 0.08);
+  box-shadow: 0 20px 34px rgba(5, 12, 31, 0.2);
+}
+
+.porto-card-version-card--ink .porto-card-plan-cta:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #e6efff 100%);
+  box-shadow: 0 24px 38px rgba(5, 12, 31, 0.26);
+}
+
+.porto-card-version-card--ink .porto-card-version-highlight {
+  border-color: rgba(227, 255, 4, 0.18);
+  background: rgba(227, 255, 4, 0.12);
+  color: #f5ffd2;
+}
+
+.porto-card-ecosystem-section,
+.porto-card-human-section {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.porto-card-ecosystem-section .container,
+.porto-card-human-section .container {
+  width: min(1600px, calc(100vw - 34px));
+}
+
+.porto-card-ecosystem-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.porto-card-ecosystem-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(250px, 0.72fr);
+  gap: 22px;
+  align-items: center;
+  overflow: hidden;
+  padding: 36px;
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent 28%),
+    linear-gradient(135deg, #0b2c83 0%, #0f58c9 54%, #1db3ee 100%);
+  color: #ffffff;
+  box-shadow: 0 26px 58px rgba(10, 44, 131, 0.16);
+}
+
+.porto-card-ecosystem-feature-copy .eyebrow {
+  color: rgba(235, 245, 255, 0.82);
+}
+
+.porto-card-ecosystem-feature-copy h3 {
+  margin: 10px 0 0;
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.porto-card-ecosystem-feature-copy p {
+  margin: 16px 0 0;
+  color: rgba(236, 245, 255, 0.88);
+  line-height: 1.82;
+}
+
+.porto-card-ecosystem-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.porto-card-ecosystem-highlights span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.porto-card-ecosystem-feature-media {
+  display: grid;
+  place-items: center;
+}
+
+.porto-card-ecosystem-feature-media img {
+  width: min(100%, 350px);
+  height: auto;
+  filter: drop-shadow(0 26px 40px rgba(7, 34, 91, 0.24));
+}
+
+.porto-card-ecosystem-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.porto-card-ecosystem-card {
+  display: grid;
+  grid-template-columns: 158px minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  min-height: 188px;
+  overflow: hidden;
+  padding: 18px;
+  border-radius: 28px;
+  border: 1px solid rgba(212, 223, 243, 0.96);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 18px 36px rgba(13, 36, 88, 0.06);
+}
+
+.porto-card-ecosystem-card-media {
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.84) 38%, rgba(232, 241, 255, 0.38) 70%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(180deg, #f5f9ff 0%, #edf3ff 100%);
+  overflow: hidden;
+}
+
+.porto-card-ecosystem-card-media img {
+  max-width: calc(100% - 18px);
+  max-height: 140px;
+  width: auto;
+  height: auto;
+}
+
+.porto-card-ecosystem-card--service .porto-card-ecosystem-card-media img {
+  max-width: 100%;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.porto-card-ecosystem-card-copy .eyebrow {
+  margin-top: 2px;
+}
+
+.porto-card-ecosystem-card-copy h3 {
+  margin: 8px 0 0;
+  color: #18253c;
+  font-size: 1.22rem;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+}
+
+.porto-card-ecosystem-card-copy p:last-child {
+  margin: 12px 0 0;
+  color: #53617b;
+  line-height: 1.75;
+}
+
+.porto-card-human-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.porto-card-human-hero-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(280px, 0.68fr);
+  gap: 18px;
+  align-items: end;
+  min-height: 540px;
+  overflow: hidden;
+  padding: 34px;
+  border-radius: 36px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.14), transparent 20%),
+    linear-gradient(135deg, #0a276b 0%, #0c49b7 58%, #1599ea 100%);
+  box-shadow: 0 28px 58px rgba(10, 39, 107, 0.16);
+}
+
+.porto-card-human-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.porto-card-human-hero-copy .eyebrow {
+  color: rgba(235, 245, 255, 0.84);
+}
+
+.porto-card-human-hero-copy h3 {
+  margin: 10px 0 0;
+  max-width: 12ch;
+  color: #ffffff;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.porto-card-human-hero-copy p {
+  margin: 16px 0 0;
+  max-width: 44ch;
+  color: rgba(236, 245, 255, 0.9);
+  line-height: 1.82;
+}
+
+.porto-card-human-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.porto-card-human-highlights span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.porto-card-human-hero-media {
+  position: relative;
+  display: grid;
+  align-self: end;
+  justify-items: end;
+}
+
+.porto-card-human-hero-media img {
+  width: min(100%, 430px);
+  height: auto;
+  filter: drop-shadow(0 26px 42px rgba(7, 34, 91, 0.22));
+}
+
+.porto-card-human-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.porto-card-human-side-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(180px, 0.75fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 260px;
+  overflow: hidden;
+  padding: 28px;
+  border-radius: 30px;
+  box-shadow: 0 18px 36px rgba(13, 36, 88, 0.08);
+}
+
+.porto-card-human-side-card--ink {
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 24%),
+    linear-gradient(135deg, #0c1526 0%, #15243f 100%);
+}
+
+.porto-card-human-side-card--editorial {
+  border: 1px solid rgba(214, 225, 245, 0.96);
+  background:
+    radial-gradient(circle at top right, rgba(0, 61, 175, 0.06), transparent 22%),
+    linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
+}
+
+.porto-card-human-side-copy .eyebrow {
+  margin: 0;
+}
+
+.porto-card-human-side-copy h3 {
+  margin: 8px 0 0;
+  font-size: 1.36rem;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.porto-card-human-side-copy p:last-child {
+  margin: 12px 0 0;
+  line-height: 1.74;
+}
+
+.porto-card-human-side-card--ink .porto-card-human-side-copy h3,
+.porto-card-human-side-card--ink .porto-card-human-side-copy p,
+.porto-card-human-side-card--ink .eyebrow {
+  color: #ffffff;
+}
+
+.porto-card-human-side-card--ink .porto-card-human-side-copy p:last-child {
+  color: rgba(235, 243, 255, 0.84);
+}
+
+.porto-card-human-side-card--editorial .porto-card-human-side-copy h3 {
+  color: #172236;
+}
+
+.porto-card-human-side-card--editorial .porto-card-human-side-copy p:last-child {
+  color: #54627d;
+}
+
+.porto-card-human-side-media {
+  display: grid;
+  place-items: center;
+}
+
+.porto-card-human-side-card--ink .porto-card-human-side-media {
+  justify-items: end;
+}
+
+.porto-card-human-side-card--ink .porto-card-human-side-media img {
+  width: min(100%, 260px);
+  height: auto;
+  filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.26));
+}
+
+.porto-card-human-side-card--editorial .porto-card-human-side-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 18px 32px rgba(13, 36, 88, 0.1);
+}
+
+@media (max-width: 1180px) {
+  .porto-card-version-section .container {
+    width: min(calc(100vw - 28px), 1260px);
+  }
+
+  .porto-card-version-shell::before {
+    inset: 24px 0 -10px;
+    border-radius: 34px;
+  }
+
+  .porto-card-version-section .porto-card-version-grid {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x proximity;
+  }
+
+  .porto-card-version-section .porto-card-version-card {
+    flex: 0 0 min(262px, 76vw);
+    scroll-snap-align: start;
+    padding: 20px;
+  }
+
+  .porto-card-ecosystem-section .container,
+  .porto-card-human-section .container {
+    width: min(calc(100vw - 28px), 1260px);
+  }
+
+  .porto-card-ecosystem-layout,
+  .porto-card-human-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .porto-card-ecosystem-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .porto-card-human-hero-card {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .porto-card-ecosystem-feature,
+  .porto-card-human-hero-card,
+  .porto-card-human-side-card {
+    padding: 20px;
+    border-radius: 28px;
+  }
+
+  .porto-card-ecosystem-card,
+  .porto-card-human-side-card {
+    grid-template-columns: 1fr;
+  }
+
+  .porto-card-ecosystem-card-media {
+    min-height: 160px;
+  }
+
+  .porto-card-human-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .porto-card-human-side-card--ink .porto-card-human-side-media {
+    justify-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .porto-card-ecosystem-section .container,
+  .porto-card-human-section .container {
+    width: min(calc(100vw - 22px), 1260px);
+  }
+
+  .porto-card-plan-cta {
+    min-height: 50px;
+    font-size: 0.9rem;
+  }
+
+  .porto-card-version-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .porto-card-version-highlight {
+    min-height: 26px;
+  }
+
+  .porto-card-version-section .porto-card-version-card {
+    padding: 18px;
+    border-radius: 28px;
+  }
+
+  .porto-card-version-section .porto-card-version-image {
+    min-height: 154px;
+    margin-top: 16px;
+  }
+
+  .porto-card-version-section .porto-card-version-image img {
+    max-width: min(100%, 204px);
+    max-height: 118px;
+  }
+
+  .porto-card-ecosystem-feature,
+  .porto-card-human-hero-card,
+  .porto-card-human-side-card {
+    padding: 20px;
+    border-radius: 24px;
+  }
+
+  .porto-card-human-hero-copy h3 {
+    max-width: none;
+  }
+
+  .porto-card-ecosystem-highlights span,
+  .porto-card-human-highlights span {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.porto-card-how-section {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+}
+
+.porto-card-section-head {
+  max-width: 760px;
 }
 
 .surety-helper-text {
@@ -11174,6 +12865,21 @@ td {
     justify-content: center;
   }
 
+  .porto-card-version-section .container {
+    width: min(calc(100vw - 28px), 1180px);
+  }
+
+  .porto-card-version-section .porto-card-version-grid {
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x proximity;
+  }
+
+  .porto-card-version-section .porto-card-version-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+  }
+
   .cell-phone-kpi-grid,
   .porto-card-kpi-grid,
   .cell-phone-pain-grid,
@@ -11182,12 +12888,7 @@ td {
   .cell-phone-journey-grid,
   .cell-phone-rule-grid,
   .cell-phone-image-grid,
-  .porto-card-version-grid,
-  .porto-card-benefit-grid,
-  .porto-card-proof-grid,
-  .porto-card-fit-grid,
-  .porto-card-detail-grid,
-  .porto-card-journey-grid {
+  .porto-card-version-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -11200,6 +12901,20 @@ td {
   .faq-shell {
     padding: 22px;
     border-radius: 22px;
+  }
+
+  .porto-card-carousel {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .porto-card-carousel--hero {
+    width: 100vw;
+    margin-left: -50vw;
+  }
+
+  .porto-card-carousel__viewport {
+    min-height: 520px;
   }
 
   .contact-grid {
@@ -11284,6 +12999,46 @@ td {
 
   .porto-card-cta-band {
     grid-template-columns: 1fr;
+  }
+
+  .porto-card-carousel__frame {
+    padding-bottom: 0;
+  }
+
+  .porto-card-carousel__content {
+    padding: 34px clamp(20px, 3vw, 42px) 30px;
+  }
+
+  .porto-card-carousel__copy {
+    max-width: 500px;
+  }
+
+  .porto-card-carousel__copy h1,
+  .porto-card-carousel__copy h2 {
+    font-size: 3.2rem;
+    max-width: 12ch;
+  }
+
+  .porto-card-carousel__subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .porto-card-carousel__art {
+    padding: 24px clamp(20px, 3vw, 40px) 26px 24px;
+  }
+
+  .porto-card-carousel__art-stage {
+    width: min(42vw, 620px);
+    height: min(70%, 420px);
+  }
+
+  .porto-card-carousel__art--black .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--duo .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--offset .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--single .porto-card-carousel__art-stage {
+    width: min(42vw, 620px);
+    height: min(70%, 420px);
   }
 
   .cell-phone-band-actions {
@@ -11440,11 +13195,6 @@ td {
   .cell-phone-rule-grid,
   .cell-phone-image-grid,
   .porto-card-version-grid,
-  .porto-card-benefit-grid,
-  .porto-card-proof-grid,
-  .porto-card-fit-grid,
-  .porto-card-detail-grid,
-  .porto-card-journey-grid,
   .premium-product-feature-grid,
   .premium-product-profile-grid,
   .premium-product-trust-row,
@@ -11537,6 +13287,109 @@ td {
 
   .porto-card-cta-band {
     padding: 24px;
+  }
+
+  .porto-card-carousel--hero {
+    width: 100vw;
+    margin-left: -50vw;
+  }
+
+  .porto-card-version-section .container {
+    width: min(calc(100vw - 24px), 1180px);
+  }
+
+  .porto-card-version-section .porto-card-version-grid {
+    overflow-x: auto;
+    gap: 14px;
+  }
+
+  .porto-card-version-section .porto-card-version-card {
+    flex: 0 0 min(252px, 84vw);
+    padding: 18px;
+    border-radius: 26px;
+  }
+
+  .porto-card-version-section .porto-card-version-image {
+    min-height: 148px;
+    padding: 6px 0 2px;
+  }
+
+  .porto-card-version-section .porto-card-version-image img {
+    max-height: 118px;
+  }
+
+  .porto-card-carousel__frame {
+    grid-template-columns: 1fr;
+  }
+
+  .porto-card-carousel__arrow {
+    display: none;
+  }
+
+  .porto-card-carousel__viewport {
+    min-height: 620px;
+    border-radius: 0;
+  }
+
+  .porto-card-carousel__slide::before {
+    background:
+      linear-gradient(180deg, rgba(252, 253, 255, 0.96) 0%, rgba(252, 253, 255, 0.84) 26%, rgba(252, 253, 255, 0.5) 50%, rgba(252, 253, 255, 0.16) 70%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .porto-card-carousel__content {
+    align-items: flex-start;
+    padding: 22px 18px 108px;
+  }
+
+  .porto-card-carousel__art {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 120px 16px 0;
+  }
+
+  .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--black .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--duo .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--offset .porto-card-carousel__art-stage,
+  .porto-card-carousel__art--single .porto-card-carousel__art-stage {
+    width: min(94vw, 430px);
+    height: min(56%, 250px);
+    margin-right: 0;
+  }
+
+  .porto-card-carousel__art-card--primary img,
+  .porto-card-carousel__art-card--secondary img {
+    filter: drop-shadow(0 22px 36px rgba(15, 23, 42, 0.16));
+  }
+
+  .porto-card-carousel__copy {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .porto-card-carousel__copy h1,
+  .porto-card-carousel__copy h2 {
+    font-size: 2.35rem;
+    line-height: 0.98;
+    max-width: 11ch;
+  }
+
+  .porto-card-carousel__subtitle {
+    font-size: 0.94rem;
+    line-height: 1.62;
+  }
+
+  .porto-card-carousel__actions .btn {
+    width: 100%;
+  }
+
+  .porto-card-carousel__arrow {
+    display: none;
+  }
+
+  .porto-card-carousel__dots {
+    bottom: 14px;
+    padding: 9px 12px;
   }
 
   .residential-trust-row,
